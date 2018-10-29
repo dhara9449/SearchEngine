@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="Project/src"/>
+	<classpathentry kind="lib" path="Project/dist/homework1.jar"/>
+	<classpathentry kind="lib" path="Project/dist/lib/gson-2.8.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="Project/dist/lib/gson-2.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="Project/dist/lib/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="Project/dist/lib/org.apache.commons.io.jar"/>
+	<classpathentry kind="lib" path="Project/dist/lib/snowball-stemmer-1.3.0.581.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="Project/build/classes"/>
+</classpath>
