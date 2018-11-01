@@ -18,5 +18,5 @@ public interface QueryComponent {
      * @param index
      * @return
      */
-    List<Posting> getPostings(Index index);
+    List<Posting> getPostings(Index index,String mode);
 }

@@ -23,8 +23,8 @@ public class TermLiteral implements QueryComponent {
     }
 
     @Override
-    public List<Posting> getPostings(Index index) {
-        return index.getPostings(mTerm);
+    public List<Posting> getPostings(Index index,String mode) {
+        return index.getPostings(mTerm,mode);
     }
 
     @Override

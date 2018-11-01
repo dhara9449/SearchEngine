@@ -32,6 +32,7 @@ public class DiskPositionalIndex {
     private static String PATH;
     private static long indexTime=0;
     private static String EXTENSION = ".txt";
+    private  static  ArrayList<String> modes;
 
     private static DocumentCorpus newCorpus(Path directoryPath, String extension) {
         DocumentCorpus corpus;
@@ -43,12 +44,17 @@ public class DiskPositionalIndex {
         return corpus;
     }
 
+    DiskPositionalIndex(){
+        modes = new ArrayList<>();
+        modes.add("");
+        modes.add("boolean");
+        modes.add("ranked");
+    }
+
     private static Index newIndex(DocumentCorpus corpus,DiskIndexWriter diskIndexWriter,Path directoryPath) {
         final long startTime = System.currentTimeMillis();
-
-
         Index index= diskIndexWriter.indexCorpus(corpus,directoryPath);
-        
+
         final long endTime = System.currentTimeMillis();
         indexTime = endTime-startTime;
         System.out.println("Time taken for indexing corpus:"+indexTime/1000 +" seconds");
@@ -76,6 +82,7 @@ public class DiskPositionalIndex {
         BooleanQueryParser parser = new BooleanQueryParser();
         String query;
         Scanner reader = new Scanner(System.in);
+        String mode;
         OUTER:
         while (true) {
             System.out.print("Query : ");
@@ -140,16 +147,19 @@ public class DiskPositionalIndex {
 
 
     private static void queryPosting(BooleanQueryParser parser, DocumentCorpus corpus, Index index, String query)  {
-
         Scanner scanner = new Scanner(System.in);
-        EnglishTokenStream englishTokenStream;
         String reply = "y";
         String docName;
         int docId;
+        String mode;
+
+        System.out.println("Enter retrieval mode: 1.Boolean 2.Ranked");
+        mode = scanner.nextLine();
+        mode = modes.get(Integer.parseInt(mode));
 
         QueryComponent queryComponent = parser.parseQuery(query);
 
-        List<Posting> postings = queryComponent.getPostings(index);
+        List<Posting> postings = queryComponent.getPostings(index,mode);
 
         if (postings != null) {
             for (Posting p : postings) {
@@ -169,7 +179,6 @@ public class DiskPositionalIndex {
                     for (Posting p : postings) {
                         docId = p.getDocumentId();
                         if (corpus.getDocument(docId).getTitle().equalsIgnoreCase(docName)) {
-                            englishTokenStream = new EnglishTokenStream(corpus.getDocument(docId).getContent());
                             try {
                                 System.out.println(IOUtils.toString(corpus.getDocument(docId).getContent()));
                             } catch (IOException e) {

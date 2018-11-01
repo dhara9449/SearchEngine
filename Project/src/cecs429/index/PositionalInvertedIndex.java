@@ -14,7 +14,7 @@ public class PositionalInvertedIndex implements Index {
     }
 
     @Override
-    public List<Posting> getPostings(String term) {
+    public List<Posting> getPostings(String term,String mode) {
         List<Posting> temp = new ArrayList<>();
         if (mInvertedIndexMap.containsKey(term)) {
             return mInvertedIndexMap.get(term);

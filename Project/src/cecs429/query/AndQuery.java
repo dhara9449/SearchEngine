@@ -20,12 +20,12 @@ public class AndQuery implements QueryComponent {
     }
 
     @Override
-    public List<Posting> getPostings(Index index) {
+    public List<Posting> getPostings(Index index,String mode) {
         List<Posting> result = new ArrayList<>() ;
-        result.addAll(mComponents.get(0).getPostings(index));
+        result.addAll(mComponents.get(0).getPostings(index,mode));
         List<Posting> tempComponentPostingsList;
         for (int i = 1; i < mComponents.size(); i++) {
-            tempComponentPostingsList = mComponents.get(i).getPostings(index);
+            tempComponentPostingsList = mComponents.get(i).getPostings(index,mode);
             result = mergePosting(result, tempComponentPostingsList);
         }
         return result;

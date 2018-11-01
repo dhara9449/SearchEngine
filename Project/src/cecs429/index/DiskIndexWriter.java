@@ -40,16 +40,14 @@ public class DiskIndexWriter {
             int prevdocId;
             int currentdocId = 0;
             int docIdGap;
-            List<Integer> mPositions;
-            for (Posting document : index.getPostings(str)) {
+            for (Posting document : index.getPostings(str,"boolean")) {
                 prevdocId = currentdocId;
                 currentdocId = document.getDocumentId();
 
-                mPositions = document.getPositions();
 
                 docIdGap = currentdocId - prevdocId;
                 postingsout.writeInt(docIdGap); //TODO: clarify... should it be docIdGap ot currentDocID
-                
+
 
                 // writing posting.bin
                 int prevPosId;
@@ -72,14 +70,14 @@ public class DiskIndexWriter {
 
     public  ArrayList<Long> writeVocab(Index index, Path path, List<String> vocab) throws IOException {
        // File vocabfile = new File(String.valueOf(path) + "\\index\\vocab.bin");
-        File vocabfile = new File(String.valueOf(path) + "/index/vocab.bin");
-        FileOutputStream out2 = new FileOutputStream(vocabfile);
-        DataOutputStream vocabout = new DataOutputStream(out2);
-        ArrayList<Long> mMapVocab = new ArrayList<Long>();
+        File vocabFile = new File(String.valueOf(path) + "/index/vocab.bin");
+        FileOutputStream out2 = new FileOutputStream(vocabFile);
+        DataOutputStream vocabOut = new DataOutputStream(out2);
+        ArrayList<Long> mMapVocab = new ArrayList<>();
 
         for(String str: vocab){
-            vocabout.writeBytes(str);
-            vocabout.flush();
+            vocabOut.writeBytes(str);
+            vocabOut.flush();
             mMapVocab.add(out2.getChannel().size());
         }
         return mMapVocab;
