@@ -26,7 +26,7 @@ public class DiskIndexWriter {
 
     }
 
-    public static ArrayList<Long> writePostings(Index index, Path path, List<String> vocab) throws IOException {
+    public  ArrayList<Long> writePostings(Index index, Path path, List<String> vocab) throws IOException {
         //File postingsfile = new File(String.valueOf(path) + "\\index\\postings.bin");
         File postingsfile = new File(String.valueOf(path) + "/index/postings.bin");
         postingsfile.getParentFile().mkdirs();
@@ -70,7 +70,7 @@ public class DiskIndexWriter {
         return mMapPosting;
     }
 
-    public static ArrayList<Long> writeVocab(Index index, Path path, List<String> vocab) throws IOException {
+    public  ArrayList<Long> writeVocab(Index index, Path path, List<String> vocab) throws IOException {
        // File vocabfile = new File(String.valueOf(path) + "\\index\\vocab.bin");
         File vocabfile = new File(String.valueOf(path) + "/index/vocab.bin");
         FileOutputStream out2 = new FileOutputStream(vocabfile);
@@ -88,7 +88,12 @@ public class DiskIndexWriter {
     public void writeVocabTable(Index index, Path path, List<String> vocab, ArrayList<Long> mMapVocab,ArrayList<Long> mMapPosting) throws IOException {
         //File vocabTablefile = new File(String.valueOf(path) + "\\index\\vocabTable.bin");
         File vocabTablefile = new File(String.valueOf(path) + "/index/vocabTable.bin");
-        DataOutputStream vocabtableout = new DataOutputStream(new FileOutputStream(vocabTablefile));
+        DataOutputStream vocabtableout = null;
+        try {
+            vocabtableout = new DataOutputStream(new FileOutputStream(vocabTablefile));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         for(int i=0;i< mMapVocab.size();i++){
             vocabtableout.writeLong(mMapVocab.get(i));
@@ -96,14 +101,18 @@ public class DiskIndexWriter {
         }
     }
 
-    public static Index indexCorpus(DocumentCorpus corpus) {
+     private  void writeDocWeights(double Ld,Path path){
+         File vocabTablefile = new File(String.valueOf(path) + "/index/docWeights.bin");
+         DataOutputStream vocabtableout = null;
+
+     }
+
+    public  Index indexCorpus(DocumentCorpus corpus,Path path) {
         HashSet<String> vocabulary = new HashSet<>();
         BetterTokenProcessor processor = new BetterTokenProcessor();//must be dynamic
         EnglishTokenStream englishTokenStream;
         PositionalInvertedIndex invertedDocumentIndex = new PositionalInvertedIndex();
-
-        PositionalInvertedIndex biwordIndex = new PositionalInvertedIndex();
-
+        
         int corpusSize=corpus.getCorpusSize();
         int currentDocId;
         for (Document document : corpus.getDocuments()) {
@@ -112,11 +121,10 @@ public class DiskIndexWriter {
             int position = 0;
             String lastTerm = "";
             String term;
-            HashMap<String,Integer> termFrequencyTracker;
+            HashMap<String,Integer> termFrequencyTracker = new HashMap<>();;
             currentDocId = document.getId();
             int frequency;
             for (String tokens : getTokens) {
-                termFrequencyTracker=new HashMap<>();
                 for (String token : processor.processToken(tokens)) {
                     term = token;
                     if(!term.trim().equals("")) {
@@ -127,22 +135,6 @@ public class DiskIndexWriter {
                         }else{
                             termFrequencyTracker.put(term,1);
                         }
-
-
-                        /*
-                         * Creating biword index only for a small number of documents
-                         * because for a larger corpus size, the following error:
-                         * "java.lang.OutOfMemoryError: GC overhead limit exceeded"
-                         * When tested on a corpus with small number of documents (in comparision to the given corpus of 36K+ docs
-                         * the biword index works perfectly fine.
-                         *
-                         * */
-
-                        if(currentDocId<150) {
-                            biwordIndex.addTerm(lastTerm + " " + term, currentDocId, position - 1);
-                        }
-                        lastTerm = term;
-                        position++;
                     }
                 }
             }
@@ -151,8 +143,23 @@ public class DiskIndexWriter {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+
+            double Ld=  0.0;
+
+
+
+            for (Integer tf : termFrequencyTracker.values()) {
+                Ld = Ld+ Math.pow(1+Math.log(tf),2);
+            }
+
         }
         BiwordIndex.setIndex(biwordIndex);
+
+        try {
+            WriteIndex(invertedDocumentIndex,path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return invertedDocumentIndex;
     }
 

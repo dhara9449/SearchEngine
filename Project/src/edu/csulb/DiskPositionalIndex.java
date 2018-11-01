@@ -47,10 +47,8 @@ public class DiskPositionalIndex {
         final long startTime = System.currentTimeMillis();
 
 
-        Index index= diskIndexWriter.indexCorpus(corpus);
-        diskIndexWriter.WriteIndex(index,directoryPath);
-
-
+        Index index= diskIndexWriter.indexCorpus(corpus,directoryPath);
+        
         final long endTime = System.currentTimeMillis();
         indexTime = endTime-startTime;
         System.out.println("Time taken for indexing corpus:"+indexTime/1000 +" seconds");
@@ -125,7 +123,7 @@ public class DiskPositionalIndex {
                             File[] listOfFiles2 = folder.listFiles();
                             EXTENSION = FilenameUtils.getExtension(listOfFiles2[0].getName());
                             corpus = newCorpus(tempPath,"."+ EXTENSION);
-                            index = newIndex(corpus);
+                            index = newIndex(corpus,diskIndexWriter,directoryPath);
                         } else {
                             System.out.println("The specified directory does not exist");
                         }
