@@ -41,25 +41,25 @@ public class DiskIndexWriter {
             int currentdocId = 0;
             int docIdGap;
             List<Integer> mPositions;
-            int postingSize;
             for (Posting document : index.getPostings(str)) {
                 prevdocId = currentdocId;
                 currentdocId = document.getDocumentId();
 
                 mPositions = document.getPositions();
-                postingSize=mPositions.size();
 
                 docIdGap = currentdocId - prevdocId;
                 postingsout.writeInt(docIdGap); //TODO: clarify... should it be docIdGap ot currentDocID
-
-                //determing the location for vocab table
-                mMapPosting.add(out1.getChannel().size());
-
+                
 
                 // writing posting.bin
                 int prevPosId;
                 int currentPosId =0;
                 postingsout.writeInt(document.getDocumentFrequency());
+
+                //determing the location for vocab table
+                mMapPosting.add(out1.getChannel().size());
+
+
                 for (Integer position : document.getPositions()) {
                     prevPosId=currentPosId;
                     currentPosId = position;
@@ -161,7 +161,7 @@ public class DiskIndexWriter {
             for (Integer tf : termFrequencyTracker.values()) {
                 Ld = Ld+ Math.pow(1+Math.log(tf),2);
             }
-            docWeights.put(currentDocId,Ld);
+            docWeights.put(currentDocId,Math.sqrt(Ld));
         }
 
         // write the index to disk
