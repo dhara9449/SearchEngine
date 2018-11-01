@@ -11,9 +11,11 @@ public class Posting {
 
     private int mDocumentId;
     private List<Integer> mPositions;
+    private int  documentFrequency;
 
     public Posting(int documentId) {
         mPositions = new ArrayList<>();
+        documentFrequency=0;
         mDocumentId = documentId;
     }
 
@@ -28,9 +30,13 @@ public class Posting {
     }
 
     //adds postion of the term in the document
-    public void addPosition(int position)
-    {
+    public void addPosition(int position) {
         mPositions.add(position);
+        documentFrequency++;
+
     }
 
+    public int getDocumentFrequency(){
+        return  documentFrequency;
+    }
 }

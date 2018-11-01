@@ -13,23 +13,22 @@ import cecs429.query.BooleanQueryParser;
 import cecs429.query.QueryComponent;
 import cecs429.text.BetterTokenProcessor;
 import cecs429.text.EnglishTokenStream;
-import java.io.File;
-import java.io.IOException;
-import static java.lang.Integer.min;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.tartarus.snowball.SnowballStemmer;
 import org.tartarus.snowball.ext.englishStemmer;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+
+import static java.lang.Integer.min;
+
 ///Users/indumanimaran/Documents/SET/MobyDick10Chapters
-public class InvertedTermDocumentIndex {
+public class DiskPositionalIndex {
     private static String PATH;
     private static long indexTime=0;
     private static String EXTENSION = ".txt";
@@ -44,11 +43,12 @@ public class InvertedTermDocumentIndex {
         return corpus;
     }
 
-    private static Index newIndex(DocumentCorpus corpus) {
+    private static Index newIndex(DocumentCorpus corpus,DiskIndexWriter diskIndexWriter,Path directoryPath) {
         final long startTime = System.currentTimeMillis();
 
-        Index index= indexCorpus(corpus);
 
+        Index index= diskIndexWriter.indexCorpus(corpus,directoryPath);
+        
         final long endTime = System.currentTimeMillis();
         indexTime = endTime-startTime;
         System.out.println("Time taken for indexing corpus:"+indexTime/1000 +" seconds");
@@ -70,10 +70,9 @@ public class InvertedTermDocumentIndex {
         EXTENSION = FilenameUtils.getExtension(listOfFiles[0].getName());
 
         corpus = newCorpus(directoryPath,"."+ EXTENSION);
-        Index index = newIndex(corpus);
-
         DiskIndexWriter diskIndexWriter = new DiskIndexWriter();
-        diskIndexWriter.WriteIndex(index,directoryPath);
+        Index index = newIndex(corpus,diskIndexWriter,directoryPath);
+
         BooleanQueryParser parser = new BooleanQueryParser();
         String query;
         Scanner reader = new Scanner(System.in);
@@ -124,7 +123,7 @@ public class InvertedTermDocumentIndex {
                             File[] listOfFiles2 = folder.listFiles();
                             EXTENSION = FilenameUtils.getExtension(listOfFiles2[0].getName());
                             corpus = newCorpus(tempPath,"."+ EXTENSION);
-                            index = newIndex(corpus);
+                            index = newIndex(corpus,diskIndexWriter,directoryPath);
                         } else {
                             System.out.println("The specified directory does not exist");
                         }
@@ -139,55 +138,6 @@ public class InvertedTermDocumentIndex {
         }
     }
 
-    private static Index indexCorpus(DocumentCorpus corpus) {
-        HashSet<String> vocabulary = new HashSet<>();
-        BetterTokenProcessor processor = new BetterTokenProcessor();//must be dynamic
-        EnglishTokenStream englishTokenStream;
-        PositionalInvertedIndex invertedDocumentIndex = new PositionalInvertedIndex();
-
-        PositionalInvertedIndex biwordIndex = new PositionalInvertedIndex();
-
-        int corpusSize=corpus.getCorpusSize();
-        int currentDocId;
-        for (Document document : corpus.getDocuments()) {
-            englishTokenStream = new EnglishTokenStream(document.getContent());
-            Iterable<String> getTokens = englishTokenStream.getTokens();
-            int position = 0;
-            String lastTerm = "";
-            String term;
-            currentDocId = document.getId();
-            for (String tokens : getTokens) {
-                for (String token : processor.processToken(tokens)) {
-                    term = token;
-                    if(!term.trim().equals("")) {
-                        invertedDocumentIndex.addTerm(term, currentDocId, position);
-
-                        /*
-                         * Creating biword index only for a small number of documents
-                         * because for a larger corpus size, the following error:
-                         * "java.lang.OutOfMemoryError: GC overhead limit exceeded"
-                         * When tested on a corpus with small number of documents (in comparision to the given corpus of 36K+ docs
-                         * the biword index works perfectly fine.
-                         *
-                         * */
-
-                        if(currentDocId<150) {
-                            biwordIndex.addTerm(lastTerm + " " + term, currentDocId, position - 1);
-                        }
-                        lastTerm = term;
-                        position++;
-                    }
-                }
-            }
-            try {
-                englishTokenStream.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        BiwordIndex.setIndex(biwordIndex);
-        return invertedDocumentIndex;
-    }
 
     private static void queryPosting(BooleanQueryParser parser, DocumentCorpus corpus, Index index, String query)  {
 

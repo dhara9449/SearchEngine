@@ -12,7 +12,7 @@ import java.util.List;
 public class TermLiteral implements QueryComponent {
 
     private final String mTerm;
-    BetterTokenProcessor processor = new BetterTokenProcessor();
+    BetterTokenProcessor processor = new BetterTokenProcessor();//must be dynamic
 
     public TermLiteral(String term) {
         mTerm = processor.processToken(term).get(0);

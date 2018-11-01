@@ -54,7 +54,6 @@ public class PositionalInvertedIndex implements Index {
                 postings.add(recentPosting);
             }
         }
-
         //otherwise create a new entry for the term in inverted index hashmap
         else {
             List<Posting> tempPostingList = new ArrayList<>();
