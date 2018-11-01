@@ -101,9 +101,20 @@ public class DiskIndexWriter {
         }
     }
 
-     private  void writeDocWeights(double Ld,Path path){
-         File vocabTablefile = new File(String.valueOf(path) + "/index/docWeights.bin");
-         DataOutputStream vocabtableout = null;
+     private  void writeDocWeights(HashMap<Integer,Double> Ld,Path path) throws IOException{
+         File docWeightsfile = new File(String.valueOf(path) + "/index/docWeights.bin");
+         DataOutputStream docWeightsout = null;
+
+         try {
+             docWeightsout = new DataOutputStream(new FileOutputStream(docWeightsfile));
+         } catch (FileNotFoundException e) {
+             e.printStackTrace();
+         }
+
+         for (HashMap.Entry<Integer,Double> hm:Ld.entrySet()){
+             docWeightsout.writeDouble(hm.getValue());
+
+         }
 
      }
 
@@ -112,7 +123,8 @@ public class DiskIndexWriter {
         BetterTokenProcessor processor = new BetterTokenProcessor();//must be dynamic
         EnglishTokenStream englishTokenStream;
         PositionalInvertedIndex invertedDocumentIndex = new PositionalInvertedIndex();
-        
+
+        HashMap<Integer,Double> docWeights =new HashMap<Integer, Double>();
         int corpusSize=corpus.getCorpusSize();
         int currentDocId;
         for (Document document : corpus.getDocuments()) {
@@ -146,21 +158,34 @@ public class DiskIndexWriter {
 
             double Ld=  0.0;
 
-
-
             for (Integer tf : termFrequencyTracker.values()) {
                 Ld = Ld+ Math.pow(1+Math.log(tf),2);
             }
-
+            docWeights.put(currentDocId,Ld);
         }
-        BiwordIndex.setIndex(biwordIndex);
 
+        // write the index to disk
         try {
             WriteIndex(invertedDocumentIndex,path);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // write term document weight to disk
+
+        try {
+            writeDocWeights(docWeights,path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return invertedDocumentIndex;
+        /*
+            TODO:
+            Modify DiskPositionalIndex so it knows how to open this 􏰀le and skip to an appropriate location to
+            read a 8-byte double for Ld. Ld values will be used when calculating ranked retrieval scores.
+
+        */
     }
 
 
