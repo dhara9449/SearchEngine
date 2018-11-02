@@ -20,7 +20,7 @@ public class AndQuery implements QueryComponent {
     }
 
     @Override
-    public List<Posting> getPostings(Index index,String mode) {
+    public List<Posting> getPostings(Index index,String mode){
         List<Posting> result = new ArrayList<>() ;
         result.addAll(mComponents.get(0).getPostings(index,mode));
         List<Posting> tempComponentPostingsList;
