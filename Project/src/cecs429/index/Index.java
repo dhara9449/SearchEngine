@@ -14,7 +14,7 @@ public interface Index {
      * @param term
      * @return
      */
-    List<Posting> getPostings(String term);
+    List<Posting> getPostings(String term,String mode);
 
     /**
      * A (sorted) list of all terms in the index vocabulary.

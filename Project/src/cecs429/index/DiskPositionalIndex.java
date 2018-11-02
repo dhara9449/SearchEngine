@@ -1,27 +1,77 @@
 package cecs429.index;
 
+import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
  * Implements an Index using a Map of term and list of postings.
  */
-public class PositionalInvertedIndex implements Index {
+public class DiskPositionalIndex implements Index {
 
     private Map<String, List<Posting>> mInvertedIndexMap;
+    private String p;
+    private InputStream vocabIS;
+    private InputStream postingsIS;
+    private InputStream vocabTableIS;
+    private File vocab;
+    private File postings;
+    private File vocabTable;
 
-    public PositionalInvertedIndex() {
+    public DiskPositionalIndex(Path path) throws FileNotFoundException {
+        p=String.valueOf(path);
+        vocab = new File(p+ "/index/vocab.bin");
+        vocabIS = new DataInputStream(new FileInputStream(vocab));
+
+        postings=new File( p + "/index/postings.bin");
+        postingsIS = new DataInputStream(new FileInputStream(postings));
+
+        vocabTable =new File( p+"/index/vocabTable.bin");
+        vocabTableIS = new DataInputStream(new FileInputStream(vocabTable));
+
         this.mInvertedIndexMap = new HashMap<>();
     }
 
+
+    //TODO:
     @Override
     public List<Posting> getPostings(String term,String mode) {
         List<Posting> temp = new ArrayList<>();
-        if (mInvertedIndexMap.containsKey(term)) {
-            return mInvertedIndexMap.get(term);
+        // get the position of postings from vocabTable.bin
+        //using binary search ....
+
+        int high = (int)vocabTable.length();
+        int low = 0;
+        int mid = (int)high/2;
+
+        while(low<=high){
+            vocabTable.
+
         }
+
+
+
+
+
+        if (mode.equalsIgnoreCase("boolean")){
+            if (mInvertedIndexMap.containsKey(term)) {
+                return mInvertedIndexMap.get(term);
+            }
+        }else{
+    //get a list of postings store it in temp
+
+            for(Posting p:temp){
+
+            }
+
+        }
+
         return temp;
     }
 
+
+    //TODO:
     @Override
     public List<String> getVocabulary() {
         List<String> mVocabulary = new ArrayList<>();
