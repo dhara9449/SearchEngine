@@ -27,7 +27,8 @@ import java.util.*;
 
 import static java.lang.Integer.min;
 
-///Users/indumanimaran/Documents/SET/MobyDick10Chapters
+    ///Users/indumanimaran/Documents/SET/MobyDick10Chapters
+///Users/indumanimaran/Documents/SET/Test/
 public class DiskPositionalIndex {
     private static String PATH;
     private static long indexTime=0;

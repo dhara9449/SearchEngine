@@ -20,9 +20,9 @@ public class DiskIndexWriter {
         List<String> vocab = index.getVocabulary();
         ArrayList<Long> mMapPosting = writePostings(index,path,vocab);
 
-        ArrayList<Long> mMapVocab = writeVocab(index, path, vocab);
+        ArrayList<Long> mMapVocab = writeVocab(path, vocab);
 
-        writeVocabTable(index,path,vocab,mMapVocab, mMapPosting);
+        writeVocabTable(path,mMapVocab, mMapPosting);
 
     }
 
@@ -75,7 +75,7 @@ public class DiskIndexWriter {
         return mMapPosting;
     }
 
-    public  ArrayList<Long> writeVocab(Index index, Path path, List<String> vocab) throws IOException {
+    public  ArrayList<Long> writeVocab( Path path, List<String> vocab) throws IOException {
         //File vocabFile = new File(String.valueOf(path) + "\\index\\vocab.bin");
         File vocabFile = new File(String.valueOf(path) + "/index/vocab.bin");
         FileOutputStream out2 = new FileOutputStream(vocabFile);
@@ -90,7 +90,7 @@ public class DiskIndexWriter {
         return mMapVocab;
     }
 
-    public void writeVocabTable(Index index, Path path, List<String> vocab, ArrayList<Long> mMapVocab,ArrayList<Long> mMapPosting) throws IOException {
+    public void writeVocabTable(Path path, ArrayList<Long> mMapVocab,ArrayList<Long> mMapPosting) throws IOException {
         //File vocabTablefile = new File(String.valueOf(path) + "\\index\\vocabTable.bin");
         File vocabTablefile = new File(String.valueOf(path) + "/index/vocabTable.bin");
         DataOutputStream vocabtableout = null;
@@ -130,7 +130,6 @@ public class DiskIndexWriter {
         PositionalInvertedIndex invertedDocumentIndex = new PositionalInvertedIndex();
 
         HashMap<Integer,Double> docWeights =new HashMap<Integer, Double>();
-        int corpusSize=corpus.getCorpusSize();
         int currentDocId;
         for (Document document : corpus.getDocuments()) {
             englishTokenStream = new EnglishTokenStream(document.getContent());
