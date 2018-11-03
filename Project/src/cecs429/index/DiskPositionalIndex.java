@@ -11,7 +11,7 @@ import java.util.*;
 public class DiskPositionalIndex implements Index {
 
     private Map<String, List<Posting>> mInvertedIndexMap;
-    private String p;
+    private String path;
     private InputStream vocabIS;
     private InputStream postingsIS;
     private InputStream vocabTableIS;
@@ -20,14 +20,14 @@ public class DiskPositionalIndex implements Index {
     private File vocabTable;
 
     public DiskPositionalIndex(Path path) throws FileNotFoundException {
-        p=String.valueOf(path);
-        vocab = new File(p+ "/index/vocab.bin");
+        this.path=String.valueOf(path);
+        vocab = new File(path+ "/index/vocab.bin");
         vocabIS = new DataInputStream(new FileInputStream(vocab));
 
-        postings=new File( p + "/index/postings.bin");
+        postings=new File( path + "/index/postings.bin");
         postingsIS = new DataInputStream(new FileInputStream(postings));
 
-        vocabTable =new File( p+"/index/vocabTable.bin");
+        vocabTable =new File( path+"/index/vocabTable.bin");
         vocabTableIS = new DataInputStream(new FileInputStream(vocabTable));
 
         this.mInvertedIndexMap = new HashMap<>();
@@ -46,7 +46,7 @@ public class DiskPositionalIndex implements Index {
         int mid = (int)high/2;
 
         while(low<=high){
-            vocabTable.
+           // vocabTable.
 
         }
 

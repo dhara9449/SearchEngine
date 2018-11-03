@@ -41,7 +41,7 @@ public class TermDocumentIndex implements Index {
     }
 
     @Override
-    public List<Posting> getPostings(String term) {
+    public List<Posting> getPostings(String term, String mode) {
         List<Posting> results = new ArrayList<>();
         // what if term is not in matrix
         int index = Collections.binarySearch(mVocabulary, term);

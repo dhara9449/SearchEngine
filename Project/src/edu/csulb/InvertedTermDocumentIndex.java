@@ -39,7 +39,7 @@ public class InvertedTermDocumentIndex {
         if (extension.contains("txt")) {
             corpus = DirectoryCorpus.loadTextDirectory(directoryPath, extension);
         } else {
-            corpus = DirectoryCorpus.loadJsonDirectory(directoryPath, extension);
+            corpus = DirectoryCorpus.loadMovieJsonDirectory(directoryPath, extension);
         }
         return corpus;
     }
