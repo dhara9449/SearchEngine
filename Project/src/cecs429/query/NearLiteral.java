@@ -47,7 +47,7 @@ public class NearLiteral implements QueryComponent {
     }
 
     @Override
-    public List<Posting> getPostings(Index index) {
+    public List<Posting> getPostings(Index index,String mode) {
 
         // Retrieving the postings for the individual terms in the phrase,
         // and positional merge them together.
@@ -63,8 +63,8 @@ public class NearLiteral implements QueryComponent {
             return result;
         }
 
-        List<Posting> tempComponentPostingsList1 = index.getPostings(mTerms.get(0));
-        List<Posting> tempComponentPostingsList2 = index.getPostings(mTerms.get(2));
+        List<Posting> tempComponentPostingsList1 = index.getPostings(mTerms.get(0),mode);
+        List<Posting> tempComponentPostingsList2 = index.getPostings(mTerms.get(2),mode);
 
         return mergePosting(tempComponentPostingsList1, tempComponentPostingsList2);
 

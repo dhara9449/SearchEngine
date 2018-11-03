@@ -22,13 +22,13 @@ public class DiskIndexWriter {
 
         ArrayList<Long> mMapVocab = writeVocab(index, path, vocab);
 
-        writeVocabTable(index,path,vocab,mMapPosting,mMapVocab);
+        writeVocabTable(index,path,vocab,mMapVocab, mMapPosting);
 
     }
 
     public  ArrayList<Long> writePostings(Index index, Path path, List<String> vocab) throws IOException {
         //File postingsfile = new File(String.valueOf(path) + "\\index\\postings.bin");
-        File postingsfile = new File(String.valueOf(path) + "/index/postings.bin");
+       File postingsfile = new File(String.valueOf(path) + "/index/postings.bin");
         postingsfile.getParentFile().mkdirs();
 
         FileOutputStream out1 = new FileOutputStream(postingsfile);
@@ -40,28 +40,35 @@ public class DiskIndexWriter {
             int prevdocId;
             int currentdocId = 0;
             int docIdGap;
-            for (Posting document : index.getPostings(str,"boolean")) {
+
+            List<Posting> docFrequency = index.getPostings(str,"boolean");
+            postingsout.writeInt(docFrequency.size()); //TO DO
+
+            //determing the location for vocab table
+            mMapPosting.add(out1.getChannel().size());
+
+
+            for (Posting document : docFrequency) {
                 prevdocId = currentdocId;
                 currentdocId = document.getDocumentId();
-
-
                 docIdGap = currentdocId - prevdocId;
                 postingsout.writeInt(docIdGap); //TODO: clarify... should it be docIdGap ot currentDocID
 
 
-                // writing posting.bin
-                int prevPosId;
-                int currentPosId =0;
+
                 postingsout.writeInt(document.getDocumentFrequency());
 
-                //determing the location for vocab table
-                mMapPosting.add(out1.getChannel().size());
+                List<Integer> positionList = document.getPositions();
+                // writing posting.bin
+                int prevPosId;
+                int currentPosId = positionList.get(0);
+                postingsout.writeInt(currentPosId);
+                positionList.remove(0);
 
-
-                for (Integer position : document.getPositions()) {
+                for (Integer position : positionList ) {
                     prevPosId=currentPosId;
                     currentPosId = position;
-                    postingsout.writeLong(currentPosId - prevPosId);
+                    postingsout.writeInt(currentPosId - prevPosId); //writeInt
                 }
             }
         }
@@ -69,7 +76,7 @@ public class DiskIndexWriter {
     }
 
     public  ArrayList<Long> writeVocab(Index index, Path path, List<String> vocab) throws IOException {
-       // File vocabfile = new File(String.valueOf(path) + "\\index\\vocab.bin");
+        //File vocabFile = new File(String.valueOf(path) + "\\index\\vocab.bin");
         File vocabFile = new File(String.valueOf(path) + "/index/vocab.bin");
         FileOutputStream out2 = new FileOutputStream(vocabFile);
         DataOutputStream vocabOut = new DataOutputStream(out2);
@@ -78,7 +85,7 @@ public class DiskIndexWriter {
         for(String str: vocab){
             vocabOut.writeBytes(str);
             vocabOut.flush();
-            mMapVocab.add(out2.getChannel().size());
+            mMapVocab.add(out2.getChannel().size()-str.length());
         }
         return mMapVocab;
     }
