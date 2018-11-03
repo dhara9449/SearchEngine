@@ -2,93 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fd3066d9-5430-404a-96cd-923907fbcdc9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/dhara.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/snowball_stemmer_1_3_0_581_1__1_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick10Chapters/chapter1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick10Chapters/chapter10.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick10Chapters/chapter2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick10Chapters/chapter3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick10Chapters/chapter4.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick10Chapters/chapter5.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick10Chapters/chapter6.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick10Chapters/chapter7.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick10Chapters/chapter8.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick10Chapters/chapter9.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick5Chapters/chapter1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick5Chapters/chapter2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick5Chapters/chapter3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick5Chapters/chapter4.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/MobyDick5Chapters/chapter5.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/.netbeans_automatic_build" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/.netbeans_update_resources" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/DirectoryCorpus$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/DirectoryCorpus$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/DirectoryCorpus.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/DirectoryCorpus.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/Document.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/Document.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/DocumentCorpus.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/DocumentCorpus.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/FileDocument.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/FileDocument.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/FileDocumentFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/FileDocumentFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/JsonFileDocument.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/JsonFileDocument.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/MovieDocument.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/MovieDocument.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/MovieDocumentCorpus.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/MovieJsonFileDocument.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/MovieJsonFileDocument.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/TextFileDocument.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/documents/TextFileDocument.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/gson/JsonDocument.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/gson/JsonDocument.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/gson/JsonDocumentArray.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/gson/JsonDocumentArray.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/gson/MovieJsonDocument.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/gson/MovieJsonDocument.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/gson/MovieJsonDocumentArray.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/gson/MovieJsonDocumentArray.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/index/BiwordIndex.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/index/BiwordIndex.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/index/Index.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/index/Index.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/index/PositionalInvertedIndex.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/index/PositionalInvertedIndex.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/index/Posting.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/index/Posting.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/index/TermDocumentIndex.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/index/TermDocumentIndex.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/query/AndQuery.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/query/AndQuery.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/query/BooleanQueryParser$Literal.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/query/BooleanQueryParser$Literal.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/query/BooleanQueryParser$StringBounds.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/query/BooleanQueryParser$StringBounds.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/query/BooleanQueryParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/query/BooleanQueryParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/query/NearLiteral.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/query/NearLiteral.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/query/OrQuery.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/query/OrQuery.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/query/PhraseLiteral.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/query/PhraseLiteral.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/query/QueryComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/query/QueryComponent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/query/TermLiteral.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/query/TermLiteral.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/text/BasicTokenProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/text/BasicTokenProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/text/BetterTokenProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/text/BetterTokenProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/text/EnglishTokenStream$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/text/EnglishTokenStream$EnglishTokenIterator.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/text/EnglishTokenStream$EnglishTokenIterator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/text/EnglishTokenStream.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/text/EnglishTokenStream.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/text/TokenProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/text/TokenProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/cecs429/text/TokenStream.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/cecs429/text/TokenStream.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/build/classes/edu/csulb/InvertedTermDocumentIndex.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project/build/classes/edu/csulb/InvertedTermDocumentIndex.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/documents/DirectoryCorpus.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/documents/DirectoryCorpus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/documents/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/documents/Document.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/documents/FileDocumentFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/documents/FileDocumentFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/documents/JsonFileDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/documents/JsonFileDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/documents/MovieDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/documents/MovieDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/documents/MovieDocumentCorpus.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/documents/MovieJsonFileDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/documents/MovieJsonFileDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/documents/TextFileDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/documents/TextFileDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/gson/JsonDocumentArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/gson/JsonDocumentArray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/gson/MovieJsonDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/gson/MovieJsonDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/gson/MovieJsonDocumentArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/gson/MovieJsonDocumentArray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/index/BiwordIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/index/BiwordIndex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/index/PositionalInvertedIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/index/PositionalInvertedIndex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/index/Posting.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/index/Posting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/index/TermDocumentIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/index/TermDocumentIndex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/query/AndQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/query/AndQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/query/BooleanQueryParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/query/BooleanQueryParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/query/NearLiteral.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/query/NearLiteral.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/query/OrQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/query/OrQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/query/PhraseLiteral.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/query/PhraseLiteral.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/query/TermLiteral.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/query/TermLiteral.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/text/BetterTokenProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/text/BetterTokenProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/edu/csulb/BetterTermDocumentIndexer.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Project/src/edu/csulb/InvertedTermDocumentIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/edu/csulb/InvertedTermDocumentIndex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/test/ch1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/test/ch2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/test/ch3.txt" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -208,38 +123,39 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-79870117">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="java" value="4" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JAVA" value="4" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.vcs.git.usages" />
+      <usages-collector id="statistics.file.types.edit" />
+    </session>
   </component>
   <component name="FavoritesManager">
     <favorites_list name="CECS529" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/documents/DocumentCorpus.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/text/BetterTokenProcessor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="34" column="40" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="16">
-              <caret line="61" column="37" lean-forward="true" selection-start-line="61" selection-start-column="37" selection-end-line="61" selection-end-column="37" />
+            <state relative-caret-position="34">
+              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -248,26 +164,40 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/io/FileOutputStream.java">
+        <entry file="file://$PROJECT_DIR$/Project/src/edu/csulb/InvertedTermDocumentIndex.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6341">
-              <caret line="397" column="28" selection-start-line="397" selection-start-column="28" selection-end-line="397" selection-end-column="28" />
+            <state relative-caret-position="1564">
+              <caret line="96" lean-forward="true" selection-start-line="96" selection-end-line="96" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/Posting.java">
+        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/documents/MovieJsonFileDocument.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="26" selection-start-line="26" selection-end-line="26" />
-              <folding>
-                <element signature="e#449#450#0" expanded="true" />
-                <element signature="e#483#484#0" expanded="true" />
-                <element signature="e#633#634#0" expanded="true" />
-                <element signature="e#729#730#0" expanded="true" />
-                <element signature="e#769#770#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="1139">
+              <caret line="86" selection-start-line="86" selection-end-line="86" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/documents/MovieDocument.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="442">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/documents/DirectoryCorpus.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3077">
+              <caret line="194" column="40" selection-start-line="194" selection-start-column="40" selection-end-line="194" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -386,8 +316,8 @@
         <option value="$PROJECT_DIR$/Project/src/cecs429/query/NearLiteral.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/query/TermLiteral.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/query/PhraseLiteral.java" />
-        <option value="$PROJECT_DIR$/Project/src/edu/csulb/InvertedTermDocumentIndex.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java" />
+        <option value="$PROJECT_DIR$/Project/src/edu/csulb/InvertedTermDocumentIndex.java" />
       </list>
     </option>
   </component>
@@ -409,75 +339,38 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="CECS529" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SearchEngine_2" type="b2602c69:ProjectViewProjectNode" />
               <item name="Project" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="CECS529" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SearchEngine_2" type="b2602c69:ProjectViewProjectNode" />
               <item name="Project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="CECS529" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SearchEngine_2" type="b2602c69:ProjectViewProjectNode" />
               <item name="Project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="cecs429" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="CECS529" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SearchEngine_2" type="b2602c69:ProjectViewProjectNode" />
               <item name="Project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="cecs429" type="462c0819:PsiDirectoryNode" />
               <item name="documents" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="CECS529" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cecs429" type="462c0819:PsiDirectoryNode" />
-              <item name="gson" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CECS529" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cecs429" type="462c0819:PsiDirectoryNode" />
-              <item name="index" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CECS529" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cecs429" type="462c0819:PsiDirectoryNode" />
-              <item name="query" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CECS529" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cecs429" type="462c0819:PsiDirectoryNode" />
-              <item name="text" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CECS529" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SearchEngine_2" type="b2602c69:ProjectViewProjectNode" />
               <item name="Project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="csulb" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CECS529" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="CECS529" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="lib" type="70bed36:NamedLibraryElementNode" />
             </path>
           </expand>
           <select />
@@ -488,7 +381,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540277747246" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541262617037" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -585,17 +478,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49270073" visible="true" weight="0.32469636" />
-      <window_info id="Structure" order="1" sideWeight="0.50729924" side_tool="true" visible="true" weight="0.32469636" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4884547" visible="true" weight="0.2631579" />
+      <window_info id="Structure" order="1" sideWeight="0.5115453" side_tool="true" visible="true" weight="0.2631579" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" sideWeight="0.50238097" side_tool="true" weight="0.26963562" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49959514" visible="true" weight="0.5133215" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3285968" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49959514" weight="0.38543516" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.31616342" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -677,13 +571,6 @@
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/util/function/Consumer.java" />
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/documents/MovieDocumentCorpus.java" />
     <entry file="file://$PROJECT_DIR$/Project/src/edu/csulb/BetterTermDocumentIndexer.java" />
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/documents/DirectoryCorpus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2171">
-          <caret line="47" column="6" lean-forward="true" selection-start-line="47" selection-start-column="6" selection-end-line="47" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/documents/Document.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -709,20 +596,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="70">
           <caret line="66" column="34" lean-forward="true" selection-start-line="66" selection-start-column="34" selection-end-line="66" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/documents/MovieDocument.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/documents/MovieJsonFileDocument.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-525">
-          <caret line="23" column="12" lean-forward="true" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -838,16 +711,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/edu/csulb/InvertedTermDocumentIndex.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="74" column="30" selection-start-line="74" selection-start-column="30" selection-end-line="74" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/documents/DocumentCorpus.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -859,9 +722,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
           <caret line="34" column="40" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -876,13 +736,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
           <caret line="26" selection-start-line="26" selection-end-line="26" />
-          <folding>
-            <element signature="e#449#450#0" expanded="true" />
-            <element signature="e#483#484#0" expanded="true" />
-            <element signature="e#633#634#0" expanded="true" />
-            <element signature="e#729#730#0" expanded="true" />
-            <element signature="e#769#770#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/documents/MovieJsonFileDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1139">
+          <caret line="86" selection-start-line="86" selection-end-line="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/documents/MovieDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/documents/DirectoryCorpus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3077">
+          <caret line="194" column="40" selection-start-line="194" selection-start-column="40" selection-end-line="194" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -925,10 +799,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Project/src/edu/csulb/InvertedTermDocumentIndex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1564">
+          <caret line="96" lean-forward="true" selection-start-line="96" selection-end-line="96" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16">
-          <caret line="61" column="37" lean-forward="true" selection-start-line="61" selection-start-column="37" selection-end-line="61" selection-end-column="37" />
+        <state relative-caret-position="34">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
