@@ -29,7 +29,7 @@ public class JsonFileDocument implements FileDocument {
      * @param id
      * @param absoluteFilePath
      */
-    public JsonFileDocument(int id, Path absoluteFilePath) {
+    private JsonFileDocument(int id, Path absoluteFilePath) {
         mDocumentId = id;
         mFilePath = absoluteFilePath;
         setFileName();
@@ -70,13 +70,13 @@ public class JsonFileDocument implements FileDocument {
             jsonDocument = gson.fromJson(jsonReader, JsonDocument.class);
             mFileTitle = jsonDocument.getTitle();
         }
-        catch (FileNotFoundException e) {
+        catch (FileNotFoundException ignored) {
         }
 
         return mFileTitle;
     }
 
-    public void setFileName() {
+    private void setFileName() {
         mFileName = mFilePath.getFileName().toString();
     }
 

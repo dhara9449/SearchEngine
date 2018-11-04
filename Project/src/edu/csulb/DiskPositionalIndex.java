@@ -30,9 +30,6 @@ import static java.lang.Integer.min;
     ///Users/indumanimaran/Documents/SET/MobyDick10Chapters
 ///Users/indumanimaran/Documents/SET/Test/
 public class DiskPositionalIndex {
-    private static String PATH;
-    private static long indexTime=0;
-    private static String EXTENSION = ".txt";
     private  static  ArrayList<String> modes;
 
     private static DocumentCorpus newCorpus(Path directoryPath, String extension) {
@@ -57,8 +54,8 @@ public class DiskPositionalIndex {
         Index index= diskIndexWriter.indexCorpus(corpus,directoryPath);
 
         final long endTime = System.currentTimeMillis();
-        indexTime = endTime-startTime;
-        System.out.println("Time taken for indexing corpus:"+indexTime/1000 +" seconds");
+        long indexTime = endTime - startTime;
+        System.out.println("Time taken for indexing corpus:"+ indexTime /1000 +" seconds");
         return index;
 
     }
@@ -68,21 +65,22 @@ public class DiskPositionalIndex {
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter corpus path:");
         //PATH=scanner.nextLine();
-        PATH="/Users/indumanimaran/Documents/SET/Test/";
+        String PATH = "/Users/indumanimaran/Documents/SET/Test/";
         Path directoryPath = Paths.get(PATH);
         System.out.println("Indexing..."+ directoryPath.toString());
         DocumentCorpus corpus;
 
         File folder2 = new File(PATH);
         File[] listOfFiles = folder2.listFiles();
-        EXTENSION = FilenameUtils.getExtension(listOfFiles[0].getName());
+        String EXTENSION = FilenameUtils.getExtension(Objects.requireNonNull(listOfFiles)[0].getName());
 
         corpus = newCorpus(directoryPath,"."+ EXTENSION);
-        System.out.println("EXTENSION is "+EXTENSION);
+        System.out.println("EXTENSION is "+ EXTENSION);
         DiskIndexWriter diskIndexWriter = new DiskIndexWriter();
         Index index = newIndex(corpus,diskIndexWriter,directoryPath);
 
         BooleanQueryParser parser = new BooleanQueryParser();
+
         String query;
         Scanner reader = new Scanner(System.in);
         String mode;
@@ -99,9 +97,7 @@ public class DiskPositionalIndex {
                         System.out.println("@vocabulary ");
                         List<String> vocabulary = index.getVocabulary();
                         List<String> newList = new ArrayList<>(vocabulary.subList(0, min(vocabulary.size(), 1000)));
-                        newList.forEach((vocab) -> {
-                            System.out.println(vocab);
-                        });
+                        newList.forEach(System.out::println);
                         System.out.println("#vocabulary terms: " + vocabulary.size());
                         break;
 
@@ -131,7 +127,7 @@ public class DiskPositionalIndex {
                         if (Files.exists(tempPath)) {
                             File folder = new File(query.split("\\s+")[1]);
                             File[] listOfFiles2 = folder.listFiles();
-                            EXTENSION = FilenameUtils.getExtension(listOfFiles2[0].getName());
+                            EXTENSION = FilenameUtils.getExtension(Objects.requireNonNull(listOfFiles2)[0].getName());
                             corpus = newCorpus(tempPath,"."+ EXTENSION);
                             index = newIndex(corpus,diskIndexWriter,directoryPath);
                         } else {
@@ -160,7 +156,16 @@ public class DiskPositionalIndex {
         mode = scanner.nextLine();
         mode = modes.get(Integer.parseInt(mode));
 
-        QueryComponent queryComponent = parser.parseQuery(query);
+        if(mode.equalsIgnoreCase("2")){
+            System.out.println("1.Default\n" +
+                    "2.tf-idf" +
+                    "3.Okapi BM25" +
+                    "4.Wacky" +
+                    "Enter choice: ");
+            String strategy = scanner.nextLine();
+        }
+
+        QueryComponent queryComponent = parser.parseQuery(query, new BetterTokenProcessor());
 
         List<Posting> postings = queryComponent.getPostings(index,mode);
 

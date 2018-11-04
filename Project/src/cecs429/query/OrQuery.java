@@ -17,7 +17,7 @@ public class OrQuery implements QueryComponent {
 
     private final List<QueryComponent> mComponents;
 
-    public OrQuery(List<QueryComponent> components) {
+    OrQuery(List<QueryComponent> components) {
         mComponents = components;
     }
 
@@ -52,14 +52,14 @@ public class OrQuery implements QueryComponent {
     /* the merge for an OrQuery, by gathering the postings of the
      composed QueryComponents and
       */
-    public List<Posting> mergePosting(List<Posting> list1, List<Posting> list2) {
+    private List<Posting> mergePosting(List<Posting> list1, List<Posting> list2) {
         List<Posting> mergeResult = new ArrayList<>();
         Posting p1, p2;
         int postingDoc1Ptr = 0;
         int postingDoc2Ptr = 0;
         while (postingDoc1Ptr < list1.size() && postingDoc2Ptr < list2.size()) {
-            p1 = (Posting) list1.get(postingDoc1Ptr);
-            p2 = (Posting) list2.get(postingDoc2Ptr);
+            p1 =  list1.get(postingDoc1Ptr);
+            p2 =  list2.get(postingDoc2Ptr);
             int p1Id = p1.getDocumentId();
             int p2Id = p2.getDocumentId();
 
@@ -77,12 +77,12 @@ public class OrQuery implements QueryComponent {
         }
         if (postingDoc1Ptr <= list1.size()) {
             for (int k = postingDoc1Ptr; k < list1.size(); k++) {
-                mergeResult.add((Posting) list1.get(k));
+                mergeResult.add( list1.get(k));
             }
         }
         if (postingDoc2Ptr <= list2.size()) {
             for (int k = postingDoc2Ptr; k < list2.size(); k++) {
-                mergeResult.add((Posting) list2.get(k));
+                mergeResult.add( list2.get(k));
             }
         }
         return mergeResult;

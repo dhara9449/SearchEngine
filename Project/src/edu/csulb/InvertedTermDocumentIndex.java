@@ -11,6 +11,7 @@ import cecs429.documents.DocumentCorpus;
 import cecs429.index.*;
 import cecs429.query.BooleanQueryParser;
 import cecs429.query.QueryComponent;
+import cecs429.text.BasicTokenProcessor;
 import cecs429.text.BetterTokenProcessor;
 import cecs429.text.EnglishTokenStream;
 import java.io.File;
@@ -190,14 +191,13 @@ public class InvertedTermDocumentIndex {
     }
 
     private static void queryPosting(BooleanQueryParser parser, DocumentCorpus corpus, Index index, String query)  {
-
         Scanner scanner = new Scanner(System.in);
-        EnglishTokenStream englishTokenStream;
         String reply = "y";
         String docName;
         int docId;
 
-        QueryComponent queryComponent = parser.parseQuery(query);
+        BasicTokenProcessor processor = new BasicTokenProcessor();
+        QueryComponent queryComponent = parser.parseQuery(query,processor);
 
         List<Posting> postings = queryComponent.getPostings(index,"boolean");
 
@@ -219,7 +219,6 @@ public class InvertedTermDocumentIndex {
                     for (Posting p : postings) {
                         docId = p.getDocumentId();
                         if (corpus.getDocument(docId).getTitle().equalsIgnoreCase(docName)) {
-                            englishTokenStream = new EnglishTokenStream(corpus.getDocument(docId).getContent());
                             try {
                                 System.out.println(IOUtils.toString(corpus.getDocument(docId).getContent()));
                             } catch (IOException e) {

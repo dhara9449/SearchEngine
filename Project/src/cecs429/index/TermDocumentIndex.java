@@ -48,7 +48,7 @@ public class TermDocumentIndex implements Index {
         try {
 
             for (int i = 0; i < mMatrix[index].length; i++) {
-                if (mMatrix[index][i] == true) {
+                if (mMatrix[index][i]) {
                     //TODO: Check if it is correct
                     results.add(new Posting(i));
                 }

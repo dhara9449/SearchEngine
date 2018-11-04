@@ -2,9 +2,8 @@ package cecs429.query;
 
 import cecs429.index.Index;
 import cecs429.index.Posting;
-import cecs429.text.BetterTokenProcessor;
+import cecs429.text.TokenProcessor;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,14 +14,13 @@ public class PhraseLiteral implements QueryComponent {
     // The list of individual terms in the phrase.
 
     private List<String> mTerms;
-    BetterTokenProcessor processor = new BetterTokenProcessor();
 
     /**
      * Constructs a PhraseLiteral with the given individual phrase terms.
      *
      * @param terms
      */
-    public PhraseLiteral(List<String> terms) {
+    public PhraseLiteral(List<String> terms,TokenProcessor processor) {
 
         for( int j=0;j<mTerms.size();j++){
             String str = mTerms.get(j);
@@ -36,9 +34,9 @@ public class PhraseLiteral implements QueryComponent {
      *
      * @param terms
      */
-    public PhraseLiteral(String terms) {
+    PhraseLiteral(String terms, TokenProcessor processor) {
         mTerms = new ArrayList<>();
-        for (String str : Arrays.asList(terms.split(" "))) {
+        for (String str : terms.split(" ")) {
             mTerms.add(processor.processToken(str).get(0));
         }
     }
@@ -74,8 +72,8 @@ public class PhraseLiteral implements QueryComponent {
         for (Posting p : result) {
             tmpPositionList = p.getPositions();
             Posting q=new Posting(p.getDocumentId());
-            for (int i = 0; i < tmpPositionList.size(); i++) {
-                q.addPosition(tmpPositionList.get(i) - decLength);
+            for (Integer aTmpPositionList : tmpPositionList) {
+                q.addPosition(aTmpPositionList - decLength);
             }
             finalResult.add(q);
         }
@@ -85,15 +83,15 @@ public class PhraseLiteral implements QueryComponent {
 
     // this method merges the posting lists from two documents
 
-    public List<Posting> mergePosting(List<Posting> list1, List<Posting> list2) {
+    private List<Posting> mergePosting(List<Posting> list1, List<Posting> list2) {
         List<Posting> mergeResult = new ArrayList<>();
         Posting p1, p2;
         int ptrL1 = 0;
         int ptrL2 = 0;
 
         while (ptrL1 < list1.size() && ptrL2 < list2.size()) {
-            p1 = (Posting) list1.get(ptrL1);
-            p2 = (Posting) list2.get(ptrL2);
+            p1 =  list1.get(ptrL1);
+            p2 =  list2.get(ptrL2);
             int p1Id = p1.getDocumentId();
             int p2Id = p2.getDocumentId();
             if (p1Id == p2Id) {
@@ -121,7 +119,7 @@ public class PhraseLiteral implements QueryComponent {
     }
 
     //This method merges the postions from the position list from two Postings
-    public List<Integer> mergePositions(List<Integer> posList1, List<Integer> posList2) {
+    private List<Integer> mergePositions(List<Integer> posList1, List<Integer> posList2) {
 
         List<Integer> mergePosResult = new ArrayList<>();
         int PtrL1 = 0, PtrL2 = 0;

@@ -27,7 +27,7 @@ public class MovieJsonFileDocument implements FileDocument {
      * @param id
      * @param absoluteFilePath
      */
-    public MovieJsonFileDocument(int id, Path absoluteFilePath) {
+    private MovieJsonFileDocument(int id, Path absoluteFilePath) {
         mDocumentId = id;
         mFilePath = absoluteFilePath;
         setFileName();
@@ -76,11 +76,11 @@ public class MovieJsonFileDocument implements FileDocument {
             JsonReader jsonReader = new JsonReader(new FileReader(mFilePath.toString()));
             jsonDocument = gson.fromJson(jsonReader, MovieJsonDocument.class);
             mFileName = jsonDocument.getTitle();
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException ignored) {
         }
     }
 
-    public static FileDocument loadMovieJsonFileDocument(Path absolutePath, int documentId) {
+    static FileDocument loadMovieJsonFileDocument(Path absolutePath, int documentId) {
         return new MovieJsonFileDocument(documentId, absolutePath);
     }
 }
