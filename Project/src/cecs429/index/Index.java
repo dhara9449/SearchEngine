@@ -25,5 +25,7 @@ public interface Index {
      */
     List<String> getVocabulary();
 
+    int getVocabulorySize();
+
     List<Posting> getPostingsWithPosition(String term);
 }

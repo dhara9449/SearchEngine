@@ -25,17 +25,10 @@ public class DiskPositionalIndex implements Index {
 
     DiskPositionalIndex(Path path, int N) throws FileNotFoundException {
         this.path=String.valueOf(path);
-/*        vocab = new File(path+ "/index/vocab.bin");
-        vocabDIS = new DataInputStream(new FileInputStream(vocab));*/
-
         vocabRAF = new RandomAccessFile( path + "/index/vocab.bin", "rw");
 
-        // postings=new File( path + "/index/postings.bin");
-        // postingsIS = new DataInputStream(new FileInputStream(postings));
         postingsRAF = new RandomAccessFile( path + "/index/postings.bin","rw");
 
-        // vocabTable =new File( path+"/index/vocabTable.bin");
-        /*  vocabTableDIS = new DataInputStream(vocabTableFIS);*/
         vocabTableRAF = new RandomAccessFile(path+"/index/vocabTable.bin","rw");
 
         this.mInvertedIndexMap = new HashMap<>();
@@ -46,7 +39,7 @@ public class DiskPositionalIndex implements Index {
     //TODO:
     @Override
     public List<Posting> getPostings(String term){
-        List<Posting> postingsList = new ArrayList<Posting>();
+        List<Posting> postingsList = new ArrayList<>();
         // get the position of postings from vocabTable.bin
         //using binary search ....
 
@@ -135,8 +128,17 @@ public class DiskPositionalIndex implements Index {
     //TODO:
     @Override
     public List<String> getVocabulary() {
-
         return null;
+    }
+
+    @Override
+    public int getVocabulorySize() {
+        try {
+            return (int)vocabTableRAF.length() /16;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  0;
     }
 
     //TODO:

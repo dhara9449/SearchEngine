@@ -4,9 +4,7 @@ import cecs429.TermFrequency.ContextStrategy;
 import cecs429.index.Index;
 import cecs429.index.Posting;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -17,7 +15,6 @@ public class RankedRetrieval implements QueryComponent {
 
     private ContextStrategy strategy;
     private List<QueryComponent> mComponents;
-    private HashMap<Integer,Double> Accumulator;
     private  int N;
 
     RankedRetrieval(List<QueryComponent> components,ContextStrategy strategy,int corpusSize) {
@@ -36,29 +33,71 @@ public class RankedRetrieval implements QueryComponent {
         double wdt,wqt;
         double Ad;
 
+        double Ld;
 
+        class Accumulator implements Comparable<Accumulator> {
+            private  int docId;
+            private double Ad =0.0;
+            private Accumulator(int docID) {
+                this.docId = docID;
+            }
+
+            private double getAd() {
+                return Ad;
+            }
+
+            private void setAd(double Ad){
+                this.Ad = Ad;
+            }
+            public  int getDocId(){
+                return docId;
+            }
+            @Override
+            public int compareTo(Accumulator otherAd)
+            {
+                return Double.compare(Ad, otherAd.Ad);
+            }
+        }
+
+
+        // max priority queue , i.e = larger value equals higher priority
+        PriorityQueue<Accumulator> accumulatorQueue = new PriorityQueue<>(Collections.reverseOrder());
+
+        HashMap<Integer,Accumulator> accumulatorHashMap = new HashMap<>();
+        Accumulator accumulator ;
+
+        //For each term t
         for (QueryComponent component : mComponents){
             temp = component.getPostings(index);
              dft= temp.size();
+             wqt=strategy.calculateWqt(N,dft);  // calculate wqt
 
-             wqt=strategy.calculateWqt(N,dft);
-
-            for(Posting p:temp){
+            for(Posting p:temp){ // for each document d in t's posting list
                 tf = p.getTermFrequency();
                 docId=p.getDocumentId();
                 wdt=strategy.calculateWdt(tf,docId);
-
-                Ad=0;
-                if(Accumulator.containsKey(docId)){
-                    Ad=Accumulator.get(docId);
+                if(accumulatorHashMap.containsKey(docId)){
+                    accumulator = accumulatorHashMap.get(docId);
                 }
-                Ad = Ad + wqt * wdt;
-                Accumulator.put(docId,Ad);
+                else{
+                    accumulator = new Accumulator(docId);
+                }
+                Ad = accumulator.getAd() + wqt * wdt;
+                accumulator.setAd(Ad);
+                accumulatorHashMap.put(docId,accumulator);
             }
-
-
         }
-        //read from disk
+
+        //For each non-aero Ad, divide A_d by L_d , where L_d is read from docWeights.bin file
+        for (Accumulator accum : accumulatorHashMap.values()) {
+            Ld=strategy.calculateLd(accum.getDocId());
+            accum.setAd(accum.getAd()/Ld);
+            accumulatorQueue.add(accum);
+        }
+
+        //TODO:Select and return the top K=10 documents by the largest A_d values
+
+
 
         return temp;
     }
