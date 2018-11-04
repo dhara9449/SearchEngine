@@ -29,10 +29,10 @@ public class Posting {
         return mPositions;
     }
 
-    //adds postion of the term in the document
+    //adds position of the term in the document
     public void addPosition(int position) {
         mPositions.add(position);
-        documentFrequency++;
+        documentFrequency=documentFrequency+1;
 
     }
 

@@ -12,12 +12,10 @@ import java.util.*;
 public class DiskIndexWriter {
 
     public void WriteIndex(Index index, Path path) throws IOException {
-
         //path = D:\Dhara_MS_in_CS\Java_Projects\MobyDick10Chapters
         ArrayList<Long> mMapPosting = writePostings(index,path);
         ArrayList<Long> mMapVocab = writeVocab(index,path);
         writeVocabTable(path,mMapVocab,mMapPosting);
-
     }
 
     private ArrayList<Long> writePostings(Index index, Path path) throws IOException {
@@ -36,14 +34,11 @@ public class DiskIndexWriter {
         ArrayList<Long> mMapPosting = new ArrayList<>();
 
         for (String str : index.getVocabulary()) {
-
             List<Posting> docFrequency = index.getPostings(str,"boolean");
             postingsout.writeInt(docFrequency.size());
-            System.out.println("doxfreq.size"+ docFrequency.size());
 
             //determining the location for vocab table
             mMapPosting.add(out1.getChannel().size()-4);
-            System.out.println("Channel size "+(out1.getChannel().size()-4));
 
             // the first document should be the docId
             int prevDocId = 0;
@@ -52,18 +47,17 @@ public class DiskIndexWriter {
             for (Posting document : docFrequency) {
                 currentDocId = document.getDocumentId();
                 postingsout.writeInt( currentDocId - prevDocId);
+                prevDocId = currentDocId;
 
-                postingsout.writeInt(document.getDocumentFrequency());
                 List<Integer> positionList = document.getPositions();
                 // writing posting.bin
+                //postingsout.writeInt(document.getDocumentFrequency());
+                postingsout.writeInt(positionList.size());
                 int prevPos=0;
-
                 for (Integer currentPos : positionList ) {
-                    postingsout.writeInt(currentPos- prevPos); //writeInt
+                    postingsout.writeInt(currentPos - prevPos); //writeInt
                     prevPos=currentPos;
-
                 }
-                prevDocId = currentDocId;
 
             }
         }
@@ -140,6 +134,7 @@ public class DiskIndexWriter {
                     term = token;
                     if(!term.trim().equals("")) {
                         invertedDocumentIndex.addTerm(term, currentDocId, position);
+                        position = position+1;
                         if(termFrequencyTracker.containsKey(term)){
                             frequency=termFrequencyTracker.get(term);
                             termFrequencyTracker.put(term,frequency+1);
