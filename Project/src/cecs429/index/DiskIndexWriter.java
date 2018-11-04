@@ -115,7 +115,7 @@ public class DiskIndexWriter {
     *
     */
 
-     private  void writeDocWeights(HashMap<Integer,Double> Ld,Path path) throws IOException{
+     private  void writeDocWeights(ArrayList<Double> Ld,Path path) throws IOException{
          File docWeightsfile = new File(String.valueOf(path) + "/index/docWeights.bin");
          DataOutputStream docWeightsout = null;
 
@@ -125,11 +125,17 @@ public class DiskIndexWriter {
              e.printStackTrace();
          }
 
-         for (HashMap.Entry<Integer,Double> hm:Ld.entrySet()){
-             Objects.requireNonNull(docWeightsout).writeDouble(hm.getValue());
-
+         double docLengthA=0.0;
+         int pos=1;
+         for (Double item:Ld){
+             Objects.requireNonNull(docWeightsout).writeDouble(item);
+             if (pos%4==0){
+                 docLengthA = docLengthA + item;
+             }
+             pos = pos+1;
          }
 
+         Objects.requireNonNull(docWeightsout).writeDouble((docLengthA * 4) / Ld.size());
      }
 
 
@@ -142,7 +148,7 @@ public class DiskIndexWriter {
         EnglishTokenStream englishTokenStream;
         PositionalInvertedIndex invertedDocumentIndex = new PositionalInvertedIndex();
 
-        HashMap<Integer,Double> docWeights =new HashMap<>();
+        ArrayList<Double> docWeights =new ArrayList<>();
         int currentDocId;
         for (Document document : corpus.getDocuments()) {
             englishTokenStream = new EnglishTokenStream(document.getContent());
@@ -175,10 +181,15 @@ public class DiskIndexWriter {
             }
 
             double Ld=  0.0;
+            double tf_td=0.0;
             for (Integer tf : termFrequencyTracker.values()) {
                 Ld = Ld+ Math.pow(1+Math.log(tf),2);
+                tf_td = tf_td + tf;
             }
-            docWeights.put(currentDocId,Math.sqrt(Ld));
+            docWeights.add(Math.sqrt(Ld)); // docWeights d
+            docWeights.add( position+0.0); // docLength d
+            docWeights.add(0.0);//Determine the bytesize fo the document
+            docWeights.add(tf_td/termFrequencyTracker.size());//avg tf t,d
         }
 
         // write the index to disk
