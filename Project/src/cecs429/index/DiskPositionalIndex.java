@@ -1,7 +1,6 @@
 package cecs429.index;
 
 import java.io.*;
-import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -18,7 +17,7 @@ public class DiskPositionalIndex implements Index {
         private File vocab;
         private File vocabTable;
         private DataInputStream vocabTableDIS;*/
-    private InputStream vocabTableFIS;
+
     private RandomAccessFile postingsRAF;
     private RandomAccessFile vocabRAF;
     private RandomAccessFile vocabTableRAF;
@@ -27,14 +26,14 @@ public class DiskPositionalIndex implements Index {
         this.path=String.valueOf(path);
 /*        vocab = new File(path+ "/index/vocab.bin");
         vocabDIS = new DataInputStream(new FileInputStream(vocab));*/
+
         vocabRAF = new RandomAccessFile( path + "/index/vocab.bin", "rw");
 
         // postings=new File( path + "/index/postings.bin");
         // postingsIS = new DataInputStream(new FileInputStream(postings));
         postingsRAF = new RandomAccessFile( path + "/index/postings.bin","rw");
 
-       // vocabTable =new File( path+"/index/vocabTable.bin");
-        vocabTableFIS = new FileInputStream(new File( path+"/index/vocabTable.bin"));
+        // vocabTable =new File( path+"/index/vocabTable.bin");
         /*  vocabTableDIS = new DataInputStream(vocabTableFIS);*/
         vocabTableRAF = new RandomAccessFile(path+"/index/vocabTable.bin","rw");
 
@@ -50,9 +49,8 @@ public class DiskPositionalIndex implements Index {
         //using binary search ....
 
         try {
-            int length =  (vocabTableFIS.available()/16);
-            System.out.println(length);
-            long postingPos = binarySearchVocab(term,0,length-1);
+           // int length =  (vocabTableFIS.available()/16);
+            long postingPos = binarySearchVocab(term);
             postingsRAF.seek(postingPos);
             int dft=postingsRAF.readInt();
             Posting p;
@@ -62,8 +60,9 @@ public class DiskPositionalIndex implements Index {
             for( int docFreq =0; docFreq < dft; docFreq++){
 
                 currentdocIdGap = postingsRAF.readInt();
-                prevdocIdGap =currentdocIdGap;
+
                 p = new Posting(prevdocIdGap+currentdocIdGap);
+                prevdocIdGap =currentdocIdGap;
                 //p.setmDocumentId(docId);
 
                 int tft = postingsRAF.readInt();
@@ -74,8 +73,8 @@ public class DiskPositionalIndex implements Index {
 
                 for(int termFreq = 0; termFreq < tft; termFreq++){
                     currentPosGap = postingsRAF.readInt();
-                    prevPosGap = currentPosGap;
                     positionList.add(currentPosGap+prevPosGap);
+                    prevPosGap = currentPosGap;
                 }
                 p.setmPositions(positionList);
                 postingsList.add(p);
@@ -96,49 +95,51 @@ public class DiskPositionalIndex implements Index {
             }
 
         }
-        System.out.println(postingsList);
         return postingsList;
     }
 
-    private long binarySearchVocab(String term,int min, int max) throws IOException {
-        // int length =  (vocabTableFIS.available()/16);
-        //System.out.println(length);
-        int i =min;
-        int j = max;
+    private long binarySearchVocab(String term) throws IOException {
+        long vocabTableLength =  (vocabTableRAF.length() /16);
+        long vocabLength = vocabRAF.length();
+            long i = 0;
+            long j = vocabTableLength - 1;
+            long currentPostingsPos = 0;
+            while (i <= j) {
+                long mid = (i + j) / 2;
+                vocabTableRAF.seek(mid * 16);
 
-        if(i>j){
-            return -1;
-        }
+                long currentVocabByte = vocabTableRAF.readLong();
+                currentPostingsPos = vocabTableRAF.readLong();
+                long nextVocabByte;
 
-        //while(i<=j){
-        long mid = (i+j)/2;
-        // byte bs[] = new byte[length];
-        long postingsPos=0;
-        vocabTableRAF.seek(mid*16);
-        long currentVocabByte = vocabTableRAF.readLong();
-        //vocabTableDIS.skipBytes(1);
-        long currentPostingsPos = vocabTableRAF.readLong();
-        long nextVocabByte = vocabTableRAF.readLong();
+                if(mid == j && i!=0 && j!=0 && i!=j){
+                    nextVocabByte = vocabLength - currentVocabByte;
+                }
+                else {
+                    nextVocabByte  = vocabTableRAF.readLong();
+                }
 
-        char[] vocabTerm =null;
-        int pos=0;
-        for(int termlength=0; termlength< nextVocabByte - currentVocabByte ; termlength++){
-            vocabRAF.seek(currentVocabByte);
-            vocabTerm[pos] = (vocabRAF.readChar());
-            pos++;
-        }
-        String retrievedVocabTerm = vocabTerm.toString();
 
-        if(retrievedVocabTerm.equals(term)){
+                vocabRAF.seek(currentVocabByte);
+                char[] vocabTerm = new char[(int) (nextVocabByte - currentVocabByte)];
+                for (int termlength = 0; termlength < vocabTerm.length ; termlength++) {
+                    vocabTerm[termlength] = (char) vocabRAF.readByte();
+                }
+                String retrievedVocabTerm = String.valueOf(vocabTerm);
+
+                if (retrievedVocabTerm.equals(term)) {
+                    //currentPostingsPos = currentPostingsPos;
+                    break;
+                } else if (retrievedVocabTerm.compareTo((term)) > 0) {
+                    j = mid - 1;
+                } else {
+                    i = mid + 1;
+                }
+
+            }
+
             return currentPostingsPos;
-        }
-        else if(retrievedVocabTerm.compareTo(term)>0){
-            return binarySearchVocab(term,i, j-1);
-        }
-        else{
-            return binarySearchVocab(term,j+1,j);
-        }
-        //}
+
     }
 
 

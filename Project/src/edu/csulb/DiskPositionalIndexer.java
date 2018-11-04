@@ -14,6 +14,7 @@ import cecs429.query.QueryComponent;
 import cecs429.text.BasicTokenProcessor;
 import cecs429.text.BetterTokenProcessor;
 import cecs429.text.EnglishTokenStream;
+import cecs429.text.TokenProcessor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.tartarus.snowball.SnowballStemmer;
@@ -156,16 +157,22 @@ public class DiskPositionalIndexer {
         String docName;
         int docId;
         String mode;
-        BasicTokenProcessor processor = new BasicTokenProcessor();
+        TokenProcessor processor = new BasicTokenProcessor();
 
         //System.out.println("Enter retrieval mode: 1.Boolean 2.Ranked");
 
       //  mode = modes.get(scanner.nextInt());
 
         QueryComponent queryComponent = parser.parseQuery(query,processor);
-
         List<Posting> postings = queryComponent.getPostings(index,"");
-        System.out.println(postings);
+
+        for(Posting p : postings){
+            System.out.println(p.getDocumentId());
+            System.out.println(p.getPositions());
+            p.getTermFrequency();
+
+        }
+
         if (postings != null) {
             for (Posting p : postings) {
                 if (p.getDocumentId() >= 0) {

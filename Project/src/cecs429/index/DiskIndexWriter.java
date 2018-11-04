@@ -121,11 +121,7 @@ public class DiskIndexWriter {
     public  Index indexCorpus(DocumentCorpus corpus,Path path) {
         HashSet<String> vocabulary = new HashSet<>();
         DiskPositionalIndex diskPositionalIndex = null;
-        try {
-            diskPositionalIndex  = new DiskPositionalIndex(path);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
         BetterTokenProcessor processor = new BetterTokenProcessor();//must be dynamic
         EnglishTokenStream englishTokenStream;
         PositionalInvertedIndex invertedDocumentIndex = new PositionalInvertedIndex();
@@ -186,6 +182,11 @@ public class DiskIndexWriter {
             e.printStackTrace();
         }
 
+        try {
+            diskPositionalIndex  = new DiskPositionalIndex(path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         return diskPositionalIndex;
         /*
             TODO:
