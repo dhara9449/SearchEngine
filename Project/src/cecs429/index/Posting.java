@@ -11,11 +11,11 @@ public class Posting {
 
     private int mDocumentId;
     private List<Integer> mPositions;
-    private int  documentFrequency;
+    private int  termFrequency;
 
     public Posting(int documentId) {
         mPositions = new ArrayList<>();
-        documentFrequency=0;
+        termFrequency=0;
         mDocumentId = documentId;
     }
 
@@ -38,6 +38,7 @@ public class Posting {
 
     public int getTermFrequency(){
         return  termFrequency;
+
     }
 
 

@@ -35,8 +35,8 @@ public class DiskIndexWriter {
 
         ArrayList<Long> mMapPosting = new ArrayList<>();
 
-        for (String str : vocab) {
-            List<Posting> docFrequency = index.getPostings(str,"boolean");
+        for (String str : index.getVocabulary()) {
+            List<Posting> docFrequency = index.getPostings(str);
             postingsout.writeInt(docFrequency.size());
 
             //determining the location for vocab table
@@ -155,7 +155,6 @@ public class DiskIndexWriter {
             englishTokenStream = new EnglishTokenStream(document.getContent());
             Iterable<String> getTokens = englishTokenStream.getTokens();
             int position = 0;
-            String lastTerm = "";
             String term;
             HashMap<String,Integer> termFrequencyTracker = new HashMap<>();;
             currentDocId = document.getId();
@@ -210,18 +209,21 @@ public class DiskIndexWriter {
         }
 
         try {
-            diskPositionalIndex  = new DiskPositionalIndex(path);
+            return new DiskPositionalIndex(path,corpus.getCorpusSize());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return diskPositionalIndex;
         /*
             TODO:
-            Modify DiskPositionalIndex so it knows how to open this 􏰀le and skip to an appropriate location to
+            Modify DiskPositionalIndexer so it knows how to open this 􏰀le and skip to an appropriate location to
             read a 8-byte double for Ld. Ld values will be used when calculating ranked retrieval scores.
 
         */
+
+        return  invertedDocumentIndex;
     }
+
+
 
 
 }

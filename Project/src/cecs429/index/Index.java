@@ -1,5 +1,7 @@
 package cecs429.index;
 
+import cecs429.TermFrequency.ContextStrategy;
+
 import java.util.List;
 
 /**

@@ -14,23 +14,10 @@ public class DiskPositionalIndex implements Index {
 
     private Map<String, List<Posting>> mInvertedIndexMap;
     private String path;
-    /*    private InputStream vocabIS;
-        private DataInputStream vocabDIS;
-        private InputStream postingsIS;
-        private InputStream vocabTableFIS;
-        private File vocab;
-        private File vocabTable;
-        private DataInputStream vocabTableDIS;*/
 
     private RandomAccessFile postingsRAF;
     private RandomAccessFile vocabRAF;
     private RandomAccessFile vocabTableRAF;
-    private InputStream vocabIS;
-    private InputStream postingsIS;
-    private InputStream vocabTableIS;
-    private File vocab;
-    private File postings;
-    private File vocabTable;
     int N;
 
 
@@ -53,7 +40,6 @@ public class DiskPositionalIndex implements Index {
 
         this.mInvertedIndexMap = new HashMap<>();
         this.N=N;
-
 
     }
 
@@ -157,20 +143,20 @@ public class DiskPositionalIndex implements Index {
 
             return currentPostingsPos;
 
+    public List<Posting> getPostings(String term) {
+        return null;
     }
+
+    public List<Integer> getPostingsWithoutPosition(String term){
+        return null;
+    }
+
 
 
     //TODO:
     @Override
     public List<String> getVocabulary() {
 
-        // To be implemented...
-
-
-        List<String> mVocabulary = new ArrayList<>();
-        /*mVocabulary.addAll(mInvertedIndexMap.keySet());
-        Collections.sort(mVocabulary);
-        return Collections.unmodifiableList(mVocabulary);*/
         return null;
     }
 }
