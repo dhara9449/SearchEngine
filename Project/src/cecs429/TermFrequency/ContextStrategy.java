@@ -13,11 +13,11 @@ public class ContextStrategy {
         return strategy.calculateWqt(num1, num2);
     }
 
-    public double calculateWdt(int num1){
-        return strategy.calculateWdt(num1);
+    public double calculateWdt(String path,int num1){
+        return strategy.calculateWdt(path,num1);
     }
 
-    public double calculateLd(List<Integer> termFrequencies){
-        return strategy.calculateLd(termFrequencies);
+    public double calculateLd(String path,int docId){
+        return strategy.calculateLd(path, docId);
     }
 }

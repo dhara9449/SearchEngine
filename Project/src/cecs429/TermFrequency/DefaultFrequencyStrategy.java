@@ -2,20 +2,18 @@ package cecs429.TermFrequency;
 
 import java.util.List;
 
-public class DefaultFrequencyStrategy {
+public class DefaultFrequencyStrategy implements  TermFrequencyStrategy{
     public double calculateWqt(int N, int dft) {
-        return Math.log(1 + (N / dft));
+        return Math.log(1 + (N *1.0/ dft));
     }
 
-    public double calculateWdt(int tf) {
+    public double calculateWdt(String path,int tf) {
         return 1 + Math.log(tf);
     }
 
-    public double calculateLd(List<Integer> termFrequencies) {
+    public double calculateLd(String path,int docId) {
         double Ld = 0.0;
-        for (Integer tf : termFrequencies) {
-            Ld = Ld + Math.pow(1 + Math.log(tf), 2);
-        }
+        //retreive  docId*8*4 from path
         return Ld;
 
     }

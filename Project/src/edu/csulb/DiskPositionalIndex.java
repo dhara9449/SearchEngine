@@ -161,6 +161,15 @@ public class DiskPositionalIndex {
         mode = scanner.nextLine();
         mode = modes.get(Integer.parseInt(mode));
 
+        if(mode.equalsIgnoreCase("2")){
+            System.out.println("1.Default\n" +
+                    "2.tf-idf" +
+                    "3.Okapi BM25" +
+                    "4.Wacky" +
+                    "Enter choice: ");
+            String strategy = scanner.nextLine();
+        }
+
         QueryComponent queryComponent = parser.parseQuery(query, new BetterTokenProcessor());
 
         List<Posting> postings = queryComponent.getPostings(index,mode);
