@@ -3,6 +3,7 @@ package cecs429.query;
 import cecs429.index.Index;
 import cecs429.index.Posting;
 import cecs429.text.BetterTokenProcessor;
+import cecs429.text.TokenProcessor;
 
 import java.util.List;
 
@@ -12,9 +13,9 @@ import java.util.List;
 public class TermLiteral implements QueryComponent {
 
     private final String mTerm;
-    BetterTokenProcessor processor = new BetterTokenProcessor();//must be dynamic
 
-    public TermLiteral(String term) {
+    public TermLiteral(String term, TokenProcessor processor) {
+
         mTerm = processor.processToken(term).get(0);
     }
 

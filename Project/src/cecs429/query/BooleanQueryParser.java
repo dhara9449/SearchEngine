@@ -1,5 +1,7 @@
 package cecs429.query;
 
+import cecs429.text.TokenProcessor;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +51,7 @@ public class BooleanQueryParser {
      * @param query
      * @return
      */
-    public QueryComponent parseQuery(String query) {
+    public QueryComponent parseQuery(String query, TokenProcessor processor) {
         int start = 0;
 
         // General routine: scan the query to identify a literal, and put that literal into a list.
@@ -70,7 +72,7 @@ public class BooleanQueryParser {
             int adjustment=0;
             do {
                 // Extract the next literal from the subquery.
-                Literal lit = findNextLiteral(subquery, subStart);
+                Literal lit = findNextLiteral(subquery, subStart,processor);
                 adjustment =0;
                 // Add the literal component to the conjunctive list.
                 subqueryLiterals.add(lit.literalComponent);
@@ -151,7 +153,7 @@ public class BooleanQueryParser {
     /**
      * Locates and returns the next literal from the given sub query string.
      */
-    private Literal findNextLiteral(String subquery, int startIndex) {
+    private Literal findNextLiteral(String subquery, int startIndex,TokenProcessor processor) {
         int subLength = subquery.length();
         int lengthOut;
 
@@ -168,7 +170,7 @@ public class BooleanQueryParser {
                 // No more literals in this subquery.
                 return new Literal(
                         new StringBounds(-1, -1),
-                        new TermLiteral("")
+                        new TermLiteral("",processor)
                 );
             } else {
                 lengthOut = nextQuote - startIndex;
@@ -178,7 +180,7 @@ public class BooleanQueryParser {
 
             return new Literal(
                     new StringBounds(startIndex, lengthOut),
-                    new PhraseLiteral(substring)
+                    new PhraseLiteral(substring,processor)
             );
         } //determine if it is a  Near literal
         else if (subquery.charAt(startIndex) == '[') {
@@ -188,7 +190,7 @@ public class BooleanQueryParser {
                 // No more literals in this subquery.
                 return new Literal(
                         new StringBounds(-1, -1),
-                        new TermLiteral("")
+                        new TermLiteral("",processor)
                 );
             } else {
                 lengthOut = nextBracket - startIndex;
@@ -216,7 +218,7 @@ public class BooleanQueryParser {
             // substring=processor.processToken(subquery);
             return new Literal(
                     new StringBounds(startIndex, lengthOut),
-                    new TermLiteral(substring)
+                    new TermLiteral(substring,processor)
             );
         }
 

@@ -83,6 +83,7 @@ public class DiskPositionalIndex {
         Index index = newIndex(corpus,diskIndexWriter,directoryPath);
 
         BooleanQueryParser parser = new BooleanQueryParser();
+        
         String query;
         Scanner reader = new Scanner(System.in);
         String mode;
@@ -160,7 +161,7 @@ public class DiskPositionalIndex {
         mode = scanner.nextLine();
         mode = modes.get(Integer.parseInt(mode));
 
-        QueryComponent queryComponent = parser.parseQuery(query);
+        QueryComponent queryComponent = parser.parseQuery(query, new BetterTokenProcessor());
 
         List<Posting> postings = queryComponent.getPostings(index,mode);
 
