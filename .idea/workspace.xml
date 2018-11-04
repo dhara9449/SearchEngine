@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fd3066d9-5430-404a-96cd-923907fbcdc9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/index/Posting.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/index/Posting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/edu/csulb/DiskPositionalIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/edu/csulb/DiskPositionalIndex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/index/DiskPositionalIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/index/DiskPositionalIndex.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -180,32 +179,39 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/Posting.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+              <folding>
+                <element signature="e#900#901#0" expanded="true" />
+                <element signature="e#941#942#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="126" column="32" lean-forward="true" selection-start-line="126" selection-start-column="32" selection-end-line="126" selection-end-column="32" />
+            <state relative-caret-position="-833">
+              <caret line="53" column="70" selection-start-line="53" selection-start-column="70" selection-end-line="53" selection-end-column="70" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#writeVocab#0;class#DiskIndexWriter#0" />
-                <element signature="method#writeVocabTable#0;class#DiskIndexWriter#0" />
-                <element signature="method#writeDocWeights#0;class#DiskIndexWriter#0" />
-                <element signature="e#4695#4712#0" expanded="true" />
+                <element signature="e#5223#5240#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/Posting.java">
+        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskPositionalIndex.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="27" column="39" lean-forward="true" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+            <state relative-caret-position="192">
+              <caret line="92" column="11" selection-start-line="92" selection-start-column="11" selection-end-line="92" selection-end-column="11" />
               <folding>
-                <element signature="e#665#666#0" expanded="true" />
-                <element signature="e#698#699#0" expanded="true" />
-                <element signature="e#900#901#0" expanded="true" />
-                <element signature="e#941#942#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -214,8 +220,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Project/src/edu/csulb/DiskPositionalIndex.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1586">
-              <caret line="84" column="17" lean-forward="true" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
+            <state relative-caret-position="170">
+              <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -335,6 +341,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -365,13 +372,6 @@
               <item name="Project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="cecs429" type="462c0819:PsiDirectoryNode" />
-              <item name="gson" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SearchEngine_2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cecs429" type="462c0819:PsiDirectoryNode" />
               <item name="index" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -385,30 +385,18 @@
               <item name="SearchEngine_2" type="b2602c69:ProjectViewProjectNode" />
               <item name="Project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cecs429" type="462c0819:PsiDirectoryNode" />
-              <item name="text" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SearchEngine_2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="csulb" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SearchEngine_2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541292309685" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541294343232" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -506,11 +494,11 @@
     <option name="totallyTimeSpent" value="2028000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="877" extended-state="0" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.79663867" visible="true" weight="0.25751072" />
-      <window_info id="Structure" order="1" sideWeight="0.20336135" side_tool="true" visible="true" weight="0.25751072" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.77442276" visible="true" weight="0.2680162" />
+      <window_info id="Structure" order="1" sideWeight="0.22557727" side_tool="true" visible="true" weight="0.2680162" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -519,7 +507,7 @@
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49959514" visible="true" weight="0.24203822" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49959514" visible="true" weight="0.0" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.31616342" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -816,8 +804,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskPositionalIndex.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+        <state relative-caret-position="192">
+          <caret line="92" column="11" selection-start-line="92" selection-start-column="11" selection-end-line="92" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -833,11 +821,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/Posting.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="27" column="39" lean-forward="true" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+        <state relative-caret-position="289">
+          <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
           <folding>
-            <element signature="e#665#666#0" expanded="true" />
-            <element signature="e#698#699#0" expanded="true" />
             <element signature="e#900#901#0" expanded="true" />
             <element signature="e#941#942#0" expanded="true" />
           </folding>
@@ -846,21 +832,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/edu/csulb/DiskPositionalIndex.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1586">
-          <caret line="84" column="17" lean-forward="true" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
+        <state relative-caret-position="170">
+          <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="126" column="32" lean-forward="true" selection-start-line="126" selection-start-column="32" selection-end-line="126" selection-end-column="32" />
+        <state relative-caret-position="-833">
+          <caret line="53" column="70" selection-start-line="53" selection-start-column="70" selection-end-line="53" selection-end-column="70" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#writeVocab#0;class#DiskIndexWriter#0" />
-            <element signature="method#writeVocabTable#0;class#DiskIndexWriter#0" />
-            <element signature="method#writeDocWeights#0;class#DiskIndexWriter#0" />
-            <element signature="e#4695#4712#0" expanded="true" />
+            <element signature="e#5223#5240#0" expanded="true" />
           </folding>
         </state>
       </provider>
