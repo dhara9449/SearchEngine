@@ -18,26 +18,18 @@ public class RankedRetrieval implements QueryComponent {
     private ContextStrategy strategy;
     private List<QueryComponent> mComponents;
     private HashMap<Integer,Double> Accumulator;
-<<<<<<< HEAD
     private  int N;
 
     RankedRetrieval(List<QueryComponent> components,ContextStrategy strategy,int corpusSize) {
         mComponents = components;
         this.strategy = strategy;
-        N=corpusSize;
-=======
-
-    RankedRetrieval(List<QueryComponent> components,ContextStrategy strategy) {
-        mComponents = components;
-        this.strategy = strategy;
->>>>>>> commit
-        Accumulator = new HashMap<>();
+        N = corpusSize;
     }
+
 
     @Override
     public List<Posting> getPostings(Index index){
         List<Posting> temp = new ArrayList<>();
-<<<<<<< HEAD
         int docId;
         int tf;
         int dft;
@@ -52,7 +44,7 @@ public class RankedRetrieval implements QueryComponent {
              wqt=strategy.calculateWqt(N,dft);
 
             for(Posting p:temp){
-                tf = p.getDocumentFrequency();
+                tf = p.getTermFrequency();
                 docId=p.getDocumentId();
                 wdt=strategy.calculateWdt(tf,docId);
 
@@ -67,23 +59,6 @@ public class RankedRetrieval implements QueryComponent {
 
         }
         //read from disk
-=======
-        int dft=0;//read from disk
-
-        double wqt=strategy.calculateWqt(N,dft);
-
-            //for each document in posting
-        int docId=0;// read from file
-        int tf = 0; // read from file
-        double wdt = strategy.calculateWdt(path,tf,docId);
-
-        double Ad=0;
-        if(Accumulator.containsKey(docId)){
-                Ad=Accumulator.get(docId);
-        }
-        Ad = Ad + wqt * wdt;
-        Accumulator.put(docId,Ad);
->>>>>>> commit
 
         return temp;
     }

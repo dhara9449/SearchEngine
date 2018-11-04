@@ -57,19 +57,13 @@ public class PhraseLiteral implements QueryComponent {
             return BiwordIndex.getIndex().getPostings(mTerms.get(0) + " " + mTerms.get(1));
         }
     */
-<<<<<<< HEAD
         List<Posting> result = index.getPostingsWithPosition(mTerms.get(0));
         List<Posting> tempComponentPostingsList;
 
         for (int i = 1; i < mTerms.size(); i++) {
             tempComponentPostingsList = index.getPostingsWithPosition(mTerms.get(i));
-=======
-        List<Posting> result = index.getPostings(mTerms.get(0));
-        List<Posting> tempComponentPostingsList;
 
-        for (int i = 1; i < mTerms.size(); i++) {
-            tempComponentPostingsList = index.getPostings(mTerms.get(i));
->>>>>>> commit
+
             result = mergePosting(result, tempComponentPostingsList);
 
         }

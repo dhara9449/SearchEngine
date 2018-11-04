@@ -43,10 +43,9 @@ public class DiskPositionalIndex implements Index {
 
     }
 
-
     //TODO:
     @Override
-    public List<Posting> getPostings(String term,String mode){
+    public List<Posting> getPostings(String term){
         List<Posting> postingsList = new ArrayList<Posting>();
         // get the position of postings from vocabTable.bin
         //using binary search ....
@@ -87,76 +86,62 @@ public class DiskPositionalIndex implements Index {
             e.printStackTrace();
         }
 
-        if (mode.equalsIgnoreCase("boolean")){
-
-            return postingsList;
-        }else{
-            //get a list of postings store it in temp for ranked retrieval queries
-            for(Posting p:postingsList){
-
-                return postingsList;
-            }
-
-        }
         return postingsList;
     }
 
     private long binarySearchVocab(String term) throws IOException {
-        long vocabTableLength =  (vocabTableRAF.length() /16);
+        long vocabTableLength = (vocabTableRAF.length() / 16);
         long vocabLength = vocabRAF.length();
-            long i = 0;
-            long j = vocabTableLength - 1;
-            long currentPostingsPos = 0;
-            while (i <= j) {
-                long mid = (i + j) / 2;
-                vocabTableRAF.seek(mid * 16);
+        long i = 0;
+        long j = vocabTableLength - 1;
+        long currentPostingsPos = 0;
+        while (i <= j) {
+            long mid = (i + j) / 2;
+            vocabTableRAF.seek(mid * 16);
 
-                long currentVocabByte = vocabTableRAF.readLong();
-                currentPostingsPos = vocabTableRAF.readLong();
-                long nextVocabByte;
+            long currentVocabByte = vocabTableRAF.readLong();
+            currentPostingsPos = vocabTableRAF.readLong();
+            long nextVocabByte;
 
-                if(mid == j && i!=0 && j!=0 && i!=j){
-                    nextVocabByte = vocabLength - currentVocabByte;
-                }
-                else {
-                    nextVocabByte  = vocabTableRAF.readLong();
-                }
-
-
-                vocabRAF.seek(currentVocabByte);
-                char[] vocabTerm = new char[(int) (nextVocabByte - currentVocabByte)];
-                for (int termlength = 0; termlength < vocabTerm.length ; termlength++) {
-                    vocabTerm[termlength] = (char) vocabRAF.readByte();
-                }
-                String retrievedVocabTerm = String.valueOf(vocabTerm);
-
-                if (retrievedVocabTerm.equals(term)) {
-                    //currentPostingsPos = currentPostingsPos;
-                    break;
-                } else if (retrievedVocabTerm.compareTo((term)) > 0) {
-                    j = mid - 1;
-                } else {
-                    i = mid + 1;
-                }
-
+            if (mid == j && i != 0 && j != 0 && i != j) {
+                nextVocabByte = vocabLength - currentVocabByte;
+            } else {
+                nextVocabByte = vocabTableRAF.readLong();
             }
 
-            return currentPostingsPos;
 
-    public List<Posting> getPostings(String term) {
-        return null;
+            vocabRAF.seek(currentVocabByte);
+            char[] vocabTerm = new char[(int) (nextVocabByte - currentVocabByte)];
+            for (int termlength = 0; termlength < vocabTerm.length; termlength++) {
+                vocabTerm[termlength] = (char) vocabRAF.readByte();
+            }
+            String retrievedVocabTerm = String.valueOf(vocabTerm);
+
+            if (retrievedVocabTerm.equals(term)) {
+                //currentPostingsPos = currentPostingsPos;
+                break;
+            } else if (retrievedVocabTerm.compareTo((term)) > 0) {
+                j = mid - 1;
+            } else {
+                i = mid + 1;
+            }
+
+        }
+
+        return currentPostingsPos;
     }
-
-    public List<Integer> getPostingsWithoutPosition(String term){
-        return null;
-    }
-
 
 
     //TODO:
     @Override
     public List<String> getVocabulary() {
 
+        return null;
+    }
+
+    //TODO:
+    @Override
+    public List<Posting> getPostingsWithPosition(String term) {
         return null;
     }
 }

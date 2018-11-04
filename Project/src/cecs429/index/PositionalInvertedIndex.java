@@ -30,11 +30,10 @@ public class PositionalInvertedIndex implements Index {
         return Collections.unmodifiableList(mVocabulary);
     }
 
-
-    // TODO: implement this!!
+    //TODO:???
     @Override
-    public List<Integer> getPostingsWithoutPosition(String term) {
-        return null;
+    public List<Posting> getPostingsWithPosition(String term) {
+        return getPostings(term);
     }
 
     /*
