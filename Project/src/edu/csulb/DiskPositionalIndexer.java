@@ -12,13 +12,7 @@ import cecs429.index.*;
 import cecs429.query.BooleanQueryParser;
 import cecs429.query.QueryComponent;
 import cecs429.query.RankedQueryParser;
-<<<<<<< HEAD:Project/src/edu/csulb/DiskPositionalIndexer.java
-import cecs429.text.BasicTokenProcessor;
 import cecs429.text.BetterTokenProcessor;
-=======
-import cecs429.text.BetterTokenProcessor;
-import cecs429.text.EnglishTokenStream;
->>>>>>> commit:Project/src/edu/csulb/DiskPositionalIndexer.java
 import cecs429.text.TokenProcessor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -37,13 +31,7 @@ import static java.lang.Integer.min;
     ///Users/indumanimaran/Documents/SET/MobyDick10Chapters
 ///Users/indumanimaran/Documents/SET/Test/
 public class DiskPositionalIndexer {
-<<<<<<< HEAD:Project/src/edu/csulb/DiskPositionalIndexer.java
-    private static String PATH;
-    private static long indexTime=0;
-    private static String EXTENSION = ".txt";
-public class DiskPositionalIndexer {
-=======
->>>>>>> commit:Project/src/edu/csulb/DiskPositionalIndexer.java
+
     private  static  ArrayList<String> modes;
     private static  ArrayList<TermFrequencyStrategy> rankRetrievalStrategy;
 
@@ -127,11 +115,7 @@ public class DiskPositionalIndexer {
                         System.out.println("Biword Index size: "+ biwordIndex.getVocabulary().size());
                         break;
                     default:
-<<<<<<< HEAD:Project/src/edu/csulb/DiskPositionalIndexer.java
                         queryPosting(corpus, index, query,directoryPath);
-=======
-                        queryPosting(corpus, index, query);
->>>>>>> commit:Project/src/edu/csulb/DiskPositionalIndexer.java
                         break;
                 }
             } else if (len == 2) {
@@ -160,29 +144,20 @@ public class DiskPositionalIndexer {
                         }
                         break;
                     default:
-<<<<<<< HEAD:Project/src/edu/csulb/DiskPositionalIndexer.java
                         queryPosting( corpus, index, query,directoryPath);
                         break;
                 }
             } else {
                 queryPosting( corpus, index, query,directoryPath);
-=======
-                        queryPosting( corpus, index, query);
                         break;
                 }
-            } else {
-                queryPosting( corpus, index, query);
->>>>>>> commit:Project/src/edu/csulb/DiskPositionalIndexer.java
             }
         }
-    }
+    
 
 
-<<<<<<< HEAD:Project/src/edu/csulb/DiskPositionalIndexer.java
+
     private static void queryPosting( DocumentCorpus corpus, Index index, String query,Path path)  {
-=======
-    private static void queryPosting( DocumentCorpus corpus, Index index, String query)  {
->>>>>>> commit:Project/src/edu/csulb/DiskPositionalIndexer.java
         Scanner scanner = new Scanner(System.in);
         String reply = "y";
         String docName;
@@ -191,11 +166,7 @@ public class DiskPositionalIndexer {
 
 
         TokenProcessor processor =new BetterTokenProcessor();
-<<<<<<< HEAD:Project/src/edu/csulb/DiskPositionalIndexer.java
         ContextStrategy strategy = new ContextStrategy(rankRetrievalStrategy.get(0),path.toString());
-=======
-        ContextStrategy strategy = new ContextStrategy(rankRetrievalStrategy.get(0));
->>>>>>> commit:Project/src/edu/csulb/DiskPositionalIndexer.java
         System.out.println("Enter retrieval mode: 1.Boolean 2.Ranked");
         mode = scanner.nextLine();
         mode = modes.get(Integer.parseInt(mode));
@@ -206,22 +177,14 @@ public class DiskPositionalIndexer {
                     "3.Okapi BM25" +
                     "4.Wacky" +
                     "Enter choice: ");
-<<<<<<< HEAD:Project/src/edu/csulb/DiskPositionalIndexer.java
              strategy= new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt()),path.toString());
-=======
-             strategy= new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt()));
->>>>>>> commit:Project/src/edu/csulb/DiskPositionalIndexer.java
         }
 
         QueryComponent queryComponent;
         if (mode.equalsIgnoreCase("boolean")){
             queryComponent = new BooleanQueryParser().parseQuery(query, processor);
         }else{
-<<<<<<< HEAD:Project/src/edu/csulb/DiskPositionalIndexer.java
             queryComponent = new RankedQueryParser(strategy,corpus.getCorpusSize()).parseQuery(query, processor);
-=======
-            queryComponent = new RankedQueryParser(strategy).parseQuery(query, processor);
->>>>>>> commit:Project/src/edu/csulb/DiskPositionalIndexer.java
         }
 
         List<Posting> postings = queryComponent.getPostings(index);

@@ -17,17 +17,11 @@ public class RankedQueryParser {
      */
 
     ContextStrategy strategy ;
-<<<<<<< HEAD
     int corpusSize;
 
     public RankedQueryParser(ContextStrategy strategy,int corpusSize){
         this.strategy = strategy;
         this.corpusSize = corpusSize;
-=======
-
-    public RankedQueryParser(ContextStrategy strategy){
-        this.strategy = strategy;
->>>>>>> commit
     }
     private static class StringBounds {
         int start;
@@ -112,11 +106,7 @@ public class RankedQueryParser {
         // that must be combined with an OrQuery.
 
 
-<<<<<<< HEAD
         return new RankedRetrieval(allSubqueries,strategy,corpusSize);
-=======
-        return new RankedRetrieval(allSubqueries,strategy);
->>>>>>> commit
     }
 
     /**
