@@ -3,6 +3,8 @@ package cecs429.query;
 import cecs429.index.Index;
 import cecs429.index.Posting;
 import cecs429.text.BetterTokenProcessor;
+import cecs429.text.TokenProcessor;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,14 +17,13 @@ public class PhraseLiteral implements QueryComponent {
     // The list of individual terms in the phrase.
 
     private List<String> mTerms;
-    BetterTokenProcessor processor = new BetterTokenProcessor();
 
     /**
      * Constructs a PhraseLiteral with the given individual phrase terms.
      *
      * @param terms
      */
-    public PhraseLiteral(List<String> terms) {
+    public PhraseLiteral(List<String> terms,TokenProcessor processor) {
 
         for( int j=0;j<mTerms.size();j++){
             String str = mTerms.get(j);
@@ -36,7 +37,7 @@ public class PhraseLiteral implements QueryComponent {
      *
      * @param terms
      */
-    public PhraseLiteral(String terms) {
+    public PhraseLiteral(String terms, TokenProcessor processor) {
         mTerms = new ArrayList<>();
         for (String str : Arrays.asList(terms.split(" "))) {
             mTerms.add(processor.processToken(str).get(0));
