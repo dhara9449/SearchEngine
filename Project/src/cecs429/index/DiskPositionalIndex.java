@@ -1,6 +1,9 @@
 package cecs429.index;
 
+import cecs429.TermFrequency.ContextStrategy;
+
 import java.io.*;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -9,6 +12,7 @@ import java.util.*;
  */
 public class DiskPositionalIndex implements Index {
 
+    private Map<String, List<Posting>> mInvertedIndexMap;
     private String path;
     /*    private InputStream vocabIS;
         private DataInputStream vocabDIS;
@@ -21,8 +25,17 @@ public class DiskPositionalIndex implements Index {
     private RandomAccessFile postingsRAF;
     private RandomAccessFile vocabRAF;
     private RandomAccessFile vocabTableRAF;
+    private InputStream vocabIS;
+    private InputStream postingsIS;
+    private InputStream vocabTableIS;
+    private File vocab;
+    private File postings;
+    private File vocabTable;
+    int N;
 
-    public DiskPositionalIndex(Path path) throws FileNotFoundException {
+
+    public  int getN(){return N;}
+    DiskPositionalIndex(Path path, int N) throws FileNotFoundException {
         this.path=String.valueOf(path);
 /*        vocab = new File(path+ "/index/vocab.bin");
         vocabDIS = new DataInputStream(new FileInputStream(vocab));*/
@@ -36,6 +49,9 @@ public class DiskPositionalIndex implements Index {
         // vocabTable =new File( path+"/index/vocabTable.bin");
         /*  vocabTableDIS = new DataInputStream(vocabTableFIS);*/
         vocabTableRAF = new RandomAccessFile(path+"/index/vocabTable.bin","rw");
+
+        this.mInvertedIndexMap = new HashMap<>();
+        this.N=N;
 
 
     }

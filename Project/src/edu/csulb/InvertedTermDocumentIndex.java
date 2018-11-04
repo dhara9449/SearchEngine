@@ -199,7 +199,7 @@ public class InvertedTermDocumentIndex {
         BasicTokenProcessor processor = new BasicTokenProcessor();
         QueryComponent queryComponent = parser.parseQuery(query,processor);
 
-        List<Posting> postings = queryComponent.getPostings(index,"");
+        List<Posting> postings = queryComponent.getPostings(index,"boolean");
 
         if (postings != null) {
             for (Posting p : postings) {

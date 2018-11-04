@@ -35,10 +35,10 @@ public class NearLiteral implements QueryComponent {
      *
      * @param terms
      */
-    public NearLiteral(String terms) {
+    NearLiteral(String terms) {
         mTerms = new ArrayList<>();
         if (!terms.contains("-")) {
-            for (String str : Arrays.asList(terms.split(" "))) {
+            for (String str : terms.split(" ")) {
                 mTerms.addAll(processor.processToken(str));
             }
         } else {
@@ -47,7 +47,7 @@ public class NearLiteral implements QueryComponent {
     }
 
     @Override
-    public List<Posting> getPostings(Index index,String mode) {
+    public List<Posting> getPostings(Index index) {
 
         // Retrieving the postings for the individual terms in the phrase,
         // and positional merge them together.
@@ -63,8 +63,8 @@ public class NearLiteral implements QueryComponent {
             return result;
         }
 
-        List<Posting> tempComponentPostingsList1 = index.getPostings(mTerms.get(0),mode);
-        List<Posting> tempComponentPostingsList2 = index.getPostings(mTerms.get(2),mode);
+        List<Posting> tempComponentPostingsList1 = index.getPostingsWithPosition(mTerms.get(0));
+        List<Posting> tempComponentPostingsList2 = index.getPostingsWithPosition(mTerms.get(2));
 
         return mergePosting(tempComponentPostingsList1, tempComponentPostingsList2);
 

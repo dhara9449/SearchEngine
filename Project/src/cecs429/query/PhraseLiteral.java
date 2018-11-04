@@ -42,7 +42,7 @@ public class PhraseLiteral implements QueryComponent {
     }
 
     @Override
-    public List<Posting> getPostings(Index index,String mode) {
+    public List<Posting> getPostings(Index index) {
 
      /*
       * Uncomment the following code for calling biword index on Phase literal queries with two terms.
@@ -57,11 +57,11 @@ public class PhraseLiteral implements QueryComponent {
             return BiwordIndex.getIndex().getPostings(mTerms.get(0) + " " + mTerms.get(1));
         }
     */
-        List<Posting> result = index.getPostings(mTerms.get(0),mode);
+        List<Posting> result = index.getPostings(mTerms.get(0));
         List<Posting> tempComponentPostingsList;
 
         for (int i = 1; i < mTerms.size(); i++) {
-            tempComponentPostingsList = index.getPostings(mTerms.get(i),mode);
+            tempComponentPostingsList = index.getPostings(mTerms.get(i));
             result = mergePosting(result, tempComponentPostingsList);
 
         }

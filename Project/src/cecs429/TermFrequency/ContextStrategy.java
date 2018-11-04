@@ -9,8 +9,8 @@ public class ContextStrategy {
         this.strategy = strategy;
     }
 
-    public double calculateWqt(int num1, int num2){
-        return strategy.calculateWqt(num1, num2);
+    public double calculateWqt(int N, int dft){
+        return strategy.calculateWqt(N, dft);
     }
 
     public double calculateWdt(String path,int tf,int docId){

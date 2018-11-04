@@ -30,13 +30,13 @@ public class OrQuery implements QueryComponent {
     }
 
     @Override
-    public List<Posting> getPostings(Index index,String mode) {
+    public List<Posting> getPostings(Index index) {
 
-        List<Posting> result = mComponents.get(0).getPostings(index,mode);
+        List<Posting> result = mComponents.get(0).getPostings(index);
         List<Posting> tempComponentPostingsList;
 
         for (int postingListNum = 1; postingListNum < mComponents.size(); postingListNum++) {
-            tempComponentPostingsList = mComponents.get(postingListNum).getPostings(index,mode);
+            tempComponentPostingsList = mComponents.get(postingListNum).getPostings(index);
 
             if (!result.isEmpty()) {
                 result = mergePosting(result, tempComponentPostingsList);
