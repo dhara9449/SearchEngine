@@ -77,8 +77,8 @@ public class NearLiteral implements QueryComponent {
         int doc2PostingPtr2 = 0;
 
         while (doc1PostingPtr1 < list1.size() && doc2PostingPtr2 < list2.size()) {
-            posting1 = (Posting) list1.get(doc1PostingPtr1);
-            posting2 = (Posting) list2.get(doc2PostingPtr2);
+            posting1 =  list1.get(doc1PostingPtr1);
+            posting2 =  list2.get(doc2PostingPtr2);
             int p1Id = posting1.getDocumentId();
             int p2Id = posting2.getDocumentId();
             if (p1Id == p2Id) {

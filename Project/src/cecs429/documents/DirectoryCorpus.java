@@ -152,7 +152,7 @@ public class DirectoryCorpus implements DocumentCorpus {
      * extension. By default, a corpus does not know how to load any files --
      * this method must be called prior to getDocuments().
      *
-     * @param fileExtension
+     * @param fileExtension extension of the files in the direcot
      * @param factory
      */
     public void registerFileDocumentFactory(String fileExtension, FileDocumentFactory factory) {
@@ -162,10 +162,10 @@ public class DirectoryCorpus implements DocumentCorpus {
     /**
      * Constructs a corpus over a directory of simple text documents.
      *
-     * @param absolutePath
+     * @param absolutePath Path where the directory is located
      * @param fileExtension The extension of the text documents to load, e.g.,
      * ".txt".
-     * @return
+     * @return returns the directory corpus
      */
     public static DirectoryCorpus loadTextDirectory(Path absolutePath, String fileExtension) {
         DirectoryCorpus corpus = new DirectoryCorpus(absolutePath);
