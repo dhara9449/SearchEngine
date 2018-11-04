@@ -11,11 +11,11 @@ public class Posting {
 
     private int mDocumentId;
     private List<Integer> mPositions;
-    private int  documentFrequency;
+    private int  termFrequency;
 
     public Posting(int documentId) {
         mPositions = new ArrayList<>();
-        documentFrequency=0;
+        termFrequency=0;
         mDocumentId = documentId;
     }
 
@@ -32,11 +32,25 @@ public class Posting {
     //adds position of the term in the document
     public void addPosition(int position) {
         mPositions.add(position);
-        documentFrequency=documentFrequency+1;
+        termFrequency=termFrequency+1;
 
     }
 
-    public int getDocumentFrequency(){
-        return  documentFrequency;
+    public int getTermFrequency(){
+        return  termFrequency;
     }
+
+
+    public void setmDocumentId(int mDocumentId) {
+        this.mDocumentId = mDocumentId;
+    }
+
+    public void setmPositions(List<Integer> mPositions) {
+        this.mPositions = mPositions;
+    }
+
+    public void setTermFrequency(int termFrequency) {
+        this.termFrequency = termFrequency;
+    }
+
 }
