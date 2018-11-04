@@ -80,7 +80,7 @@ public class MovieJsonFileDocument implements FileDocument {
         }
     }
 
-    public static FileDocument loadMovieJsonFileDocument(Path absolutePath, int documentId) {
+    static FileDocument loadMovieJsonFileDocument(Path absolutePath, int documentId) {
         return new MovieJsonFileDocument(documentId, absolutePath);
     }
 }

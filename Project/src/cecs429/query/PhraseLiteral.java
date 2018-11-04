@@ -2,11 +2,8 @@ package cecs429.query;
 
 import cecs429.index.Index;
 import cecs429.index.Posting;
-import cecs429.text.BetterTokenProcessor;
 import cecs429.text.TokenProcessor;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,7 +36,7 @@ public class PhraseLiteral implements QueryComponent {
      */
     PhraseLiteral(String terms, TokenProcessor processor) {
         mTerms = new ArrayList<>();
-        for (String str : Arrays.asList(terms.split(" "))) {
+        for (String str : terms.split(" ")) {
             mTerms.add(processor.processToken(str).get(0));
         }
     }
@@ -75,8 +72,8 @@ public class PhraseLiteral implements QueryComponent {
         for (Posting p : result) {
             tmpPositionList = p.getPositions();
             Posting q=new Posting(p.getDocumentId());
-            for (int i = 0; i < tmpPositionList.size(); i++) {
-                q.addPosition(tmpPositionList.get(i) - decLength);
+            for (Integer aTmpPositionList : tmpPositionList) {
+                q.addPosition(aTmpPositionList - decLength);
             }
             finalResult.add(q);
         }
