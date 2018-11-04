@@ -13,8 +13,8 @@ public class ContextStrategy {
         return strategy.calculateWqt(num1, num2);
     }
 
-    public double calculateWdt(String path,int num1){
-        return strategy.calculateWdt(path,num1);
+    public double calculateWdt(String path,int tf,int docId){
+        return strategy.calculateWdt(path,tf,docId);
     }
 
     public double calculateLd(String path,int docId){
