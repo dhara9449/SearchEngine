@@ -54,7 +54,7 @@ public class DiskIndexWriter {
                 postingsout.writeInt( currentDocId - prevDocId);
                 prevDocId = currentDocId;
 
-                postingsout.writeInt(document.getDocumentFrequency());
+               // postingsout.writeInt(document.getDocumentFrequency());
 
                 List<Integer> positionList = document.getPositions();
                 // writing posting.bin

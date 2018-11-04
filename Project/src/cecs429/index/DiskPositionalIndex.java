@@ -12,23 +12,32 @@ public class DiskPositionalIndex implements Index {
 
     private Map<String, List<Posting>> mInvertedIndexMap;
     private String path;
-    private InputStream vocabIS;
-    private InputStream postingsIS;
-    private InputStream vocabTableIS;
-    private File vocab;
-    private File postings;
-    private File vocabTable;
+    /*    private InputStream vocabIS;
+        private DataInputStream vocabDIS;
+        private InputStream postingsIS;
+        private InputStream vocabTableFIS;
+        private File vocab;
+        private File vocabTable;
+        private DataInputStream vocabTableDIS;*/
+    private InputStream vocabTableFIS;
+    private RandomAccessFile postingsRAF;
+    private RandomAccessFile vocabRAF;
+    private RandomAccessFile vocabTableRAF;
 
     public DiskPositionalIndex(Path path) throws FileNotFoundException {
         this.path=String.valueOf(path);
-        vocab = new File(path+ "/index/vocab.bin");
-        vocabIS = new DataInputStream(new FileInputStream(vocab));
+/*        vocab = new File(path+ "/index/vocab.bin");
+        vocabDIS = new DataInputStream(new FileInputStream(vocab));*/
+        vocabRAF = new RandomAccessFile( path + "/index/vocab.bin", "rw");
 
-        postings=new File( path + "/index/postings.bin");
-        postingsIS = new DataInputStream(new FileInputStream(postings));
+        // postings=new File( path + "/index/postings.bin");
+        // postingsIS = new DataInputStream(new FileInputStream(postings));
+        postingsRAF = new RandomAccessFile( path + "/index/postings.bin","rw");
 
-        vocabTable =new File( path+"/index/vocabTable.bin");
-        vocabTableIS = new DataInputStream(new FileInputStream(vocabTable));
+       // vocabTable =new File( path+"/index/vocabTable.bin");
+        vocabTableFIS = new FileInputStream(new File( path+"/index/vocabTable.bin"));
+        /*  vocabTableDIS = new DataInputStream(vocabTableFIS);*/
+        vocabTableRAF = new RandomAccessFile(path+"/index/vocabTable.bin","rw");
 
         this.mInvertedIndexMap = new HashMap<>();
     }
@@ -36,57 +45,100 @@ public class DiskPositionalIndex implements Index {
 
     //TODO:
     @Override
-    public List<Posting> getPostings(String term,String mode) {
-        List<Posting> temp = new ArrayList<>();
+    public List<Posting> getPostings(String term,String mode){
+        List<Posting> postingsList = new ArrayList<Posting>();
         // get the position of postings from vocabTable.bin
         //using binary search ....
 
-        int high = (int)vocabTable.length();
-        int low = 0;
-        int mid = (int)high/2;
+        try {
+            int length =  (vocabTableFIS.available()/16);
+            long postingPos = binarySearchVocab(term,0,length-1);
+            postingsRAF.seek(postingPos);
+            int dft=postingsRAF.readInt();
+            Posting p;
+            int currentdocIdGap;
+            int prevdocIdGap =0;
 
-        while(low<=high){
-           // vocabTable.
+            for( int docFreq =0; docFreq < dft; docFreq++){
 
+                currentdocIdGap = postingsRAF.readInt();
+                prevdocIdGap =currentdocIdGap;
+                p = new Posting(prevdocIdGap+currentdocIdGap);
+                //p.setmDocumentId(docId);
+
+                int tft = postingsRAF.readInt();
+                p.setTermFrequency(tft);
+                int currentPosGap;
+                int prevPosGap =0;
+                List<Integer> positionList = new ArrayList<>();
+
+                for(int termFreq = 0; termFreq < tft; termFreq++){
+                    currentPosGap = postingsRAF.readInt();
+                    prevPosGap = currentPosGap;
+                    positionList.add(currentPosGap+prevPosGap);
+                }
+                p.setmPositions(positionList);
+                postingsList.add(p);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-
-
-
 
         if (mode.equalsIgnoreCase("boolean")){
             if (mInvertedIndexMap.containsKey(term)) {
                 return mInvertedIndexMap.get(term);
             }
         }else{
-    //get a list of postings store it in temp for ranked retrieval queries
-
-            for(Posting p:temp){
+            //get a list of postings store it in temp for ranked retrieval queries
+            for(Posting p:postingsList){
 
             }
 
         }
 
-        return temp;
+        return postingsList;
     }
 
-    private long binSearchVocab(String term){
-        long length = (long) (vocabTable.length()/16);
-        long i =0;
-        long j = length-1;
+    private long binarySearchVocab(String term,int min, int max) throws IOException {
+        // int length =  (vocabTableFIS.available()/16);
+        //System.out.println(length);
+        int i =min;
+        int j = max;
 
         if(i>j){
             return -1;
         }
 
-        while(i<=j){
-            long mid = (i+j)/2;
+        //while(i<=j){
+        long mid = (i+j)/2;
+        // byte bs[] = new byte[length];
+        long postingsPos=0;
+        vocabTableRAF.seek(mid*16);
+        long currentVocabByte = vocabTableRAF.readLong();
+        //vocabTableDIS.skipBytes(1);
+        long currentPostingsPos = vocabTableRAF.readLong();
+        long nextVocabByte = vocabTableRAF.readLong();
 
-          /*  if(vocabIS.mark(); equals(term)){
-                return mid
-            }*/
+        char[] vocabTerm =null;
+        int pos=0;
+        for(int termlength=0; termlength< nextVocabByte - currentVocabByte ; termlength++){
+            vocabRAF.seek(currentVocabByte);
+            vocabTerm[pos] = (vocabRAF.readChar());
+            pos++;
         }
-        return 1; // change to long....
+        String retrievedVocabTerm = vocabTerm.toString();
+
+        if(retrievedVocabTerm.equals(term)){
+            return currentPostingsPos;
+        }
+        else if(retrievedVocabTerm.compareTo(term)>0){
+            return binarySearchVocab(term,i, j-1);
+        }
+        else{
+            return binarySearchVocab(term,j+1,j);
+        }
+        //}
     }
 
 
