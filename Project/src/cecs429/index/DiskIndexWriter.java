@@ -40,14 +40,18 @@ public class DiskIndexWriter {
             //determining the location for vocab table
             mMapPosting.add(out1.getChannel().size()-4);
 
+
             // the first document should be the docId
             int prevDocId = 0;
             int currentDocId;
 
             for (Posting document : docFrequency) {
+
                 currentDocId = document.getDocumentId();
                 postingsout.writeInt( currentDocId - prevDocId);
                 prevDocId = currentDocId;
+
+                postingsout.writeInt(document.getDocumentFrequency());
 
                 List<Integer> positionList = document.getPositions();
                 // writing posting.bin
@@ -134,6 +138,7 @@ public class DiskIndexWriter {
                     term = token;
                     if(!term.trim().equals("")) {
                         invertedDocumentIndex.addTerm(term, currentDocId, position);
+
                         position = position+1;
                         if(termFrequencyTracker.containsKey(term)){
                             frequency=termFrequencyTracker.get(term);

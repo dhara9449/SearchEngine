@@ -59,7 +59,7 @@ public class DiskPositionalIndex implements Index {
                 return mInvertedIndexMap.get(term);
             }
         }else{
-    //get a list of postings store it in temp
+    //get a list of postings store it in temp for ranked retrieval queries
 
             for(Posting p:temp){
 
@@ -68,6 +68,25 @@ public class DiskPositionalIndex implements Index {
         }
 
         return temp;
+    }
+
+    private long binSearchVocab(String term){
+        long length = (long) (vocabTable.length()/16);
+        long i =0;
+        long j = length-1;
+
+        if(i>j){
+            return -1;
+        }
+
+        while(i<=j){
+            long mid = (i+j)/2;
+
+          /*  if(vocabIS.mark(); equals(term)){
+                return mid
+            }*/
+        }
+        return 1; // change to long....
     }
 
 
