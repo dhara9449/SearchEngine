@@ -27,7 +27,8 @@ import java.util.*;
 
 import static java.lang.Integer.min;
 
-///Users/indumanimaran/Documents/SET/MobyDick10Chapters
+    ///Users/indumanimaran/Documents/SET/MobyDick10Chapters
+///Users/indumanimaran/Documents/SET/Test/
 public class DiskPositionalIndex {
     private static String PATH;
     private static long indexTime=0;
@@ -66,7 +67,8 @@ public class DiskPositionalIndex {
         SnowballStemmer stemmer = new englishStemmer();
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter corpus path:");
-        PATH=scanner.nextLine();
+        //PATH=scanner.nextLine();
+        PATH="/Users/indumanimaran/Documents/SET/Test/";
         Path directoryPath = Paths.get(PATH);
         System.out.println("Indexing..."+ directoryPath.toString());
         DocumentCorpus corpus;
@@ -76,6 +78,7 @@ public class DiskPositionalIndex {
         EXTENSION = FilenameUtils.getExtension(listOfFiles[0].getName());
 
         corpus = newCorpus(directoryPath,"."+ EXTENSION);
+        System.out.println("EXTENSION is "+EXTENSION);
         DiskIndexWriter diskIndexWriter = new DiskIndexWriter();
         Index index = newIndex(corpus,diskIndexWriter,directoryPath);
 
