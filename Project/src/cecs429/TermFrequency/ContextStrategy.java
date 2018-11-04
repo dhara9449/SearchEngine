@@ -17,10 +17,10 @@ public class ContextStrategy {
     }
 
     public double calculateWdt(int tf,int docId){
-        return strategy.calculateWdt(path,tf,docId);
+        return strategy.calculateWdt(tf,docId);
     }
 
     public double calculateLd(int docId){
-        return strategy.calculateLd(path, docId);
+        return strategy.calculateLd(docId);
     }
 }

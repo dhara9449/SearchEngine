@@ -18,10 +18,12 @@ public class RankedRetrieval implements QueryComponent {
     private ContextStrategy strategy;
     private List<QueryComponent> mComponents;
     private HashMap<Integer,Double> Accumulator;
+    private  int N;
 
-    RankedRetrieval(List<QueryComponent> components,ContextStrategy strategy) {
+    RankedRetrieval(List<QueryComponent> components,ContextStrategy strategy,int corpusSize) {
         mComponents = components;
         this.strategy = strategy;
+        N=corpusSize;
         Accumulator = new HashMap<>();
     }
 
@@ -31,18 +33,20 @@ public class RankedRetrieval implements QueryComponent {
         int docId;
         int tf;
         int dft;
-        double wdt;
+        double wdt,wqt;
         double Ad;
+
 
         for (QueryComponent component : mComponents){
             temp = component.getPostings(index);
              dft= temp.size();
 
-            double wqt=strategy.calculateWqt(N,dft);
+             wqt=strategy.calculateWqt(N,dft);
+
             for(Posting p:temp){
                 tf = p.getDocumentFrequency();
                 docId=p.getDocumentId();
-                wdt=strategy.calculateWdt(path,tf,docId);
+                wdt=strategy.calculateWdt(tf,docId);
 
                 Ad=0;
                 if(Accumulator.containsKey(docId)){

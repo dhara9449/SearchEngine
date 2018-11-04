@@ -7,7 +7,6 @@ package edu.csulb;
 
 import cecs429.TermFrequency.*;
 import cecs429.documents.DirectoryCorpus;
-import cecs429.documents.Document;
 import cecs429.documents.DocumentCorpus;
 import cecs429.index.*;
 import cecs429.query.BooleanQueryParser;
@@ -15,7 +14,6 @@ import cecs429.query.QueryComponent;
 import cecs429.query.RankedQueryParser;
 import cecs429.text.BasicTokenProcessor;
 import cecs429.text.BetterTokenProcessor;
-import cecs429.text.EnglishTokenStream;
 import cecs429.text.TokenProcessor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -78,7 +76,7 @@ public class DiskPositionalIndexer {
 
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
         SnowballStemmer stemmer = new englishStemmer();
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter corpus path:");
@@ -99,7 +97,6 @@ public class DiskPositionalIndexer {
 
         String query;
         Scanner reader = new Scanner(System.in);
-        String mode;
         OUTER:
         while (true) {
             System.out.print("Query : ");
@@ -122,7 +119,7 @@ public class DiskPositionalIndexer {
                         System.out.println("Biword Index size: "+ biwordIndex.getVocabulary().size());
                         break;
                     default:
-                        queryPosting(corpus, index, query);
+                        queryPosting(corpus, index, query,directoryPath);
                         break;
                 }
             } else if (len == 2) {
@@ -151,17 +148,17 @@ public class DiskPositionalIndexer {
                         }
                         break;
                     default:
-                        queryPosting( corpus, index, query);
+                        queryPosting( corpus, index, query,directoryPath);
                         break;
                 }
             } else {
-                queryPosting( corpus, index, query);
+                queryPosting( corpus, index, query,directoryPath);
             }
         }
     }
 
 
-    private static void queryPosting( DocumentCorpus corpus, Index index, String query)  {
+    private static void queryPosting( DocumentCorpus corpus, Index index, String query,Path path)  {
         Scanner scanner = new Scanner(System.in);
         String reply = "y";
         String docName;
@@ -170,7 +167,7 @@ public class DiskPositionalIndexer {
 
 
         TokenProcessor processor =new BetterTokenProcessor();
-        ContextStrategy strategy = new ContextStrategy(rankRetrievalStrategy.get(0));
+        ContextStrategy strategy = new ContextStrategy(rankRetrievalStrategy.get(0),path.toString());
         System.out.println("Enter retrieval mode: 1.Boolean 2.Ranked");
         mode = scanner.nextLine();
         mode = modes.get(Integer.parseInt(mode));
@@ -181,14 +178,14 @@ public class DiskPositionalIndexer {
                     "3.Okapi BM25" +
                     "4.Wacky" +
                     "Enter choice: ");
-             strategy= new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt()));
+             strategy= new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt()),path.toString());
         }
 
         QueryComponent queryComponent;
         if (mode.equalsIgnoreCase("boolean")){
             queryComponent = new BooleanQueryParser().parseQuery(query, processor);
         }else{
-            queryComponent = new RankedQueryParser(strategy).parseQuery(query, processor);
+            queryComponent = new RankedQueryParser(strategy,corpus.getCorpusSize()).parseQuery(query, processor);
         }
 
         List<Posting> postings = queryComponent.getPostings(index);
