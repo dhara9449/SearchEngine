@@ -3,21 +3,24 @@ package cecs429.TermFrequency;
 import java.util.List;
 
 public class ContextStrategy {
-    private TermFrequencyStrategy strategy;
 
-    public ContextStrategy(TermFrequencyStrategy strategy){
+
+    private TermFrequencyStrategy strategy;
+    private  String path;
+
+    public ContextStrategy(TermFrequencyStrategy strategy,String  path){
         this.strategy = strategy;
     }
 
-    public double calculateWqt(int num1, int num2){
-        return strategy.calculateWqt(num1, num2);
+    public double calculateWqt(int N, int dft){
+        return strategy.calculateWqt(N, dft);
     }
 
-    public double calculateWdt(String path,int tf,int docId){
-        return strategy.calculateWdt(path,tf,docId);
+    public double calculateWdt(int tf,int docId){
+        return strategy.calculateWdt(tf,docId);
     }
 
-    public double calculateLd(String path,int docId){
-        return strategy.calculateLd(path, docId);
+    public double calculateLd(int docId){
+        return strategy.calculateLd(docId);
     }
 }

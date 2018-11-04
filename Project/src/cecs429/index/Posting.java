@@ -38,6 +38,7 @@ public class Posting {
 
     public int getTermFrequency(){
         return  termFrequency;
+
     }
 
 

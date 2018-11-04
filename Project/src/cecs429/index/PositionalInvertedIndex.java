@@ -14,7 +14,7 @@ public class PositionalInvertedIndex implements Index {
     }
 
     @Override
-    public List<Posting> getPostings(String term,String mode) {
+    public List<Posting> getPostings(String term) {
         // this is where perform ranked vs boolean retrieval
         List<Posting> temp = new ArrayList<>();
         if (mInvertedIndexMap.containsKey(term)) {
@@ -28,6 +28,12 @@ public class PositionalInvertedIndex implements Index {
         List<String> mVocabulary = new ArrayList<>(mInvertedIndexMap.keySet());
         Collections.sort(mVocabulary);
         return Collections.unmodifiableList(mVocabulary);
+    }
+
+    //TODO:???
+    @Override
+    public List<Posting> getPostingsWithPosition(String term) {
+        return getPostings(term);
     }
 
     /*

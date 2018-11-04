@@ -1,5 +1,6 @@
 package cecs429.query;
 
+import cecs429.TermFrequency.ContextStrategy;
 import cecs429.index.*;
 
 import java.util.List;
@@ -18,5 +19,5 @@ public interface QueryComponent {
      * @param index
      * @return
      */
-    List<Posting> getPostings(Index index,String mode);
+    List<Posting> getPostings(Index index);
 }

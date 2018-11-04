@@ -1,5 +1,7 @@
 package cecs429.index;
 
+import cecs429.TermFrequency.ContextStrategy;
+
 import java.util.List;
 
 /**
@@ -14,7 +16,7 @@ public interface Index {
      * @param term
      * @return
      */
-    List<Posting> getPostings(String term,String mode);
+    List<Posting> getPostings(String term);
 
     /**
      * A (sorted) list of all terms in the index vocabulary.
@@ -22,4 +24,6 @@ public interface Index {
      * @return
      */
     List<String> getVocabulary();
+
+    List<Posting> getPostingsWithPosition(String term);
 }

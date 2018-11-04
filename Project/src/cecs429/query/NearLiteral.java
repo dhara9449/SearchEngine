@@ -7,23 +7,22 @@ import cecs429.text.BetterTokenProcessor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class NearLiteral implements QueryComponent {
 
     private List<String> mTerms;
     private int k = 1; // k=1 is default
-    BetterTokenProcessor processor = new BetterTokenProcessor();
+    private BetterTokenProcessor processor = new BetterTokenProcessor();
 
     /**
      * Constructs a NearLiteral with the given individual phrase terms.
      *
-     * @param terms
+     * @param terms term in near liter query
      */
     public NearLiteral(List<String> terms) {
-        if (!mTerms.contains("-")) {
-            terms.forEach((str) -> {
-                mTerms.addAll(processor.processToken(str));
-            });
+        if (!Objects.requireNonNull(mTerms).contains("-")) {
+            terms.forEach((str) -> mTerms.addAll(processor.processToken(str)));
         } else {
             mTerms.addAll(terms);
         }
@@ -33,12 +32,12 @@ public class NearLiteral implements QueryComponent {
      * Constructs a NearLiteral given a string with one or more individual
      * terms separated by spaces.
      *
-     * @param terms
+     * @param terms the terms in near literal query
      */
-    public NearLiteral(String terms) {
+    NearLiteral(String terms) {
         mTerms = new ArrayList<>();
         if (!terms.contains("-")) {
-            for (String str : Arrays.asList(terms.split(" "))) {
+            for (String str : terms.split(" ")) {
                 mTerms.addAll(processor.processToken(str));
             }
         } else {
@@ -47,7 +46,7 @@ public class NearLiteral implements QueryComponent {
     }
 
     @Override
-    public List<Posting> getPostings(Index index,String mode) {
+    public List<Posting> getPostings(Index index) {
 
         // Retrieving the postings for the individual terms in the phrase,
         // and positional merge them together.
@@ -63,8 +62,8 @@ public class NearLiteral implements QueryComponent {
             return result;
         }
 
-        List<Posting> tempComponentPostingsList1 = index.getPostings(mTerms.get(0),mode);
-        List<Posting> tempComponentPostingsList2 = index.getPostings(mTerms.get(2),mode);
+        List<Posting> tempComponentPostingsList1 = index.getPostingsWithPosition(mTerms.get(0));
+        List<Posting> tempComponentPostingsList2 = index.getPostingsWithPosition(mTerms.get(2));
 
         return mergePosting(tempComponentPostingsList1, tempComponentPostingsList2);
 
