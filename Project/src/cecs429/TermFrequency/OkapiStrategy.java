@@ -8,7 +8,7 @@ public class OkapiStrategy implements  TermFrequencyStrategy{
         double nr=N - dft+ 0.5;
         return Math.max(0.1, Math.log(nr/dr));
     }
-    public  double calculateWdt(String path,int tf){
+    public  double calculateWdt(String path,int tf,int docId){
         double docLength_d= 1.0;//docId*8*4 + 8*2 from path
         double docLength_A = 1.0;//last 8 bytes in the filePath
         double nr= 2.2*tf;

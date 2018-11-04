@@ -5,7 +5,7 @@ public class WackyStrategy implements  TermFrequencyStrategy {
 
         return Math.max(0,Math.log( (N-dft)/dft));
     }
-    public  double calculateWdt(String path,int tf){
+    public  double calculateWdt(String path,int tf,int docId){
         double nr = 1+Math.log(tf);
         double dr= 1+Math.log(tf);// not right - refer formula
         return nr/dr;

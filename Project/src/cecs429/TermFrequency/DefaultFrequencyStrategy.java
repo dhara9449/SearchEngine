@@ -7,7 +7,7 @@ public class DefaultFrequencyStrategy implements  TermFrequencyStrategy{
         return Math.log(1 + (N *1.0/ dft));
     }
 
-    public double calculateWdt(String path,int tf) {
+    public double calculateWdt(String path,int tf,int docId) {
         return 1 + Math.log(tf);
     }
 
