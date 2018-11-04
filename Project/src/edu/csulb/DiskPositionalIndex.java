@@ -77,6 +77,7 @@ public class DiskPositionalIndex {
         EXTENSION = FilenameUtils.getExtension(listOfFiles[0].getName());
 
         corpus = newCorpus(directoryPath,"."+ EXTENSION);
+        System.out.println("EXTENSION is "+EXTENSION);
         DiskIndexWriter diskIndexWriter = new DiskIndexWriter();
         Index index = newIndex(corpus,diskIndexWriter,directoryPath);
 

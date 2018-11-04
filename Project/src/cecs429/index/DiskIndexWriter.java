@@ -7,82 +7,77 @@ import cecs429.text.EnglishTokenStream;
 
 import java.io.*;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class DiskIndexWriter {
 
     public void WriteIndex(Index index, Path path) throws IOException {
 
         //path = D:\Dhara_MS_in_CS\Java_Projects\MobyDick10Chapters
-        List<String> vocab = index.getVocabulary();
-        ArrayList<Long> mMapPosting = writePostings(index,path,vocab);
-
-        ArrayList<Long> mMapVocab = writeVocab(path, vocab);
-
-        writeVocabTable(path,mMapVocab, mMapPosting);
+        ArrayList<Long> mMapPosting = writePostings(index,path);
+        ArrayList<Long> mMapVocab = writeVocab(index,path);
+        writeVocabTable(path,mMapVocab,mMapPosting);
 
     }
 
-    public  ArrayList<Long> writePostings(Index index, Path path, List<String> vocab) throws IOException {
+    private ArrayList<Long> writePostings(Index index, Path path) throws IOException {
         //File postingsfile = new File(String.valueOf(path) + "\\index\\postings.bin");
-       File postingsfile = new File(String.valueOf(path) + "/index/postings.bin");
-        postingsfile.getParentFile().mkdirs();
+       File postingsFile = new File(String.valueOf(path) + "/index/postings.bin");
+       final boolean mkdirs = postingsFile.getParentFile().mkdirs();
 
-        FileOutputStream out1 = new FileOutputStream(postingsfile);
+       if(!mkdirs){
+           System.out.println("Cannot create postings.bin");
+           return new ArrayList<>();
+       }
+
+        FileOutputStream out1 = new FileOutputStream(postingsFile);
         DataOutputStream postingsout = new DataOutputStream(out1);
 
         ArrayList<Long> mMapPosting = new ArrayList<>();
 
-        for (String str : vocab) {
-            int prevdocId;
-            int currentdocId = 0;
-            int docIdGap;
+        for (String str : index.getVocabulary()) {
 
             List<Posting> docFrequency = index.getPostings(str,"boolean");
-            postingsout.writeInt(docFrequency.size()); //TO DO
+            postingsout.writeInt(docFrequency.size());
+            System.out.println("doxfreq.size"+ docFrequency.size());
 
-            //determing the location for vocab table
-            mMapPosting.add(out1.getChannel().size());
+            //determining the location for vocab table
+            mMapPosting.add(out1.getChannel().size()-4);
+            System.out.println("Channel size "+(out1.getChannel().size()-4));
 
+            // the first document should be the docId
+            int prevDocId = 0;
+            int currentDocId;
 
             for (Posting document : docFrequency) {
-                prevdocId = currentdocId;
-                currentdocId = document.getDocumentId();
-                docIdGap = currentdocId - prevdocId;
-                postingsout.writeInt(docIdGap); //TODO: clarify... should it be docIdGap ot currentDocID
-
-
+                currentDocId = document.getDocumentId();
+                postingsout.writeInt( currentDocId - prevDocId);
 
                 postingsout.writeInt(document.getDocumentFrequency());
-
                 List<Integer> positionList = document.getPositions();
                 // writing posting.bin
-                int prevPosId;
-                int currentPosId = positionList.get(0);
-                postingsout.writeInt(currentPosId);
-                positionList.remove(0);
+                int prevPos=0;
 
-                for (Integer position : positionList ) {
-                    prevPosId=currentPosId;
-                    currentPosId = position;
-                    postingsout.writeInt(currentPosId - prevPosId); //writeInt
+                for (Integer currentPos : positionList ) {
+                    postingsout.writeInt(currentPos- prevPos); //writeInt
+                    prevPos=currentPos;
+
                 }
+                prevDocId = currentDocId;
+
             }
         }
         return mMapPosting;
     }
 
-    public  ArrayList<Long> writeVocab( Path path, List<String> vocab) throws IOException {
+    private ArrayList<Long> writeVocab(Index index, Path path) throws IOException {
         //File vocabFile = new File(String.valueOf(path) + "\\index\\vocab.bin");
         File vocabFile = new File(String.valueOf(path) + "/index/vocab.bin");
         FileOutputStream out2 = new FileOutputStream(vocabFile);
         DataOutputStream vocabOut = new DataOutputStream(out2);
         ArrayList<Long> mMapVocab = new ArrayList<>();
 
-        for(String str: vocab){
+        for(String str: index.getVocabulary()){
             vocabOut.writeBytes(str);
             vocabOut.flush();
             mMapVocab.add(out2.getChannel().size()-str.length());
@@ -90,7 +85,7 @@ public class DiskIndexWriter {
         return mMapVocab;
     }
 
-    public void writeVocabTable(Path path, ArrayList<Long> mMapVocab,ArrayList<Long> mMapPosting) throws IOException {
+    private void writeVocabTable(Path path, ArrayList<Long> mMapVocab,ArrayList<Long> mMapPosting) throws IOException {
         //File vocabTablefile = new File(String.valueOf(path) + "\\index\\vocabTable.bin");
         File vocabTablefile = new File(String.valueOf(path) + "/index/vocabTable.bin");
         DataOutputStream vocabtableout = null;
@@ -101,7 +96,7 @@ public class DiskIndexWriter {
         }
 
         for(int i=0;i< mMapVocab.size();i++){
-            vocabtableout.writeLong(mMapVocab.get(i));
+            Objects.requireNonNull(vocabtableout).writeLong(mMapVocab.get(i));
             vocabtableout.writeLong(mMapPosting.get(i));
         }
     }
@@ -117,7 +112,7 @@ public class DiskIndexWriter {
          }
 
          for (HashMap.Entry<Integer,Double> hm:Ld.entrySet()){
-             docWeightsout.writeDouble(hm.getValue());
+             Objects.requireNonNull(docWeightsout).writeDouble(hm.getValue());
 
          }
 
