@@ -37,7 +37,7 @@ public class PhraseLiteral implements QueryComponent {
      *
      * @param terms
      */
-    public PhraseLiteral(String terms, TokenProcessor processor) {
+    PhraseLiteral(String terms, TokenProcessor processor) {
         mTerms = new ArrayList<>();
         for (String str : Arrays.asList(terms.split(" "))) {
             mTerms.add(processor.processToken(str).get(0));
@@ -86,15 +86,15 @@ public class PhraseLiteral implements QueryComponent {
 
     // this method merges the posting lists from two documents
 
-    public List<Posting> mergePosting(List<Posting> list1, List<Posting> list2) {
+    private List<Posting> mergePosting(List<Posting> list1, List<Posting> list2) {
         List<Posting> mergeResult = new ArrayList<>();
         Posting p1, p2;
         int ptrL1 = 0;
         int ptrL2 = 0;
 
         while (ptrL1 < list1.size() && ptrL2 < list2.size()) {
-            p1 = (Posting) list1.get(ptrL1);
-            p2 = (Posting) list2.get(ptrL2);
+            p1 =  list1.get(ptrL1);
+            p2 =  list2.get(ptrL2);
             int p1Id = p1.getDocumentId();
             int p2Id = p2.getDocumentId();
             if (p1Id == p2Id) {
@@ -122,7 +122,7 @@ public class PhraseLiteral implements QueryComponent {
     }
 
     //This method merges the postions from the position list from two Postings
-    public List<Integer> mergePositions(List<Integer> posList1, List<Integer> posList2) {
+    private List<Integer> mergePositions(List<Integer> posList1, List<Integer> posList2) {
 
         List<Integer> mergePosResult = new ArrayList<>();
         int PtrL1 = 0, PtrL2 = 0;

@@ -83,7 +83,7 @@ public class DiskPositionalIndex {
         Index index = newIndex(corpus,diskIndexWriter,directoryPath);
 
         BooleanQueryParser parser = new BooleanQueryParser();
-        
+
         String query;
         Scanner reader = new Scanner(System.in);
         String mode;
