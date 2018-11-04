@@ -6,10 +6,10 @@ public class TfIdfStrategy implements  TermFrequencyStrategy{
     public double calculateWqt(int N, int dft){
         return Math.log( N*1.0/dft);
     }
-    public  double calculateWdt(String path,int tf,int docId){
+    public  double calculateWdt(int tf,int docId){
         return tf;
     }
-    public double calculateLd(String path,int docId) {
+    public double calculateLd(int docId) {
         double Ld = 0.0;
         //retreive  docId*8*4 from path
         return Ld;

@@ -7,23 +7,22 @@ import cecs429.text.BetterTokenProcessor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class NearLiteral implements QueryComponent {
 
     private List<String> mTerms;
     private int k = 1; // k=1 is default
-    BetterTokenProcessor processor = new BetterTokenProcessor();
+    private BetterTokenProcessor processor = new BetterTokenProcessor();
 
     /**
      * Constructs a NearLiteral with the given individual phrase terms.
      *
-     * @param terms
+     * @param terms term in near liter query
      */
     public NearLiteral(List<String> terms) {
-        if (!mTerms.contains("-")) {
-            terms.forEach((str) -> {
-                mTerms.addAll(processor.processToken(str));
-            });
+        if (!Objects.requireNonNull(mTerms).contains("-")) {
+            terms.forEach((str) -> mTerms.addAll(processor.processToken(str)));
         } else {
             mTerms.addAll(terms);
         }
@@ -33,7 +32,7 @@ public class NearLiteral implements QueryComponent {
      * Constructs a NearLiteral given a string with one or more individual
      * terms separated by spaces.
      *
-     * @param terms
+     * @param terms the terms in near literal query
      */
     NearLiteral(String terms) {
         mTerms = new ArrayList<>();

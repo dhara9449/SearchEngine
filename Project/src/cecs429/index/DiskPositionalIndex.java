@@ -35,6 +35,7 @@ public class DiskPositionalIndex implements Index {
 
 
     public  int getN(){return N;}
+
     DiskPositionalIndex(Path path, int N) throws FileNotFoundException {
         this.path=String.valueOf(path);
 /*        vocab = new File(path+ "/index/vocab.bin");

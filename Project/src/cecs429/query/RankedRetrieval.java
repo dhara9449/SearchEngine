@@ -28,21 +28,33 @@ public class RankedRetrieval implements QueryComponent {
     @Override
     public List<Posting> getPostings(Index index){
         List<Posting> temp = new ArrayList<>();
-        int dft=0;//read from disk
+        int docId;
+        int tf;
+        int dft;
+        double wdt;
+        double Ad;
 
-        double wqt=strategy.calculateWqt(N,dft);
+        for (QueryComponent component : mComponents){
+            temp = component.getPostings(index);
+             dft= temp.size();
 
-            //for each document in posting
-        int docId=0;// read from file
-        int tf = 0; // read from file
-        double wdt = strategy.calculateWdt(path,tf,docId);
+            double wqt=strategy.calculateWqt(N,dft);
+            for(Posting p:temp){
+                tf = p.getDocumentFrequency();
+                docId=p.getDocumentId();
+                wdt=strategy.calculateWdt(path,tf,docId);
 
-        double Ad=0;
-        if(Accumulator.containsKey(docId)){
-                Ad=Accumulator.get(docId);
+                Ad=0;
+                if(Accumulator.containsKey(docId)){
+                    Ad=Accumulator.get(docId);
+                }
+                Ad = Ad + wqt * wdt;
+                Accumulator.put(docId,Ad);
+            }
+
+
         }
-        Ad = Ad + wqt * wdt;
-        Accumulator.put(docId,Ad);
+        //read from disk
 
         return temp;
     }
