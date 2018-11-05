@@ -40,13 +40,10 @@ public class DiskPositionalIndex implements Index {
         this.path=String.valueOf(path);
 /*        vocab = new File(path+ "/index/vocab.bin");
         vocabDIS = new DataInputStream(new FileInputStream(vocab));*/
-
         vocabRAF = new RandomAccessFile( path + "/index/vocab.bin", "rw");
-
         // postings=new File( path + "/index/postings.bin");
         // postingsIS = new DataInputStream(new FileInputStream(postings));
         postingsRAF = new RandomAccessFile( path + "/index/postings.bin","rw");
-
         // vocabTable =new File( path+"/index/vocabTable.bin");
         /*  vocabTableDIS = new DataInputStream(vocabTableFIS);*/
         vocabTableRAF = new RandomAccessFile(path+"/index/vocabTable.bin","rw");
@@ -56,7 +53,6 @@ public class DiskPositionalIndex implements Index {
         this.N=N;
 
     }
-
 
     /*
     * Returns  a lis of postings without information about the term position in a document
@@ -186,23 +182,38 @@ public class DiskPositionalIndex implements Index {
     //TODO:
     @Override
     public List<String> getVocabulary() throws IOException {
-        List<String> result = new ArrayList<>();
-        int count =1;
-        long currentVocabByte=0,nextVocabByte=0;
-        while(count<1000) {
-            vocabTableRAF.seek(currentVocabByte);
-            count++;
-            vocabTableRAF.seek(count * 16);
-            nextVocabByte = vocabTableRAF.readLong();
-            vocabRAF.seek(currentVocabByte);
-            char[] vocabTerm = new char[(int) (nextVocabByte - currentVocabByte)];
-            for (int termlength = 0; termlength < vocabTerm.length; termlength++) {
-                vocabTerm[termlength] = (char) vocabRAF.readByte();
+        List<String> vocabResultList = new ArrayList<>();
+        long vocabTableLength = (vocabTableRAF.length()/16);
+        long vocabLength = vocabRAF.length();
+        int count =1,termLength;
+        long currentVocabByte,currentPostingPosition, nextVocabByte;
+        char[] vocabTerm;
+        while(count<=1000 && vocabTableLength >= count) {
+
+           currentVocabByte = vocabTableRAF.readLong();
+           // currentPostingPosition = vocabTableRAF.readLong();
+
+            if((count) < vocabTableLength) {
+                vocabTableRAF.seek(count*16);
+                nextVocabByte = vocabTableRAF.readLong();
+                vocabTableRAF.seek(count*16);
+                termLength = (int) (nextVocabByte - currentVocabByte);
+
+            }else{
+                termLength = (int) (vocabLength - currentVocabByte);
             }
-            result.add(String.valueOf(vocabTerm));
-            currentVocabByte = nextVocabByte;
+            vocabTerm = new char[termLength];
+
+            for (int i =0 ; i<termLength; i++){
+                vocabTerm[i] = (char) vocabRAF.readByte();
+
+            }
+
+            String retrievedTerm = String.valueOf(vocabTerm);
+            vocabResultList.add(retrievedTerm);
+            count++;
         }
-        return result;
+        return vocabResultList;
     }
 
     //TODO:

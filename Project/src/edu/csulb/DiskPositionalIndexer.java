@@ -45,21 +45,6 @@ public class DiskPositionalIndexer {
         return corpus;
     }
 
-    DiskPositionalIndexer(){
-        modes = new ArrayList<>();
-        modes.add("");
-        modes.add("boolean");
-        modes.add("ranked");
-
-        rankRetrievalStrategy = new ArrayList<>();
-        rankRetrievalStrategy.add(new DefaultFrequencyStrategy());
-        rankRetrievalStrategy.add(new TfIdfStrategy());
-        rankRetrievalStrategy.add(new OkapiStrategy());
-        rankRetrievalStrategy.add(new WackyStrategy());
-    }
-
-
-
 
     private static Index newIndex(DocumentCorpus corpus,DiskIndexWriter diskIndexWriter,Path directoryPath) {
         final long startTime = System.currentTimeMillis();
@@ -79,6 +64,11 @@ public class DiskPositionalIndexer {
         modes.add("boolean");
         modes.add("ranked");
 
+        modes = new ArrayList<>();
+        modes.add("");
+        modes.add("boolean");
+        modes.add("ranked");
+
 
         SnowballStemmer stemmer = new englishStemmer();
         Scanner scanner=new Scanner(System.in);
@@ -90,6 +80,8 @@ public class DiskPositionalIndexer {
         System.out.println("Indexing..."+ directoryPath.toString());
         DocumentCorpus corpus;
 
+
+
         File folder2 = new File(PATH);
         File[] listOfFiles = folder2.listFiles();
         String EXTENSION = FilenameUtils.getExtension(Objects.requireNonNull(listOfFiles)[0].getName());
@@ -98,8 +90,6 @@ public class DiskPositionalIndexer {
         System.out.println("EXTENSION is "+ EXTENSION);
         DiskIndexWriter diskIndexWriter = new DiskIndexWriter();
         Index index = newIndex(corpus,diskIndexWriter,directoryPath);
-
-
 
         rankRetrievalStrategy = new ArrayList<>();
         rankRetrievalStrategy.add(new DefaultFrequencyStrategy(sPath));
