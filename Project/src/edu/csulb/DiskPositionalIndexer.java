@@ -45,10 +45,6 @@ public class DiskPositionalIndexer {
         return corpus;
     }
 
-
-
-
-
     private static Index newIndex(DocumentCorpus corpus,DiskIndexWriter diskIndexWriter,Path directoryPath) {
         final long startTime = System.currentTimeMillis();
         Index index= diskIndexWriter.indexCorpus(corpus,directoryPath);
@@ -67,16 +63,17 @@ public class DiskPositionalIndexer {
         modes.add("boolean");
         modes.add("ranked");
 
-
         SnowballStemmer stemmer = new englishStemmer();
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter corpus path:");
-        //PATH=scanner.nextLine();
-        String PATH = "/Users/indumanimaran/Documents/SET/Test/";
+        String PATH=scanner.nextLine();
+       // String PATH = "/Users/indumanimaran/Documents/SET/Test/";
         Path directoryPath = Paths.get(PATH);
         String sPath = directoryPath.toString();
         System.out.println("Indexing..."+ directoryPath.toString());
         DocumentCorpus corpus;
+
+
 
         File folder2 = new File(PATH);
         File[] listOfFiles = folder2.listFiles();
@@ -86,8 +83,6 @@ public class DiskPositionalIndexer {
         System.out.println("EXTENSION is "+ EXTENSION);
         DiskIndexWriter diskIndexWriter = new DiskIndexWriter();
         Index index = newIndex(corpus,diskIndexWriter,directoryPath);
-
-
 
         rankRetrievalStrategy = new ArrayList<>();
         rankRetrievalStrategy.add(new DefaultFrequencyStrategy(sPath));
@@ -166,16 +161,12 @@ public class DiskPositionalIndexer {
             }
         }
 
-
-
-
     private static void queryPosting( DocumentCorpus corpus, Index index, String query,Path path)  {
         Scanner scanner = new Scanner(System.in);
         String reply = "y";
         String docName;
         int docId;
         String mode;
-
 
         TokenProcessor processor =new BetterTokenProcessor();
         ContextStrategy strategy = new ContextStrategy(rankRetrievalStrategy.get(0));
@@ -206,6 +197,7 @@ public class DiskPositionalIndexer {
             for (Posting p : postings) {
                 if (p.getDocumentId() >= 0) {
                     docId = p.getDocumentId();
+                    System.out.println(p.getPositions());
                     System.out.println(corpus.getDocument(docId).getmFileName());
                 }
             }
