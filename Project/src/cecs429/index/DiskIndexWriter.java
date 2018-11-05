@@ -11,17 +11,19 @@ import java.util.*;
 
 public class DiskIndexWriter {
 
-    public void WriteIndex(Index index, Path path) throws IOException {
+    private Path path;
+
+    private void WriteIndex(Index index, Path path) throws IOException {
         //path = D:\Dhara_MS_in_CS\Java_Projects\MobyDick10Chapters
        List<String> vocab = index.getVocabulary();
 
         ArrayList<Long> mMapPosting = writePostings(index,path, vocab);
         ArrayList<Long> mMapVocab = writeVocab(index,path, vocab);
         writeVocabTable(path,mMapVocab,mMapPosting);
+        this.path = path;
     }
 
     private ArrayList<Long> writePostings(Index index, Path path, List<String> vocab) throws IOException {
-        //File postingsfile = new File(String.valueOf(path) + "\\index\\postings.bin");
        File postingsFile = new File(String.valueOf(path) + "/index/postings.bin");
        final boolean mkdirs = postingsFile.getParentFile().mkdirs();
 
@@ -53,11 +55,10 @@ public class DiskIndexWriter {
                 postingsout.writeInt( currentDocId - prevDocId);
                 prevDocId = currentDocId;
 
-               // postingsout.writeInt(document.getDocumentFrequency());
 
                 List<Integer> positionList = document.getPositions();
                 // writing posting.bin
-                //postingsout.writeInt(document.getDocumentFrequency());
+                //postingsout.writeInt(document.getTermFrequency());
                 postingsout.writeInt(positionList.size());
                 int prevPos=0;
                 for (Integer currentPos : positionList ) {
@@ -137,6 +138,10 @@ public class DiskIndexWriter {
          Objects.requireNonNull(docWeightsout).writeDouble((docLengthA * 4) / Ld.size());
      }
 
+     public  void getDocWeights(int docId){
+
+
+     }
 
      /*index the corpus given
        * also find the document weight for each document in the corpus
