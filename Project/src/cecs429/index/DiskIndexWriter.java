@@ -213,19 +213,9 @@ public class DiskIndexWriter {
             e.printStackTrace();
         }
 
-        try {
-            return new DiskPositionalIndex(path,corpus.getCorpusSize());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        /*
-            TODO:
-            Modify DiskPositionalIndexer so it knows how to open this 􏰀le and skip to an appropriate location to
-            read a 8-byte double for Ld. Ld values will be used when calculating ranked retrieval scores.
 
-        */
-
-        return  invertedDocumentIndex;
+        DiskPositionalIndex dIndex= new DiskPositionalIndex(path,corpus.getCorpusSize());
+        return  dIndex;
     }
 
 

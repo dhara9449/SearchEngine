@@ -96,7 +96,7 @@ public class RankedRetrieval implements QueryComponent {
         }
 
         //TODO:Select and return the top K=10 documents by the largest A_d values
-
+        
 
 
         return temp;
