@@ -1,18 +1,30 @@
 package cecs429.TermFrequency;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.List;
 
 public class TfIdfStrategy implements  TermFrequencyStrategy{
+
+    private RandomAccessFile weightsRAF=null;
+
+    public TfIdfStrategy(String path){
+        try {
+            weightsRAF = new RandomAccessFile(path+"/index/weights.bin","rw");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public double calculateWqt(int N, int dft){
         return Math.log( N*1.0/dft);
     }
     public  double calculateWdt(int tf,int docId){
         return tf;
     }
-    public double calculateLd(int docId) {
-        double Ld = 0.0;
-        //retreive  docId*8*4 from path
-        return Ld;
-
+    public double calculateLd(int docId) throws IOException {
+        weightsRAF.seek(docId*8*4);
+        return  weightsRAF.readDouble();
     }
 }
