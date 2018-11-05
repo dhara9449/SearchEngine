@@ -14,11 +14,11 @@ import com.google.gson.annotations.SerializedName;
 public class JsonDocument {
 
     @SerializedName("body")
-    public String body;
+    private String body;
     @SerializedName("url")
-    public String url;
+    private String url;
     @SerializedName("title")
-    public String title;
+    private String title;
 
     public String getBody() {
         return body;

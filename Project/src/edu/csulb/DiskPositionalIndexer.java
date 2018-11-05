@@ -211,7 +211,7 @@ public class DiskPositionalIndexer {
                     docName = scanner.nextLine();
                     for (Posting p : postings) {
                         docId = p.getDocumentId();
-                        if (corpus.getDocument(docId).getTitle().equalsIgnoreCase(docName)) {
+                        if (corpus.getDocument(docId).getmFileName().equalsIgnoreCase(docName)) {
                             try {
                                 System.out.println(IOUtils.toString(corpus.getDocument(docId).getContent()));
                             } catch (IOException e) {
