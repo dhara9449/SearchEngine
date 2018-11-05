@@ -1,7 +1,9 @@
 package cecs429.index;
 
+import cecs429.TermFrequency.ContextStrategy;
 
 import java.io.*;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -10,6 +12,7 @@ import java.util.*;
  */
 public class DiskPositionalIndex implements Index {
 
+    private Map<String, List<Posting>> mInvertedIndexMap;
     private String path;
     /*    private InputStream vocabIS;
         private DataInputStream vocabDIS;
@@ -162,7 +165,7 @@ public class DiskPositionalIndex implements Index {
 
             vocabRAF.seek(currentVocabByte);
             char[] vocabTerm = new char[(int) (nextVocabByte - currentVocabByte)];
-            for (int termlength = 0; termlength < vocabTerm.length ; termlength++) {
+            for (int termlength = 0; termlength < vocabTerm.length; termlength++) {
                 vocabTerm[termlength] = (char) vocabRAF.readByte();
             }
             String retrievedVocabTerm = String.valueOf(vocabTerm);
@@ -175,6 +178,7 @@ public class DiskPositionalIndex implements Index {
             } else {
                 i = mid + 1;
             }
+
         }
         return currentPostingsPos;
     }
@@ -201,6 +205,7 @@ public class DiskPositionalIndex implements Index {
         return result;
     }
 
+    //TODO:
     @Override
     public int getVocabulorySize() {
         try {

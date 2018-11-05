@@ -83,8 +83,8 @@ public class DiskPositionalIndexer {
         SnowballStemmer stemmer = new englishStemmer();
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter corpus path:");
-        //PATH=scanner.nextLine();
-        String PATH = "/Users/indumanimaran/Documents/SET/Test/";
+        String PATH=scanner.nextLine();
+       // String PATH = "/Users/indumanimaran/Documents/SET/Test/";
         Path directoryPath = Paths.get(PATH);
         String sPath = directoryPath.toString();
         System.out.println("Indexing..."+ directoryPath.toString());
