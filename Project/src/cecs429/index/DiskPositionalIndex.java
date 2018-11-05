@@ -1,6 +1,5 @@
 package cecs429.index;
 
-import cecs429.TermFrequency.ContextStrategy;
 
 import java.io.*;
 import java.nio.file.FileSystems;
@@ -18,35 +17,72 @@ public class DiskPositionalIndex implements Index {
     private RandomAccessFile postingsRAF;
     private RandomAccessFile vocabRAF;
     private RandomAccessFile vocabTableRAF;
+    private  RandomAccessFile weightsRAF;
     int N;
 
+    /*
+               TODO:
+               Modify DiskPositionalIndexer so it knows how to open this 􏰀le and skip to an appropriate location to
+               read a 8-byte double for Ld. Ld values will be used when calculating ranked retrieval scores.
 
+           */
     public  int getN(){return N;}
 
     DiskPositionalIndex(Path path, int N) throws FileNotFoundException {
         this.path=String.valueOf(path);
-/*        vocab = new File(path+ "/index/vocab.bin");
-        vocabDIS = new DataInputStream(new FileInputStream(vocab));*/
-
         vocabRAF = new RandomAccessFile( path + "/index/vocab.bin", "rw");
 
-        // postings=new File( path + "/index/postings.bin");
-        // postingsIS = new DataInputStream(new FileInputStream(postings));
         postingsRAF = new RandomAccessFile( path + "/index/postings.bin","rw");
 
-        // vocabTable =new File( path+"/index/vocabTable.bin");
-        /*  vocabTableDIS = new DataInputStream(vocabTableFIS);*/
         vocabTableRAF = new RandomAccessFile(path+"/index/vocabTable.bin","rw");
 
+        weightsRAF = new RandomAccessFile(path+"/index/weights.bin","rw");
         this.mInvertedIndexMap = new HashMap<>();
         this.N=N;
 
     }
 
+
+    /*
+    * Returns  a lis of postings without information about the term position in a document
+    */
+    @Override
+    public List<Posting> getPostings(String term) {
+        List<Posting> postingsList = new ArrayList<>();
+        // get the position of postings from vocabTable.bin
+        //using binary search ....
+
+        try {
+            // int length =  (vocabTableFIS.available()/16);
+            long postingPos = binarySearchVocab(term);
+            postingsRAF.seek(postingPos);
+            int dft=postingsRAF.readInt();
+            Posting p;
+            int currentdocIdGap;
+            int prevdocIdGap =0;
+
+            for( int docFreq =0; docFreq < dft; docFreq++){
+
+                currentdocIdGap = postingsRAF.readInt();
+
+                p = new Posting(prevdocIdGap+currentdocIdGap);
+                prevdocIdGap =currentdocIdGap;
+                //p.setmDocumentId(docId);
+
+                int tft = postingsRAF.readInt();
+                p.setTermFrequency(tft);
+                postingsList.add(p);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return postingsList;    }
     //TODO:
     @Override
-    public List<Posting> getPostings(String term){
-        List<Posting> postingsList = new ArrayList<Posting>();
+    public List<Posting> getPostingsWithPosition(String term){
+        List<Posting> postingsList = new ArrayList<>();
         // get the position of postings from vocabTable.bin
         //using binary search ....
 
@@ -135,13 +171,18 @@ public class DiskPositionalIndex implements Index {
     //TODO:
     @Override
     public List<String> getVocabulary() {
-
         return null;
     }
 
-    //TODO:
     @Override
-    public List<Posting> getPostingsWithPosition(String term) {
-        return null;
+    public int getVocabulorySize() {
+        try {
+            return (int)vocabTableRAF.length() /16;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  0;
     }
+
+
 }

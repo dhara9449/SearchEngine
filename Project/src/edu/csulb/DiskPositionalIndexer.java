@@ -167,6 +167,7 @@ public class DiskPositionalIndexer {
 
         TokenProcessor processor =new BetterTokenProcessor();
         ContextStrategy strategy = new ContextStrategy(rankRetrievalStrategy.get(0),path.toString());
+
         System.out.println("Enter retrieval mode: 1.Boolean 2.Ranked");
         mode = scanner.nextLine();
         mode = modes.get(Integer.parseInt(mode));

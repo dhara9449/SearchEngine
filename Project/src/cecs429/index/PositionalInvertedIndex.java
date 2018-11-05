@@ -30,6 +30,11 @@ public class PositionalInvertedIndex implements Index {
         return Collections.unmodifiableList(mVocabulary);
     }
 
+    @Override
+    public int getVocabulorySize() {
+        return mInvertedIndexMap.size();
+    }
+
     //TODO:???
     @Override
     public List<Posting> getPostingsWithPosition(String term) {
