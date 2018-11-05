@@ -11,6 +11,7 @@ public class ContextStrategy {
 
     public ContextStrategy(TermFrequencyStrategy strategy){
         this.strategy = strategy;
+        this.path=path;
     }
 
     public double calculateWqt(int N, int dft){

@@ -45,6 +45,18 @@ public class DiskPositionalIndexer {
         return corpus;
     }
 
+    DiskPositionalIndexer(){
+        modes = new ArrayList<>();
+        modes.add("");
+        modes.add("boolean");
+        modes.add("ranked");
+
+        rankRetrievalStrategy = new ArrayList<>();
+        rankRetrievalStrategy.add(new DefaultFrequencyStrategy());
+        rankRetrievalStrategy.add(new TfIdfStrategy());
+        rankRetrievalStrategy.add(new OkapiStrategy());
+        rankRetrievalStrategy.add(new WackyStrategy());
+    }
 
 
 
@@ -166,16 +178,12 @@ public class DiskPositionalIndexer {
             }
         }
 
-
-
-
     private static void queryPosting( DocumentCorpus corpus, Index index, String query,Path path)  {
         Scanner scanner = new Scanner(System.in);
         String reply = "y";
         String docName;
         int docId;
         String mode;
-
 
         TokenProcessor processor =new BetterTokenProcessor();
         ContextStrategy strategy = new ContextStrategy(rankRetrievalStrategy.get(0));
@@ -206,6 +214,7 @@ public class DiskPositionalIndexer {
             for (Posting p : postings) {
                 if (p.getDocumentId() >= 0) {
                     docId = p.getDocumentId();
+                    System.out.println(p.getPositions());
                     System.out.println(corpus.getDocument(docId).getmFileName());
                 }
             }
