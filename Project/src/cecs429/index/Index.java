@@ -2,6 +2,7 @@ package cecs429.index;
 
 import cecs429.TermFrequency.ContextStrategy;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ public interface Index {
      *
      * @return
      */
-    List<String> getVocabulary();
+    List<String> getVocabulary() throws IOException;
 
     int getVocabulorySize();
 

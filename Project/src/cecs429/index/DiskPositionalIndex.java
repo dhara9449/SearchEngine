@@ -79,7 +79,8 @@ public class DiskPositionalIndex implements Index {
         }
 
         return postingsList;    }
-    //TODO:
+
+
     @Override
     public List<Posting> getPostingsWithPosition(String term){
         List<Posting> postingsList = new ArrayList<>();
@@ -168,10 +169,26 @@ public class DiskPositionalIndex implements Index {
     }
 
 
-    //TODO:
+    //TODO: Check if getVocabulory is correct...
     @Override
-    public List<String> getVocabulary() {
-        return null;
+    public List<String> getVocabulary() throws IOException {
+        List<String> result = new ArrayList<>();
+        int count =1;
+        long currentVocabByte=0,nextVocabByte=0;
+        while(count<1000) {
+            vocabTableRAF.seek(currentVocabByte);
+            count++;
+            vocabTableRAF.seek(count * 16);
+            nextVocabByte = vocabTableRAF.readLong();
+            vocabRAF.seek(currentVocabByte);
+            char[] vocabTerm = new char[(int) (nextVocabByte - currentVocabByte)];
+            for (int termlength = 0; termlength < vocabTerm.length; termlength++) {
+                vocabTerm[termlength] = (char) vocabRAF.readByte();
+            }
+            result.add(String.valueOf(vocabTerm));
+            currentVocabByte = nextVocabByte;
+        }
+        return result;
     }
 
     @Override
