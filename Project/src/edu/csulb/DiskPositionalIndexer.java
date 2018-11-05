@@ -107,7 +107,12 @@ public class DiskPositionalIndexer {
                         break OUTER;
                     case ":vocab":
                         System.out.println("@vocabulary ");
-                        List<String> vocabulary = index.getVocabulary();
+                        List<String> vocabulary = null;
+                        try {
+                            vocabulary = index.getVocabulary();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         List<String> newList = new ArrayList<>(vocabulary.subList(0, min(vocabulary.size(), 1000)));
                         newList.forEach(System.out::println);
                         System.out.println("#vocabulary terms: " + vocabulary.size());
@@ -115,7 +120,11 @@ public class DiskPositionalIndexer {
 
                     case ":biwordVocab":
                         Index biwordIndex=BiwordIndex.getIndex();
-                        System.out.println("Biword Index size: "+ biwordIndex.getVocabulary().size());
+                        try {
+                            System.out.println("Biword Index size: "+ biwordIndex.getVocabulary().size());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     default:
                         queryPosting(corpus, index, query,directoryPath);
