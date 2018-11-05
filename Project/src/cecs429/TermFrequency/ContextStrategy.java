@@ -1,16 +1,16 @@
 package cecs429.TermFrequency;
 
-import java.util.List;
+import java.io.IOException;
 
 public class ContextStrategy {
 
 
     private TermFrequencyStrategy strategy;
-    private  String path;
 
-    public ContextStrategy(TermFrequencyStrategy strategy,String  path){
+
+
+    public ContextStrategy(TermFrequencyStrategy strategy){
         this.strategy = strategy;
-        this.path = path;
     }
 
     public double calculateWqt(int N, int dft){
@@ -21,7 +21,8 @@ public class ContextStrategy {
         return strategy.calculateWdt(tf,docId);
     }
 
-    public double calculateLd(int docId){
+    public double calculateLd(int docId) throws IOException {
+
         return strategy.calculateLd(docId);
     }
 }

@@ -45,18 +45,6 @@ public class DiskPositionalIndexer {
         return corpus;
     }
 
-    DiskPositionalIndexer(){
-        modes = new ArrayList<>();
-        modes.add("");
-        modes.add("boolean");
-        modes.add("ranked");
-
-        rankRetrievalStrategy = new ArrayList<>();
-        rankRetrievalStrategy.add(new DefaultFrequencyStrategy());
-        rankRetrievalStrategy.add(new TfIdfStrategy());
-        rankRetrievalStrategy.add(new OkapiStrategy());
-        rankRetrievalStrategy.add(new WackyStrategy());
-    }
 
 
 
@@ -73,12 +61,20 @@ public class DiskPositionalIndexer {
     }
 
     public static void main(String[] args)  {
+
+        modes = new ArrayList<>();
+        modes.add("");
+        modes.add("boolean");
+        modes.add("ranked");
+
+
         SnowballStemmer stemmer = new englishStemmer();
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter corpus path:");
         //PATH=scanner.nextLine();
         String PATH = "/Users/indumanimaran/Documents/SET/Test/";
         Path directoryPath = Paths.get(PATH);
+        String sPath = directoryPath.toString();
         System.out.println("Indexing..."+ directoryPath.toString());
         DocumentCorpus corpus;
 
@@ -91,6 +87,13 @@ public class DiskPositionalIndexer {
         DiskIndexWriter diskIndexWriter = new DiskIndexWriter();
         Index index = newIndex(corpus,diskIndexWriter,directoryPath);
 
+
+
+        rankRetrievalStrategy = new ArrayList<>();
+        rankRetrievalStrategy.add(new DefaultFrequencyStrategy(sPath));
+        rankRetrievalStrategy.add(new TfIdfStrategy(sPath));
+        rankRetrievalStrategy.add(new OkapiStrategy(sPath));
+        rankRetrievalStrategy.add(new WackyStrategy(sPath));
         String query;
         Scanner reader = new Scanner(System.in);
         OUTER:
@@ -166,7 +169,7 @@ public class DiskPositionalIndexer {
 
 
         TokenProcessor processor =new BetterTokenProcessor();
-        ContextStrategy strategy = new ContextStrategy(rankRetrievalStrategy.get(0),path.toString());
+        ContextStrategy strategy = new ContextStrategy(rankRetrievalStrategy.get(0));
 
         System.out.println("Enter retrieval mode: 1.Boolean 2.Ranked");
         mode = scanner.nextLine();
@@ -178,7 +181,7 @@ public class DiskPositionalIndexer {
                     "3.Okapi BM25" +
                     "4.Wacky" +
                     "Enter choice: ");
-             strategy= new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt()),path.toString());
+             strategy= new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt()));
         }
 
         QueryComponent queryComponent;
