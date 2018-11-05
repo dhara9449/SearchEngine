@@ -1,5 +1,6 @@
 package cecs429.index;
 
+import cecs429.TermFrequency.ContextStrategy;
 
 import java.io.*;
 import java.nio.file.FileSystems;
@@ -13,6 +14,13 @@ public class DiskPositionalIndex implements Index {
 
     private Map<String, List<Posting>> mInvertedIndexMap;
     private String path;
+    /*    private InputStream vocabIS;
+        private DataInputStream vocabDIS;
+        private InputStream postingsIS;
+        private InputStream vocabTableFIS;
+        private File vocab;
+        private File vocabTable;
+        private DataInputStream vocabTableDIS;*/
 
     private RandomAccessFile postingsRAF;
     private RandomAccessFile vocabRAF;
@@ -30,13 +38,19 @@ public class DiskPositionalIndex implements Index {
 
     DiskPositionalIndex(Path path, int N) throws FileNotFoundException {
         this.path=String.valueOf(path);
+/*        vocab = new File(path+ "/index/vocab.bin");
+        vocabDIS = new DataInputStream(new FileInputStream(vocab));*/
+
         vocabRAF = new RandomAccessFile( path + "/index/vocab.bin", "rw");
 
+        // postings=new File( path + "/index/postings.bin");
+        // postingsIS = new DataInputStream(new FileInputStream(postings));
         postingsRAF = new RandomAccessFile( path + "/index/postings.bin","rw");
 
+        // vocabTable =new File( path+"/index/vocabTable.bin");
+        /*  vocabTableDIS = new DataInputStream(vocabTableFIS);*/
         vocabTableRAF = new RandomAccessFile(path+"/index/vocabTable.bin","rw");
 
-        weightsRAF = new RandomAccessFile(path+"/index/weights.bin","rw");
         this.mInvertedIndexMap = new HashMap<>();
         this.N=N;
 
@@ -87,7 +101,7 @@ public class DiskPositionalIndex implements Index {
         //using binary search ....
 
         try {
-           // int length =  (vocabTableFIS.available()/16);
+            // int length =  (vocabTableFIS.available()/16);
             long postingPos = binarySearchVocab(term);
             postingsRAF.seek(postingPos);
             int dft=postingsRAF.readInt();
@@ -126,7 +140,7 @@ public class DiskPositionalIndex implements Index {
     }
 
     private long binarySearchVocab(String term) throws IOException {
-        long vocabTableLength = (vocabTableRAF.length() / 16);
+        long vocabTableLength =  (vocabTableRAF.length() /16);
         long vocabLength = vocabRAF.length();
         long i = 0;
         long j = vocabTableLength - 1;
@@ -171,9 +185,15 @@ public class DiskPositionalIndex implements Index {
     //TODO:
     @Override
     public List<String> getVocabulary() {
+
+        List<String> mVocabulary = new ArrayList<>();
+        /*mVocabulary.addAll(mInvertedIndexMap.keySet());
+        Collections.sort(mVocabulary);
+        return Collections.unmodifiableList(mVocabulary);*/
         return null;
     }
 
+    //TODO:
     @Override
     public int getVocabulorySize() {
         try {
