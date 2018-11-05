@@ -45,7 +45,6 @@ public class DiskPositionalIndexer {
         return corpus;
     }
 
-
     private static Index newIndex(DocumentCorpus corpus,DiskIndexWriter diskIndexWriter,Path directoryPath) {
         final long startTime = System.currentTimeMillis();
         Index index= diskIndexWriter.indexCorpus(corpus,directoryPath);
@@ -63,12 +62,6 @@ public class DiskPositionalIndexer {
         modes.add("");
         modes.add("boolean");
         modes.add("ranked");
-
-        modes = new ArrayList<>();
-        modes.add("");
-        modes.add("boolean");
-        modes.add("ranked");
-
 
         SnowballStemmer stemmer = new englishStemmer();
         Scanner scanner=new Scanner(System.in);
