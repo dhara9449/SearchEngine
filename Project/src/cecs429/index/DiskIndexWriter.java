@@ -214,7 +214,12 @@ public class DiskIndexWriter {
         }
 
 
-        DiskPositionalIndex dIndex= new DiskPositionalIndex(path,corpus.getCorpusSize());
+        DiskPositionalIndex dIndex=null;
+
+        try{
+            dIndex=new DiskPositionalIndex(path,corpus.getCorpusSize());
+        }catch (Exception ignored){
+        }
         return  dIndex;
     }
 

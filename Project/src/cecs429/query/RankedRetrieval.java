@@ -95,10 +95,17 @@ public class RankedRetrieval implements QueryComponent {
             accumulatorQueue.add(accum);
         }
 
-        //TODO:Select and return the top K=10 documents by the largest A_d values
-        
 
-
+        List<Integer> result = new ArrayList<>();
+        Iterator priorityQIterator = accumulatorQueue.iterator();
+        int cnt=0;
+        while (priorityQIterator.hasNext()) {
+            Accumulator s=(Accumulator) priorityQIterator.next();
+            result.add(s.getDocId());
+            cnt++;
+            if(cnt>=10)
+                break;
+        }
         return temp;
     }
 
