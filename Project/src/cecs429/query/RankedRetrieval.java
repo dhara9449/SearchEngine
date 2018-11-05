@@ -4,6 +4,7 @@ import cecs429.TermFrequency.ContextStrategy;
 import cecs429.index.Index;
 import cecs429.index.Posting;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,10 +31,10 @@ public class RankedRetrieval implements QueryComponent {
         int docId;
         int tf;
         int dft;
-        double wdt,wqt;
-        double Ad;
+        double wdt=0.0,wqt=0.0;
+        double Ad=0.0;
 
-        double Ld;
+        double Ld=0.0;
 
         class Accumulator implements Comparable<Accumulator> {
             private  int docId;
@@ -75,7 +76,11 @@ public class RankedRetrieval implements QueryComponent {
             for(Posting p:temp){ // for each document d in t's posting list
                 tf = p.getTermFrequency();
                 docId=p.getDocumentId();
-                wdt=strategy.calculateWdt(tf,docId);
+                try {
+                    wdt=strategy.calculateWdt(tf,docId);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 if(accumulatorHashMap.containsKey(docId)){
                     accumulator = accumulatorHashMap.get(docId);
                 }
@@ -90,7 +95,11 @@ public class RankedRetrieval implements QueryComponent {
 
         //For each non-aero Ad, divide A_d by L_d , where L_d is read from docWeights.bin file
         for (Accumulator accum : accumulatorHashMap.values()) {
-            Ld=strategy.calculateLd(accum.getDocId());
+            try {
+                Ld=strategy.calculateLd(accum.getDocId());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             accum.setAd(accum.getAd()/Ld);
             accumulatorQueue.add(accum);
         }

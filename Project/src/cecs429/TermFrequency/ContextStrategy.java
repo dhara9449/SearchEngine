@@ -17,7 +17,7 @@ public class ContextStrategy {
         return strategy.calculateWqt(N, dft);
     }
 
-    public double calculateWdt(int tf,int docId){
+    public double calculateWdt(int tf,int docId) throws IOException {
         return strategy.calculateWdt(tf,docId);
     }
 
