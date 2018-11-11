@@ -15,10 +15,12 @@ public class Posting {
 
     public Posting(int documentId) {
         mPositions = new ArrayList<>();
-        termFrequency=0;
+
         mDocumentId = documentId;
     }
 
+
+    //TO DO :: Another constrctor with termFreq
   //Gets document ID of the current posting object.
     public int getDocumentId() {
         return mDocumentId;

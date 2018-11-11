@@ -2,38 +2,37 @@
  * To change this license header, choose Licensex Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ *//*
+
 package edu.csulb;
 
-import cecs429.TermFrequency.*;
 import cecs429.documents.DirectoryCorpus;
+import cecs429.documents.Document;
 import cecs429.documents.DocumentCorpus;
 import cecs429.index.*;
 import cecs429.query.BooleanQueryParser;
 import cecs429.query.QueryComponent;
-import cecs429.query.RankedQueryParser;
 import cecs429.text.BetterTokenProcessor;
-import cecs429.text.TokenProcessor;
+import cecs429.text.EnglishTokenStream;
+import java.io.File;
+import java.io.IOException;
+import static java.lang.Integer.min;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.tartarus.snowball.SnowballStemmer;
 import org.tartarus.snowball.ext.englishStemmer;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
-
-import static java.lang.Integer.min;
-
-    ///Users/indumanimaran/Documents/SET/MobyDick10Chapters
-///Users/indumanimaran/Documents/SET/Test/
-public class DiskPositionalIndexer {
-
-    private  static  ArrayList<String> modes;
-    private static  ArrayList<TermFrequencyStrategy> rankRetrievalStrategy;
+public class InvertedTermDocumentIndex {
+    private static String PATH;
+    private static long indexTime=0;
+    private static String EXTENSION = ".txt";
 
     private static DocumentCorpus newCorpus(Path directoryPath, String extension) {
         DocumentCorpus corpus;
@@ -45,50 +44,37 @@ public class DiskPositionalIndexer {
         return corpus;
     }
 
-    private static Index newIndex(DocumentCorpus corpus,DiskIndexWriter diskIndexWriter,Path directoryPath) {
+    private static Index newIndex(DocumentCorpus corpus) {
         final long startTime = System.currentTimeMillis();
-        Index index= diskIndexWriter.indexCorpus(corpus,directoryPath);
+
+        Index index= indexCorpus(corpus);
 
         final long endTime = System.currentTimeMillis();
-        long indexTime = endTime - startTime;
-        System.out.println("Time taken for indexing corpus:"+ indexTime /1000 +" seconds");
+        indexTime = endTime-startTime;
+        System.out.println("Time taken for indexing corpus:"+indexTime/1000 +" seconds");
         return index;
 
     }
 
-    public static void main(String[] args)  {
-
-        modes = new ArrayList<>();
-        modes.add("");
-        modes.add("boolean");
-        modes.add("ranked");
-
+    public static void main(String[] args) throws IOException {
         SnowballStemmer stemmer = new englishStemmer();
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter corpus path:");
-        String PATH=scanner.nextLine();
-       // String PATH = "/Users/indumanimaran/Documents/SET/Test/";
+        PATH=scanner.nextLine();
         Path directoryPath = Paths.get(PATH);
-        String sPath = directoryPath.toString();
         System.out.println("Indexing..."+ directoryPath.toString());
         DocumentCorpus corpus;
 
-
-
         File folder2 = new File(PATH);
         File[] listOfFiles = folder2.listFiles();
-        String EXTENSION = FilenameUtils.getExtension(Objects.requireNonNull(listOfFiles)[0].getName());
+        EXTENSION = FilenameUtils.getExtension(listOfFiles[0].getName());
 
         corpus = newCorpus(directoryPath,"."+ EXTENSION);
-        System.out.println("EXTENSION is "+ EXTENSION);
-        DiskIndexWriter diskIndexWriter = new DiskIndexWriter();
-        Index index = newIndex(corpus,diskIndexWriter,directoryPath);
+        Index index = newIndex(corpus);
 
-        rankRetrievalStrategy = new ArrayList<>();
-        rankRetrievalStrategy.add(new DefaultFrequencyStrategy(sPath));
-        rankRetrievalStrategy.add(new TfIdfStrategy(sPath));
-        rankRetrievalStrategy.add(new OkapiStrategy(sPath));
-        rankRetrievalStrategy.add(new WackyStrategy(sPath));
+        DiskIndexWriter diskIndexWriter = new DiskIndexWriter();
+        diskIndexWriter.WriteIndex(index,directoryPath);
+        BooleanQueryParser parser = new BooleanQueryParser();
         String query;
         Scanner reader = new Scanner(System.in);
         OUTER:
@@ -102,27 +88,20 @@ public class DiskPositionalIndexer {
                         break OUTER;
                     case ":vocab":
                         System.out.println("@vocabulary ");
-                        List<String> vocabulary = null;
-                        try {
-                            vocabulary = index.getVocabulary();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        List<String> vocabulary = index.getVocabulary();
                         List<String> newList = new ArrayList<>(vocabulary.subList(0, min(vocabulary.size(), 1000)));
-                        newList.forEach(System.out::println);
+                        newList.forEach((vocab) -> {
+                            System.out.println(vocab);
+                        });
                         System.out.println("#vocabulary terms: " + vocabulary.size());
                         break;
 
                     case ":biwordVocab":
                         Index biwordIndex=BiwordIndex.getIndex();
-                        try {
-                            System.out.println("Biword Index size: "+ biwordIndex.getVocabulary().size());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        System.out.println("Biword Index size: "+ biwordIndex.getVocabulary().size());
                         break;
                     default:
-                        queryPosting(corpus, index, query,directoryPath);
+                        queryPosting(parser, corpus, index, query);
                         break;
                 }
             } else if (len == 2) {
@@ -143,53 +122,84 @@ public class DiskPositionalIndexer {
                         if (Files.exists(tempPath)) {
                             File folder = new File(query.split("\\s+")[1]);
                             File[] listOfFiles2 = folder.listFiles();
-                            EXTENSION = FilenameUtils.getExtension(Objects.requireNonNull(listOfFiles2)[0].getName());
+                            EXTENSION = FilenameUtils.getExtension(listOfFiles2[0].getName());
                             corpus = newCorpus(tempPath,"."+ EXTENSION);
-                            index = newIndex(corpus,diskIndexWriter,directoryPath);
+                            index = newIndex(corpus);
                         } else {
                             System.out.println("The specified directory does not exist");
                         }
                         break;
                     default:
-                        queryPosting( corpus, index, query,directoryPath);
+                        queryPosting(parser, corpus, index, query);
                         break;
                 }
             } else {
-                queryPosting( corpus, index, query,directoryPath);
-                        break;
-                }
+                queryPosting(parser, corpus, index, query);
             }
         }
+    }
 
-    private static void queryPosting( DocumentCorpus corpus, Index index, String query,Path path)  {
+    private static Index indexCorpus(DocumentCorpus corpus) {
+        HashSet<String> vocabulary = new HashSet<>();
+        BetterTokenProcessor processor = new BetterTokenProcessor();
+        EnglishTokenStream englishTokenStream;
+        PositionalInvertedIndex invertedDocumentIndex = new PositionalInvertedIndex();
+
+        PositionalInvertedIndex biwordIndex = new PositionalInvertedIndex();
+
+        int corpusSize=corpus.getCorpusSize();
+        int currentDocId;
+        for (Document document : corpus.getDocuments()) {
+            englishTokenStream = new EnglishTokenStream(document.getContent());
+            Iterable<String> getTokens = englishTokenStream.getTokens();
+            int position = 0;
+            String lastTerm = "";
+            String term;
+            currentDocId = document.getId();
+            for (String tokens : getTokens) {
+                for (String token : processor.processToken(tokens)) {
+                    term = token;
+                    if(!term.trim().equals("")) {
+                        invertedDocumentIndex.addTerm(term, currentDocId, position);
+
+                        */
+/*
+                         * Creating biword index only for a small number of documents
+                         * because for a larger corpus size, the following error:
+                         * "java.lang.OutOfMemoryError: GC overhead limit exceeded"
+                         * When tested on a corpus with small number of documents (in comparision to the given corpus of 36K+ docs
+                         * the biword index works perfectly fine.
+                         *
+                         * *//*
+
+
+                        if(currentDocId<150) {
+                            biwordIndex.addTerm(lastTerm + " " + term, currentDocId, position - 1);
+                        }
+                        lastTerm = term;
+                        position++;
+                    }
+                }
+            }
+            try {
+                englishTokenStream.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        BiwordIndex.setIndex(biwordIndex);
+        return invertedDocumentIndex;
+    }
+
+    private static void queryPosting(BooleanQueryParser parser, DocumentCorpus corpus, Index index, String query)  {
+
         Scanner scanner = new Scanner(System.in);
+        EnglishTokenStream englishTokenStream;
         String reply = "y";
         String docName;
         int docId;
-        String mode;
 
-        TokenProcessor processor =new BetterTokenProcessor();
-        ContextStrategy strategy = new ContextStrategy(rankRetrievalStrategy.get(0));
-
-        System.out.println("Enter retrieval mode: 1.Boolean 2.Ranked");
-        mode = scanner.next();
-        mode = modes.get(Integer.parseInt(mode));
-
-        if(mode.equalsIgnoreCase("2")){
-            System.out.println("1.Default\n" +
-                    "2.tf-idf" +
-                    "3.Okapi BM25" +
-                    "4.Wacky" +
-                    "Enter choice: ");
-             strategy= new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt()));
-        }
-
-        QueryComponent queryComponent;
-        if (mode.equalsIgnoreCase("boolean")){
-            queryComponent = new BooleanQueryParser().parseQuery(query, processor);
-        }else{
-            queryComponent = new RankedQueryParser(strategy,corpus.getCorpusSize()).parseQuery(query, processor);
-        }
+        QueryComponent queryComponent = parser.parseQuery(query);
 
         List<Posting> postings = queryComponent.getPostings(index);
 
@@ -197,7 +207,6 @@ public class DiskPositionalIndexer {
             for (Posting p : postings) {
                 if (p.getDocumentId() >= 0) {
                     docId = p.getDocumentId();
-                    System.out.println(p.getPositions());
                     System.out.println(corpus.getDocument(docId).getmFileName());
                 }
             }
@@ -212,6 +221,7 @@ public class DiskPositionalIndexer {
                     for (Posting p : postings) {
                         docId = p.getDocumentId();
                         if (corpus.getDocument(docId).getTitle().equalsIgnoreCase(docName)) {
+                            englishTokenStream = new EnglishTokenStream(corpus.getDocument(docId).getContent());
                             try {
                                 System.out.println(IOUtils.toString(corpus.getDocument(docId).getContent()));
                             } catch (IOException e) {
@@ -223,4 +233,4 @@ public class DiskPositionalIndexer {
             }
         }
     }
-}
+}*/

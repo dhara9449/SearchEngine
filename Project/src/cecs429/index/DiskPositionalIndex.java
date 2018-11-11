@@ -10,50 +10,29 @@ import java.util.*;
 public class DiskPositionalIndex implements Index {
 
     private String path;
-    /*    private InputStream vocabIS;
-        private DataInputStream vocabDIS;
-        private InputStream postingsIS;
-        private InputStream vocabTableFIS;
-        private File vocab;
-        private File vocabTable;
-        private DataInputStream vocabTableDIS;*/
-
     private RandomAccessFile postingsRAF;
     private RandomAccessFile vocabRAF;
     private RandomAccessFile vocabTableRAF;
-
     private  RandomAccessFile weightsRAF;
     int N;
 
     /*
-               TODO:
-               Modify DiskPositionalIndexer so it knows how to open this 􏰀le and skip to an appropriate location to
-               read a 8-byte double for Ld. Ld values will be used when calculating ranked retrieval scores.
-
-           */
+     TODO:
+     Modify DiskPositionalIndexer so it knows how to open this 􏰀le and skip to an appropriate location to
+     read a 8-byte double for Ld. Ld values will be used when calculating ranked retrieval scores.
+    */
     public  int getN(){return N;}
 
 
     public DiskPositionalIndex(Path path,int N) throws FileNotFoundException {
         this.path=String.valueOf(path);
-/*        vocab = new File(path+ "/index/vocab.bin");
-        vocabDIS = new DataInputStream(new FileInputStream(vocab));*/
-
-
         vocabRAF = new RandomAccessFile( path + "/index/vocab.bin", "rw");
-        // postings=new File( path + "/index/postings.bin");
-        // postingsIS = new DataInputStream(new FileInputStream(postings));
         postingsRAF = new RandomAccessFile( path + "/index/postings.bin","rw");
-
-        // vocabTable =new File( path+"/index/vocabTable.bin");
-        /*  vocabTableDIS = new DataInputStream(vocabTableFIS);*/
         vocabTableRAF = new RandomAccessFile(path+"/index/vocabTable.bin","rw");
-
-
     }
 
     /*
-    * Returns  a lis of postings without information about the term position in a document
+    * Returns  a list of postings without information about the term position in a document
     */
     @Override
     public List<Posting> getPostings(String term) {
@@ -62,7 +41,6 @@ public class DiskPositionalIndex implements Index {
         //using binary search ....
 
         try {
-            // int length =  (vocabTableFIS.available()/16);
             long postingPos = binarySearchVocab(term);
             postingsRAF.seek(postingPos);
             int dft=postingsRAF.readInt();
@@ -71,14 +49,15 @@ public class DiskPositionalIndex implements Index {
             int prevdocIdGap =0;
 
             for( int docFreq =0; docFreq < dft; docFreq++){
-
                 currentdocIdGap = postingsRAF.readInt();
-
                 p = new Posting(prevdocIdGap+currentdocIdGap);
                 prevdocIdGap =currentdocIdGap;
                 //p.setmDocumentId(docId);
 
                 int tft = postingsRAF.readInt();
+                for(int termFreq = 0; termFreq < tft; termFreq++) {
+                    postingsRAF.readInt();
+                }
                 p.setTermFrequency(tft);
                 postingsList.add(p);
             }
@@ -152,6 +131,7 @@ public class DiskPositionalIndex implements Index {
                 nextVocabByte = vocabLength;
             }
             else {
+                // for the last vocab byte, the posting position will be the byte length of the vocabTable.bin
                 nextVocabByte  = vocabTableRAF.readLong();
             }
 
@@ -184,7 +164,7 @@ public class DiskPositionalIndex implements Index {
         int count =1,termLength;
         long currentVocabByte,currentPostingPosition, nextVocabByte;
         char[] vocabTerm;
-        while(count<=1000 && vocabTableLength >= count) {
+       // while(count<=1000 && vocabTableLength >= count) { //TO DO for all....
 
            currentVocabByte = vocabTableRAF.readLong();
            // currentPostingPosition = vocabTableRAF.readLong();
@@ -208,18 +188,19 @@ public class DiskPositionalIndex implements Index {
             String retrievedTerm = String.valueOf(vocabTerm);
             vocabResultList.add(retrievedTerm);
             count++;
-        }
+       // }
         return vocabResultList;
     }
 
     //TODO:
     @Override
     public int getVocabulorySize() {
+        int vocabSize = 0;
         try {
-            return (int)vocabTableRAF.length() /16;
+            vocabSize = (int)vocabTableRAF.length() /16;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  0;
+        return vocabSize;
     }
 }

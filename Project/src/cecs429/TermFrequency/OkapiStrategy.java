@@ -10,7 +10,7 @@ public class OkapiStrategy implements  TermFrequencyStrategy{
 
     public OkapiStrategy(String path){
         try {
-            weightsRAF = new RandomAccessFile(path+"/index/weights.bin","rw");
+            weightsRAF = new RandomAccessFile(path+"/index/docWeights.bin","rw");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

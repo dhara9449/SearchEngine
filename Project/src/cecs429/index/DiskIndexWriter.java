@@ -44,7 +44,6 @@ public class DiskIndexWriter {
             //determining the location for vocab table
             mMapPosting.add(out1.getChannel().size()-4);
 
-
             // the first document should be the docId
             int prevDocId = 0;
             int currentDocId;
@@ -54,7 +53,6 @@ public class DiskIndexWriter {
                 currentDocId = document.getDocumentId();
                 postingsout.writeInt( currentDocId - prevDocId);
                 prevDocId = currentDocId;
-
 
                 List<Integer> positionList = document.getPositions();
                 // writing posting.bin
@@ -85,7 +83,6 @@ public class DiskIndexWriter {
         }
         return mMapVocab;
     }
-
 
 
     /*
@@ -143,6 +140,8 @@ public class DiskIndexWriter {
 
      }
 
+
+
      /*index the corpus given
        * also find the document weight for each document in the corpus
     */
@@ -193,8 +192,8 @@ public class DiskIndexWriter {
                 tf_td = tf_td + tf;
             }
             docWeights.add(Math.sqrt(Ld)); // docWeights d
-            docWeights.add( position+0.0); // docLength d
-            docWeights.add(0.0);//Determine the bytesize fo the document
+            docWeights.add(position+0.0); // docLength d
+            docWeights.add(0.0);//Determine the bytesize of the document
             docWeights.add(tf_td/termFrequencyTracker.size());//avg tf t,d
         }
 
@@ -222,8 +221,4 @@ public class DiskIndexWriter {
         }
         return  dIndex;
     }
-
-
-
-
 }
