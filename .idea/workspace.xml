@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8f3f9e3e-1d97-4ba4-92a2-6cbbe7fdfdb1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/ContextStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/ContextStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/DefaultFrequencyStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/DefaultFrequencyStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/OkapiStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/OkapiStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/TfIdfStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/TfIdfStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/WackyStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/WackyStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/index/DiskPositionalIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/index/DiskPositionalIndex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/index/Posting.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/index/Posting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/edu/csulb/DiskPositionalIndexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/edu/csulb/DiskPositionalIndexer.java" afterDir="false" />
-    </list>
+    <list default="true" id="8f3f9e3e-1d97-4ba4-92a2-6cbbe7fdfdb1" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,8 +82,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskPositionalIndex.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="81" column="22" lean-forward="true" selection-start-line="81" selection-start-column="22" selection-end-line="81" selection-end-column="22" />
+            <state relative-caret-position="675">
+              <caret line="84" lean-forward="true" selection-start-line="84" selection-end-line="84" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -338,7 +326,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541969570944" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541969830917" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
@@ -389,7 +377,7 @@
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.11545293" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.6021314" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.13854352" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -725,8 +713,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskPositionalIndex.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="81" column="22" lean-forward="true" selection-start-line="81" selection-start-column="22" selection-end-line="81" selection-end-column="22" />
+        <state relative-caret-position="675">
+          <caret line="84" lean-forward="true" selection-start-line="84" selection-end-line="84" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
