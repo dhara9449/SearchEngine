@@ -11,7 +11,6 @@ public class ContextStrategy {
         this.strategy = strategy;
 
  }
-
     public double calculateWqt(int N, int dft){
         return strategy.calculateWqt(N, dft);
     }
