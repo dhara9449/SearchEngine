@@ -152,6 +152,15 @@ public class DiskIndexWriter {
      }
 
 
+    public Index loadCorpus(DocumentCorpus corpus,Path path){
+        DiskPositionalIndex dIndex=null;
+        try{
+            dIndex=new DiskPositionalIndex(path,corpus.getCorpusSize());
+        }catch (Exception ignored){
+        }
+        return  dIndex;
+
+    }
 
      /*index the corpus given
        * also find the document weight for each document in the corpus
@@ -203,7 +212,7 @@ public class DiskIndexWriter {
                 tf_td = tf_td + tf;
             }
             docWeights.add(Math.sqrt(Ld)); // docWeights d
-            docWeights.add(position+0.0); // docLength d -- TODO
+            docWeights.add(position+0.0); // docLength d
             docWeights.add(document.getByteSize());//Determine the bytesize of the document
             docWeights.add(tf_td/termFrequencyTracker.size());//avg tf t,d
         }
@@ -218,8 +227,6 @@ public class DiskIndexWriter {
 
             dIndex=new DiskPositionalIndex(path,corpus.getCorpusSize());
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
