@@ -28,7 +28,7 @@ import java.util.*;
 
 import static java.lang.Integer.min;
 
-    ///Users/indumanimaran/Documents/SET/MobyDick10Chapters
+///Users/indumanimaran/Documents/SET/MobyDick10Chapters
 ///Users/indumanimaran/Documents/SET/Test/
 public class DiskPositionalIndexer {
 
@@ -48,7 +48,6 @@ public class DiskPositionalIndexer {
     private static Index newIndex(DocumentCorpus corpus,DiskIndexWriter diskIndexWriter,Path directoryPath) {
         final long startTime = System.currentTimeMillis();
         Index index= diskIndexWriter.indexCorpus(corpus,directoryPath);
-
         final long endTime = System.currentTimeMillis();
         long indexTime = endTime - startTime;
         System.out.println("Time taken for indexing corpus:"+ indexTime /1000 +" seconds");
@@ -67,7 +66,7 @@ public class DiskPositionalIndexer {
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter corpus path:");
         String PATH=scanner.nextLine();
-       // String PATH = "/Users/indumanimaran/Documents/SET/Test/";
+        // String PATH = "/Users/indumanimaran/Documents/SET/Test/";
         Path directoryPath = Paths.get(PATH);
         String sPath = directoryPath.toString();
         System.out.println("Indexing..."+ directoryPath.toString());
@@ -156,10 +155,10 @@ public class DiskPositionalIndexer {
                 }
             } else {
                 queryPosting( corpus, index, query,directoryPath);
-                        break;
-                }
+                break;
             }
         }
+    }
 
     private static void queryPosting( DocumentCorpus corpus, Index index, String query,Path path)  {
         Scanner scanner = new Scanner(System.in);
@@ -181,7 +180,7 @@ public class DiskPositionalIndexer {
                     "3.Okapi BM25" +
                     "4.Wacky" +
                     "Enter choice: ");
-             strategy= new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt()));
+            strategy= new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt()));
         }
 
         QueryComponent queryComponent;
