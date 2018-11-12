@@ -197,7 +197,7 @@ public class DiskPositionalIndexer {
             for (Posting p : postings) {
                 if (p.getDocumentId() >= 0) {
                     docId = p.getDocumentId();
-                    System.out.println(p.getPositions());
+                    System.out.println(p.getDocumentId() + " " +p.getPositions());
                     System.out.println(corpus.getDocument(docId).getmFileName());
                 }
             }

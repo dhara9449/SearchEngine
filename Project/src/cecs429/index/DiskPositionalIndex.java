@@ -66,7 +66,7 @@ public class DiskPositionalIndex implements Index {
             for( int docFreq =0; docFreq < dft; docFreq++){
                 currentdocIdGap = postingsRAF.readInt();
                 p = new Posting(prevdocIdGap+currentdocIdGap);
-                prevdocIdGap =currentdocIdGap;
+                prevdocIdGap = prevdocIdGap + currentdocIdGap;
                 //p.setmDocumentId(docId);
 
                 int tft = postingsRAF.readInt();
@@ -81,10 +81,12 @@ public class DiskPositionalIndex implements Index {
             e.printStackTrace();
         }
 
-        return postingsList;    }
+        return postingsList;
+    }
 
     @Override
     public List<Posting> getPostingsWithPosition(String term){
+
         List<Posting> postingsList = new ArrayList<>();
         // get the position of postings from vocabTable.bin
         //using binary search ....
@@ -102,7 +104,7 @@ public class DiskPositionalIndex implements Index {
 
                 currentdocIdGap = postingsRAF.readInt();
                 p = new Posting(prevdocIdGap+currentdocIdGap);
-                prevdocIdGap =currentdocIdGap;
+                prevdocIdGap = prevdocIdGap + currentdocIdGap;
                 //p.setmDocumentId(docId);
 
                 int tft = postingsRAF.readInt();
@@ -226,4 +228,5 @@ public class DiskPositionalIndex implements Index {
         }
         return vocabSize;
     }
+
 }
