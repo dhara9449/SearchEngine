@@ -25,11 +25,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+
 import static java.lang.Integer.min;
 
-///Users/indumanimaran/Documents/SET/MobyDick10Chapters
+    ///Users/indumanimaran/Documents/SET/MobyDick10Chapters
 ///Users/indumanimaran/Documents/SET/Test/
-
 public class DiskPositionalIndexer {
 
     private  static  ArrayList<String> modes;
