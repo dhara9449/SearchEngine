@@ -213,8 +213,6 @@ public class DiskIndexWriter {
             docWeights.add(tf_td/termFrequencyTracker.size());//avg tf t,d
         }
 
-
-
         DiskPositionalIndex dIndex = null;
         try {
             // write the index to disk
@@ -232,4 +230,6 @@ public class DiskIndexWriter {
         }
         return  dIndex;
     }
+
+
 }
