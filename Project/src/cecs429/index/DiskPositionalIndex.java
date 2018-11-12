@@ -1,5 +1,10 @@
 package cecs429.index;
 
+import org.mapdb.BTreeMap;
+import org.mapdb.DB;
+import org.mapdb.DBMaker;
+import org.mapdb.Serializer;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.util.*;
@@ -14,14 +19,10 @@ public class DiskPositionalIndex implements Index {
     private RandomAccessFile vocabRAF;
     private RandomAccessFile vocabTableRAF;
     private  RandomAccessFile weightsRAF;
+    DB vocabTabledb;
+    BTreeMap<String, Long> map;
     int N;
 
-    /*
-     TODO:
-     Modify DiskPositionalIndexer so it knows how to open this 􏰀le and skip to an appropriate location to
-     read a 8-byte double for Ld. Ld values will be used when calculating ranked retrieval scores.
-    */
-    public  int getN(){return N;}
 
 
     public DiskPositionalIndex(Path path,int N) throws FileNotFoundException {
@@ -29,7 +30,21 @@ public class DiskPositionalIndex implements Index {
         vocabRAF = new RandomAccessFile( path + "/index/vocab.bin", "rw");
         postingsRAF = new RandomAccessFile( path + "/index/postings.bin","rw");
         vocabTableRAF = new RandomAccessFile(path+"/index/vocabTable.bin","rw");
+        vocabTabledb = DBMaker.fileDB(new File(path +"/index/BTreeDatabase.db")).make();
+        map = vocabTabledb.treeMap("map")
+                .keySerializer(Serializer.STRING)
+                .valueSerializer(Serializer.LONG)
+                .open();
+
     }
+
+
+    /*
+     TODO:
+     Modify DiskPositionalIndexer so it knows how to open this 􏰀le and skip to an appropriate location to
+     read a 8-byte double for Ld. Ld values will be used when calculating ranked retrieval scores.
+    */
+    public  int getN(){return N;}
 
     /*
     * Returns  a list of postings without information about the term position in a document
@@ -86,7 +101,6 @@ public class DiskPositionalIndex implements Index {
             for( int docFreq =0; docFreq < dft; docFreq++){
 
                 currentdocIdGap = postingsRAF.readInt();
-
                 p = new Posting(prevdocIdGap+currentdocIdGap);
                 prevdocIdGap =currentdocIdGap;
                 //p.setmDocumentId(docId);
@@ -113,7 +127,12 @@ public class DiskPositionalIndex implements Index {
         return postingsList;
     }
 
-    private long binarySearchVocab(String term) throws IOException {
+    private long binarySearchVocab(String term) {
+
+            return map.get(term);
+    }
+
+/*    private long binarySearchVocab(String term) throws IOException {
         long vocabTableLength =  (vocabTableRAF.length() /16);
         long vocabLength = vocabRAF.length();
         long i = 0;
@@ -152,11 +171,14 @@ public class DiskPositionalIndex implements Index {
             }
         }
         return currentPostingsPos;
-    }
+    }*/
 
     //TODO:
     @Override
-
+    public List<String> getVocabulary() throws IOException {
+        return (List<String>) map.keySet();
+    }
+/*
     public List<String> getVocabulary() throws IOException {
         List<String> vocabResultList = new ArrayList<>();
         long vocabTableLength = (vocabTableRAF.length()/16);
@@ -191,6 +213,7 @@ public class DiskPositionalIndex implements Index {
        // }
         return vocabResultList;
     }
+*/
 
     //TODO:
     @Override

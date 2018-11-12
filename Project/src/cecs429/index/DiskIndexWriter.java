@@ -4,6 +4,10 @@ import cecs429.documents.Document;
 import cecs429.documents.DocumentCorpus;
 import cecs429.text.BetterTokenProcessor;
 import cecs429.text.EnglishTokenStream;
+import org.mapdb.BTreeMap;
+import org.mapdb.DB;
+import org.mapdb.DBMaker;
+import org.mapdb.Serializer;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -23,6 +27,10 @@ public class DiskIndexWriter {
         this.path = path;
     }
 
+    private static void createBtree(){
+
+
+    }
     private ArrayList<Long> writePostings(Index index, Path path, List<String> vocab) throws IOException {
        File postingsFile = new File(String.valueOf(path) + "/index/postings.bin");
        final boolean mkdirs = postingsFile.getParentFile().mkdirs();
@@ -34,15 +42,22 @@ public class DiskIndexWriter {
 
         FileOutputStream out1 = new FileOutputStream(postingsFile);
         DataOutputStream postingsout = new DataOutputStream(out1);
-
         ArrayList<Long> mMapPosting = new ArrayList<>();
+        DB vocabTabledb = DBMaker.fileDB(String.valueOf(path)  +"/index/BTreeDatabase.db").make();
+        BTreeMap<String, Long> map = vocabTabledb.treeMap("map")
+                .keySerializer(Serializer.STRING)
+                .valueSerializer(Serializer.LONG)
+                .create();
 
         for (String str : index.getVocabulary()) {
             List<Posting> docFrequency = index.getPostings(str);
             postingsout.writeInt(docFrequency.size());
+            Long postingPos = out1.getChannel().size()-4;
+            System.out.println(str + postingPos);
+            map.put(str,postingPos);
 
             //determining the location for vocab table
-            mMapPosting.add(out1.getChannel().size()-4);
+            mMapPosting.add(postingPos);
 
             // the first document should be the docId
             int prevDocId = 0;
@@ -66,6 +81,7 @@ public class DiskIndexWriter {
 
             }
         }
+        vocabTabledb.close();
         return mMapPosting;
     }
 
@@ -192,32 +208,27 @@ public class DiskIndexWriter {
                 tf_td = tf_td + tf;
             }
             docWeights.add(Math.sqrt(Ld)); // docWeights d
-            docWeights.add(position+0.0); // docLength d
+            docWeights.add(position+0.0); // docLength d -- TODO
             docWeights.add(0.0);//Determine the bytesize of the document
             docWeights.add(tf_td/termFrequencyTracker.size());//avg tf t,d
         }
 
-        // write the index to disk
+
+
+        DiskPositionalIndex dIndex = null;
         try {
+            // write the index to disk
             WriteIndex(invertedDocumentIndex,path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        // write term document weight to disk
-
-        try {
+            // write term document weight to disk
             writeDocWeights(docWeights,path);
+
+            dIndex=new DiskPositionalIndex(path,corpus.getCorpusSize());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-
-        DiskPositionalIndex dIndex=null;
-
-        try{
-            dIndex=new DiskPositionalIndex(path,corpus.getCorpusSize());
-        }catch (Exception ignored){
         }
         return  dIndex;
     }
