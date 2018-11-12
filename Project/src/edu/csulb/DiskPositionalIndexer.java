@@ -64,7 +64,7 @@ public class DiskPositionalIndexer {
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter corpus path:");
         // String PATH=scanner.nextLine();
-        String PATH = "/Users/indumanimaran/Downloads/ArticlesX/";
+        String PATH = "/Users/indumanimaran/Documents/SET/MobyDick10Chapters/";
         Path directoryPath = Paths.get(PATH);
         String sPath = directoryPath.toString();
 
