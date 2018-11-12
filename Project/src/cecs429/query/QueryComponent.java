@@ -20,4 +20,6 @@ public interface QueryComponent {
      * @return
      */
     List<Posting> getPostings(Index index);
+
+   // List<Posting> getPostingsWithPosition(Index index);
 }

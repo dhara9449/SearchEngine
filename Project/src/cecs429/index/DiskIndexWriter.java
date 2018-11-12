@@ -53,7 +53,7 @@ public class DiskIndexWriter {
             List<Posting> docFrequency = index.getPostings(str);
             postingsout.writeInt(docFrequency.size());
             Long postingPos = out1.getChannel().size()-4;
-            System.out.println(str + postingPos);
+            //System.out.println(str + postingPos);
             map.put(str,postingPos);
 
             //determining the location for vocab table
