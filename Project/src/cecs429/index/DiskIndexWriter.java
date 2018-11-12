@@ -151,11 +151,6 @@ public class DiskIndexWriter {
          Objects.requireNonNull(docWeightsout).writeDouble((docLengthA * 4) / Ld.size());
      }
 
-     public  void getDocWeights(int docId){
-
-
-     }
-
 
 
      /*index the corpus given
@@ -209,7 +204,7 @@ public class DiskIndexWriter {
             }
             docWeights.add(Math.sqrt(Ld)); // docWeights d
             docWeights.add(position+0.0); // docLength d -- TODO
-            docWeights.add(0.0);//Determine the bytesize of the document
+            docWeights.add(document.getByteSize());//Determine the bytesize of the document
             docWeights.add(tf_td/termFrequencyTracker.size());//avg tf t,d
         }
 

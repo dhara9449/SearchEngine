@@ -34,4 +34,6 @@ public interface Document {
      * **/
     String getmFileName();
 
+    double getByteSize();
+
 }

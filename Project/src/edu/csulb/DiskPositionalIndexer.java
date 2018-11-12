@@ -18,7 +18,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.tartarus.snowball.SnowballStemmer;
 import org.tartarus.snowball.ext.englishStemmer;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,15 +27,7 @@ import java.util.*;
 
 import static java.lang.Integer.min;
 
-///Users/indumanimaran/Documents/SET/MobyDick10Chapters
-///Users/indumanimaran/Documents/SET/Test/
-
-///Users/indumanimaran/Downloads/ArticlesX/
-
 public class DiskPositionalIndexer {
-
-    private  static  ArrayList<String> modes;
-    private static  ArrayList<TermFrequencyStrategy> rankRetrievalStrategy;
 
     private static DocumentCorpus newCorpus(Path directoryPath, String extension) {
         DocumentCorpus corpus;
@@ -51,6 +42,7 @@ public class DiskPositionalIndexer {
     private static Index newIndex(DocumentCorpus corpus,DiskIndexWriter diskIndexWriter,Path directoryPath) {
         final long startTime = System.currentTimeMillis();
         Index index= diskIndexWriter.indexCorpus(corpus,directoryPath);
+
         final long endTime = System.currentTimeMillis();
         long indexTime = endTime - startTime;
         System.out.println("Time taken for indexing corpus:"+ indexTime /1000 +" seconds");
@@ -58,45 +50,77 @@ public class DiskPositionalIndexer {
 
     }
 
+    private static Index loadIndex(DocumentCorpus corpus,DiskIndexWriter diskIndexWriter,Path directoryPath) {
+        return diskIndexWriter.loadCorpus(corpus,directoryPath);
+    }
+
     public static void main(String[] args)  {
 
-        modes = new ArrayList<>();
-        modes.add("");
-        modes.add("boolean");
-        modes.add("ranked");
+        DocumentCorpus corpus;
+        String query;
+        DiskIndexWriter diskIndexWriter = new DiskIndexWriter();
 
         SnowballStemmer stemmer = new englishStemmer();
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter corpus path:");
-        String PATH=scanner.nextLine();
-        // String PATH = "/Users/indumanimaran/Documents/SET/Test/";
+        // String PATH=scanner.nextLine();
+        String PATH = "/Users/indumanimaran/Downloads/ArticlesX/";
         Path directoryPath = Paths.get(PATH);
         String sPath = directoryPath.toString();
-        System.out.println("Indexing..."+ directoryPath.toString());
-        DocumentCorpus corpus;
-
-
 
         File folder2 = new File(PATH);
         File[] listOfFiles = folder2.listFiles();
         String EXTENSION = FilenameUtils.getExtension(Objects.requireNonNull(listOfFiles)[0].getName());
 
+        System.out.println("1.Build corpus" +
+                "\n2.Query corpus" +
+                "\nEnter choice: ");
+        int choice = scanner.nextInt();
         corpus = newCorpus(directoryPath,"."+ EXTENSION);
-        System.out.println("EXTENSION is "+ EXTENSION);
-        DiskIndexWriter diskIndexWriter = new DiskIndexWriter();
-        Index index = newIndex(corpus,diskIndexWriter,directoryPath);
 
-        rankRetrievalStrategy = new ArrayList<>();
+        if(choice==1) {
+            System.out.println("Indexing..." + directoryPath.toString());
+            newIndex(corpus,diskIndexWriter,directoryPath);
+            return;
+        }
+
+        Index index = loadIndex(corpus,diskIndexWriter,directoryPath);
+
+        ArrayList<String> modes = new ArrayList<>();
+        modes.add("");
+        modes.add("boolean");
+        modes.add("ranked");
+
+        ArrayList<TermFrequencyStrategy> rankRetrievalStrategy = new ArrayList<>();
         rankRetrievalStrategy.add(new DefaultFrequencyStrategy(sPath));
         rankRetrievalStrategy.add(new TfIdfStrategy(sPath));
         rankRetrievalStrategy.add(new OkapiStrategy(sPath));
         rankRetrievalStrategy.add(new WackyStrategy(sPath));
-        String query;
-        Scanner reader = new Scanner(System.in);
+
+        ContextStrategy strategy = new ContextStrategy(rankRetrievalStrategy.get(0));
+
+        System.out.println(" 1.Boolean\n" +
+                " 2.Ranked\n" +
+                "Enter retrieval mode:");
+        int mode = scanner.nextInt();
+        String currentMode = modes.get(mode);
+
+        if(currentMode.equalsIgnoreCase("ranked")){
+            System.out.println("1.Default\n" +
+                    "2.tf-idf\n" +
+                    "3.Okapi BM25\n" +
+                    "4.Wacky\n" +
+                    "Enter choice: ");
+            strategy= new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt()));
+        }
+        query = scanner.nextLine();
+
+
         OUTER:
         while (true) {
             System.out.print("Query : ");
-            query = reader.nextLine();
+            query = scanner.nextLine();
+
             int len = query.split("\\s+").length;
             if (len == 1) {
                 switch (query) {
@@ -110,7 +134,7 @@ public class DiskPositionalIndexer {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        List<String> newList = new ArrayList<>(vocabulary.subList(0, min(vocabulary.size(), 1000)));
+                        List<String> newList = new ArrayList<>(vocabulary.subList(0, min(Objects.requireNonNull(vocabulary).size(), 1000)));
                         newList.forEach(System.out::println);
                         System.out.println("#vocabulary terms: " + vocabulary.size());
                         break;
@@ -124,7 +148,7 @@ public class DiskPositionalIndexer {
                         }
                         break;
                     default:
-                        queryPosting(corpus, index, query,directoryPath);
+                        queryPosting(corpus, index, query,currentMode,strategy);
                         break;
                 }
             } else if (len == 2) {
@@ -141,7 +165,6 @@ public class DiskPositionalIndexer {
                         System.out.println("Program Restarted");
                         Path tempPath = Paths.get(query.split("\\s+")[1]);
 
-
                         if (Files.exists(tempPath)) {
                             File folder = new File(query.split("\\s+")[1]);
                             File[] listOfFiles2 = folder.listFiles();
@@ -153,38 +176,23 @@ public class DiskPositionalIndexer {
                         }
                         break;
                     default:
-                        queryPosting( corpus, index, query,directoryPath);
+                        queryPosting( corpus, index, query,currentMode,strategy);
                         break;
                 }
             } else {
-                queryPosting( corpus, index, query,directoryPath);
+                queryPosting( corpus, index, query,currentMode,strategy);
                 break;
             }
         }
     }
 
-    private static void queryPosting( DocumentCorpus corpus, Index index, String query,Path path)  {
+    private static void queryPosting( DocumentCorpus corpus, Index index, String query,String mode,ContextStrategy strategy)  {
         Scanner scanner = new Scanner(System.in);
         String reply = "y";
         String docName;
         int docId;
-        String mode;
 
         TokenProcessor processor =new BetterTokenProcessor();
-        ContextStrategy strategy = new ContextStrategy(rankRetrievalStrategy.get(0));
-
-        System.out.println("Enter retrieval mode: 1.Boolean 2.Ranked");
-        mode = scanner.next();
-        mode = modes.get(Integer.parseInt(mode));
-
-        if(mode.equalsIgnoreCase("2")){
-            System.out.println("1.Default\n" +
-                    "2.tf-idf" +
-                    "3.Okapi BM25" +
-                    "4.Wacky" +
-                    "Enter choice: ");
-            strategy= new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt()));
-        }
 
         QueryComponent queryComponent;
         if (mode.equalsIgnoreCase("boolean")){
@@ -199,12 +207,12 @@ public class DiskPositionalIndexer {
             for (Posting p : postings) {
                 if (p.getDocumentId() >= 0) {
                     docId = p.getDocumentId();
-                    System.out.println(p.getDocumentId() + " " +p.getPositions());
+                    System.out.println("docId "+docId );
+                    //2  System.out.println("COntent "+corpus.getDocument(docId).getByteSize());
                     System.out.println(corpus.getDocument(docId).getmFileName());
                 }
             }
             System.out.println(postings.size() + " document(s)");
-
             while (reply.equalsIgnoreCase("y")) {
                 System.out.println("View document(y/n):");
                 reply = scanner.nextLine();
