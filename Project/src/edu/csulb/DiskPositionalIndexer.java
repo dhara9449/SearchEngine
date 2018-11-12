@@ -30,6 +30,9 @@ import static java.lang.Integer.min;
 
 ///Users/indumanimaran/Documents/SET/MobyDick10Chapters
 ///Users/indumanimaran/Documents/SET/Test/
+
+///Users/indumanimaran/Downloads/ArticlesX/
+
 public class DiskPositionalIndexer {
 
     private  static  ArrayList<String> modes;
