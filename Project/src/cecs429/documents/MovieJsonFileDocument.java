@@ -36,6 +36,12 @@ public class MovieJsonFileDocument implements FileDocument {
     public String getmFileName(){
         return mFileName;
     }
+
+    @Override
+    public double getByteSize() {
+        return 0;
+    }
+
     @Override
     public Path getFilePath() {
         return mFilePath;

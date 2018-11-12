@@ -79,7 +79,10 @@ public class DiskPositionalIndex implements Index {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }catch (NullPointerException e){
+            return postingsList;
         }
+
 
         return postingsList;
     }
@@ -130,8 +133,8 @@ public class DiskPositionalIndex implements Index {
     }
 
     private long binarySearchVocab(String term) {
-
-            return map.get(term);
+        //TODO: make case for no word in the map
+        return map.get(term);
     }
 
 /*    private long binarySearchVocab(String term) throws IOException {
@@ -175,7 +178,6 @@ public class DiskPositionalIndex implements Index {
         return currentPostingsPos;
     }*/
 
-    //TODO:
     @Override
     public List<String> getVocabulary() throws IOException {
         return (List<String>) map.keySet();

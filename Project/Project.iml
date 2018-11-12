@@ -90,5 +90,13 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="guava-15.0-cdi1.0" level="project" />
+    <orderEntry type="library" name="lz4-1.3.0" level="project" />
+    <orderEntry type="library" name="eclipse-collections-api-9.2.0" level="project" />
+    <orderEntry type="library" name="eclipse-collections-9.2.0" level="project" />
+    <orderEntry type="library" name="eclipse-collections-forkjoin-9.2.0" level="project" />
+    <orderEntry type="library" name="kotlin-stdlib-1.2.21" level="project" />
+    <orderEntry type="library" name="elsa-3.0.0-M5" level="project" />
+    <orderEntry type="library" name="mapdb-3.0.7" level="project" />
   </component>
 </module>

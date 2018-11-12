@@ -1,5 +1,6 @@
 package cecs429.documents;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -56,4 +57,10 @@ public class TextFileDocument implements FileDocument {
     public static FileDocument loadTextFileDocument(Path absolutePath, int documentId) {
         return new TextFileDocument(documentId, absolutePath);
     }
+
+    @Override
+    public double getByteSize(){
+        return new File(mFilePath.toString()).length();
+    }
+
 }

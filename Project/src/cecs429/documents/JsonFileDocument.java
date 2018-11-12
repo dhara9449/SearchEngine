@@ -8,10 +8,8 @@ package cecs429.documents;
 import cecs429.gson.JsonDocument;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
-import java.io.StringReader;
+
+import java.io.*;
 import java.nio.file.Path;
 
 
@@ -87,4 +85,11 @@ public class JsonFileDocument implements FileDocument {
     public static FileDocument loadJsonFileDocument(Path absolutePath, int documentId) {
         return new JsonFileDocument(documentId, absolutePath);
     }
+
+
+    @Override
+    public double getByteSize(){
+        return new File(mFilePath.toString()).length();
+    }
+
 }
