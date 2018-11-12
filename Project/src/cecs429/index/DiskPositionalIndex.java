@@ -39,7 +39,11 @@ public class DiskPositionalIndex implements Index {
     }
 
 
-
+    /*
+     TODO:
+     Modify DiskPositionalIndexer so it knows how to open this 􏰀le and skip to an appropriate location to
+     read a 8-byte double for Ld. Ld values will be used when calculating ranked retrieval scores.
+    */
     public  int getN(){return N;}
 
     /*
@@ -66,7 +70,6 @@ public class DiskPositionalIndex implements Index {
                 //p.setmDocumentId(docId);
 
                 int tft = postingsRAF.readInt();
-                //System.out.println("tft "+tft);
                 for(int termFreq = 0; termFreq < tft; termFreq++) {
                     postingsRAF.readInt();
                 }

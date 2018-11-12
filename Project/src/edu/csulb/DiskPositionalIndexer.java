@@ -64,8 +64,7 @@ public class DiskPositionalIndexer {
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter corpus path:");
         // String PATH=scanner.nextLine();
-       // String PATH = "/Users/indumanimaran/Downloads/ArticlesX/";
-        String PATH = "/Users/indumanimaran/Documents/SET/MobyDick10Chapters";
+        String PATH = "/Users/indumanimaran/Downloads/ArticlesX/";
         Path directoryPath = Paths.get(PATH);
         String sPath = directoryPath.toString();
 
@@ -208,9 +207,9 @@ public class DiskPositionalIndexer {
             for (Posting p : postings) {
                 if (p.getDocumentId() >= 0) {
                     docId = p.getDocumentId();
-                    //System.out.println("docId "+docId );
+                    System.out.println("docId "+docId );
                     //2  System.out.println("COntent "+corpus.getDocument(docId).getByteSize());
-                    System.out.println("Document "+ corpus.getDocument(docId).getmFileName()+" (ID:"+docId+")");
+                    System.out.println(corpus.getDocument(docId).getmFileName());
                 }
             }
             System.out.println(postings.size() + " document(s)");
