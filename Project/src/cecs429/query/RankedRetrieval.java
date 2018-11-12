@@ -14,6 +14,30 @@ import java.util.stream.Collectors;
  */
 public class RankedRetrieval implements QueryComponent {
 
+    private class Accumulator implements Comparable<Accumulator> {
+        private  int docId;
+        private double Ad =0.0;
+        private Accumulator(int docID) {
+            this.docId = docID;
+        }
+
+        private double getAd() {
+            return Ad;
+        }
+
+        private void setAd(double Ad){
+            this.Ad = Ad;
+        }
+        public  int getDocId(){
+            return docId;
+        }
+        @Override
+        public int compareTo(Accumulator otherAd)
+        {
+            return Double.compare(Ad, otherAd.Ad);
+        }
+    }
+
     private ContextStrategy strategy;
     private List<QueryComponent> mComponents;
     private  int N;
@@ -31,35 +55,10 @@ public class RankedRetrieval implements QueryComponent {
         int docId;
         int tf;
         int dft;
-        double wdt=0.0,wqt=0.0;
-        double Ad=0.0;
+        double wdt=0.0,wqt;
+        double Ad;
 
         double Ld=0.0;
-
-        class Accumulator implements Comparable<Accumulator> {
-            private  int docId;
-            private double Ad =0.0;
-            private Accumulator(int docID) {
-                this.docId = docID;
-            }
-
-            private double getAd() {
-                return Ad;
-            }
-
-            private void setAd(double Ad){
-                this.Ad = Ad;
-            }
-            public  int getDocId(){
-                return docId;
-            }
-            @Override
-            public int compareTo(Accumulator otherAd)
-            {
-                return Double.compare(Ad, otherAd.Ad);
-            }
-        }
-
 
         // max priority queue , i.e = larger value equals higher priority
         PriorityQueue<Accumulator> accumulatorQueue = new PriorityQueue<>(Collections.reverseOrder());
@@ -71,6 +70,7 @@ public class RankedRetrieval implements QueryComponent {
         for (QueryComponent component : mComponents){
             temp = component.getPostings(index);
              dft= temp.size();
+             System.out.println("N:"+N);
              wqt=strategy.calculateWqt(N,dft);  // calculate wqt
 
             for(Posting p:temp){ // for each document d in t's posting list
@@ -78,6 +78,7 @@ public class RankedRetrieval implements QueryComponent {
                 docId=p.getDocumentId();
                 try {
                     wdt=strategy.calculateWdt(tf,docId);
+                    System.out.println("wdt " + docId+" "+wdt);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -97,6 +98,7 @@ public class RankedRetrieval implements QueryComponent {
         for (Accumulator accum : accumulatorHashMap.values()) {
             try {
                 Ld=strategy.calculateLd(accum.getDocId());
+                System.out.println(Ld+"  "+accum.docId );
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -110,6 +112,7 @@ public class RankedRetrieval implements QueryComponent {
         int cnt=0;
         while (priorityQIterator.hasNext()) {
             Accumulator s=(Accumulator) priorityQIterator.next();
+            System.out.println("Prority: "+cnt +s.getAd());
             result.add(s.getDocId());
             cnt++;
             if(cnt>=10)
