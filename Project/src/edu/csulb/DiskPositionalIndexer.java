@@ -207,9 +207,7 @@ public class DiskPositionalIndexer {
             for (Posting p : postings) {
                 if (p.getDocumentId() >= 0) {
                     docId = p.getDocumentId();
-                    System.out.println("docId "+docId );
-                    //2  System.out.println("COntent "+corpus.getDocument(docId).getByteSize());
-                    System.out.println(corpus.getDocument(docId).getmFileName());
+                    System.out.println("Document \""+corpus.getDocument(docId).getmFileName()+"\"(ID: "+docId+")");
                 }
             }
             System.out.println(postings.size() + " document(s)");
