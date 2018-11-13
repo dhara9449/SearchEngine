@@ -7,6 +7,7 @@ package edu.csulb;
 
 import cecs429.TermFrequency.*;
 import cecs429.documents.DirectoryCorpus;
+import cecs429.documents.Document;
 import cecs429.documents.DocumentCorpus;
 import cecs429.index.*;
 import cecs429.query.BooleanQueryParser;
@@ -209,7 +210,8 @@ public class DiskPositionalIndexer {
                 p1 = postings.get(i);
                 if (p1.getDocumentId() >= 0) {
                     docId = p1.getDocumentId();
-                    System.out.println("Document \""+corpus.getDocument(docId).getmFileName()+"\"(ID: "+docId+")");
+                    Document doc=corpus.getDocument(docId);
+                    System.out.println("Document \""+doc.getmFileName()+"\"(ID: "+docId+") A:" + p1.getAccumulator() +" ld:" +p1.getLd() +" Wdt: "+p1.getWdt());
                 }
             }
             System.out.println(postings.size() + " document(s)");

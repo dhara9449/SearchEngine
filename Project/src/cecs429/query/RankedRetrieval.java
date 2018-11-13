@@ -26,7 +26,7 @@ public class RankedRetrieval implements QueryComponent {
 
 
     @Override
-    public List<Posting> getPostings(Index index){
+    public List<Posting> getPostings(Index index) {
         List<Posting> temp = new ArrayList<>();
         int docId;
         int tf;
@@ -39,10 +39,19 @@ public class RankedRetrieval implements QueryComponent {
         class Accumulator implements Comparable<Accumulator> {
             private  int docId;
             private double Ad =0.0;
+            private  double wdt=0.0;
             private Accumulator(int docID) {
                 this.docId = docID;
             }
 
+
+            private  double getWdt(){
+                return  wdt;
+            }
+
+            private  void setWdt(double x){
+                wdt =x;
+            }
             private double getAd() {
                 return Ad;
             }
@@ -78,7 +87,7 @@ public class RankedRetrieval implements QueryComponent {
                 docId=p.getDocumentId();
                 try {
                     wdt=strategy.calculateWdt(tf,docId);
-                    System.out.println(docId+"  wdt:"+ wdt);
+                   // System.out.println(docId+"  wdt:"+ wdt);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -90,6 +99,7 @@ public class RankedRetrieval implements QueryComponent {
                 }
                 Ad = accumulator.getAd() + wqt * wdt;
                 accumulator.setAd(Ad);
+                accumulator.setWdt(wdt);
                 accumulatorHashMap.put(docId,accumulator);
             }
         }
@@ -107,17 +117,33 @@ public class RankedRetrieval implements QueryComponent {
 
 
         List<Integer> result = new ArrayList<>();
+        ArrayList<Posting> ans=new ArrayList<>();
+
         Iterator priorityQIterator = accumulatorQueue.iterator();
         int cnt=0;
         while (priorityQIterator.hasNext()) {
             Accumulator s=(Accumulator) priorityQIterator.next();
-            System.out.println("Accum: " + s.getAd() + " docId: "+ s.getDocId());
-            result.add(s.getDocId());
+            int dId= s.getDocId();
+          //  System.out.println("Accum: " + s.getAd() + " docId: "+ s.getDocId());
+                for (Posting p:temp){
+                    if (dId ==p.getDocumentId()){
+                        p.setAccumulator(s.getAd());
+                        try {
+                            p.setLd(strategy.calculateLd(dId));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        p.setWdt(s.getWdt());
+                        ans.add(p);
+                        break;
+                    }
+                }
+
             cnt++;
             if(cnt>=10)
                 break;
         }
-        return temp;
+        return ans;
     }
 
     @Override
