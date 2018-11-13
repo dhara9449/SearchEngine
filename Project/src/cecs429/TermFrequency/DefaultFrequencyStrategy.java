@@ -20,7 +20,7 @@ public class DefaultFrequencyStrategy implements  TermFrequencyStrategy{
     }
 
     public double calculateWdt(int tf,int docId) {
-        return 1 + Math.log(tf);
+        return  (1+ Math.log(tf));
     }
 
     public double calculateLd(int docId) throws  IOException{

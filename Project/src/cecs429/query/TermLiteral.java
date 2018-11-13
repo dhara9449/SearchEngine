@@ -26,6 +26,7 @@ public class TermLiteral implements QueryComponent {
 
     @Override
     public List<Posting> getPostings(Index index) {
+        
         return index.getPostings(mTerm);
     }
 

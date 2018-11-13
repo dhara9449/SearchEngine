@@ -78,6 +78,7 @@ public class RankedRetrieval implements QueryComponent {
                 docId=p.getDocumentId();
                 try {
                     wdt=strategy.calculateWdt(tf,docId);
+                    System.out.println(docId+"  wdt:"+ wdt);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -110,6 +111,7 @@ public class RankedRetrieval implements QueryComponent {
         int cnt=0;
         while (priorityQIterator.hasNext()) {
             Accumulator s=(Accumulator) priorityQIterator.next();
+            System.out.println("Accum: " + s.getAd() + " docId: "+ s.getDocId());
             result.add(s.getDocId());
             cnt++;
             if(cnt>=10)

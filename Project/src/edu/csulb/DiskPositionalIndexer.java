@@ -14,6 +14,7 @@ import cecs429.query.QueryComponent;
 import cecs429.query.RankedQueryParser;
 import cecs429.text.BetterTokenProcessor;
 import cecs429.text.TokenProcessor;
+import javafx.geometry.Pos;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.tartarus.snowball.SnowballStemmer;
@@ -64,7 +65,7 @@ public class DiskPositionalIndexer {
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter corpus path:");
         // String PATH=scanner.nextLine();
-        String PATH = "/Users/indumanimaran/Downloads/ArticlesX/";
+        String PATH = "/Users/indumanimaran/Documents/SET/MobyDick10Chapters/";
         Path directoryPath = Paths.get(PATH);
         String sPath = directoryPath.toString();
 
@@ -111,7 +112,7 @@ public class DiskPositionalIndexer {
                     "3.Okapi BM25\n" +
                     "4.Wacky\n" +
                     "Enter choice: ");
-            strategy= new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt()));
+            strategy= new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt()-1));
         }
         query = scanner.nextLine();
 
@@ -202,14 +203,13 @@ public class DiskPositionalIndexer {
         }
 
         List<Posting> postings = queryComponent.getPostings(index);
-
+        Posting p1;
         if (postings != null) {
-            for (Posting p : postings) {
-                if (p.getDocumentId() >= 0) {
-                    docId = p.getDocumentId();
-                    System.out.println("docId "+docId );
-                    //2  System.out.println("COntent "+corpus.getDocument(docId).getByteSize());
-                    System.out.println(corpus.getDocument(docId).getmFileName());
+            for(int i=0;i<postings.size();i++){
+                p1 = postings.get(i);
+                if (p1.getDocumentId() >= 0) {
+                    docId = p1.getDocumentId();
+                    System.out.println("Document \""+corpus.getDocument(docId).getmFileName()+"\"(ID: "+docId+")");
                 }
             }
             System.out.println(postings.size() + " document(s)");
