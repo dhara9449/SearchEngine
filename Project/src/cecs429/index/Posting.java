@@ -13,6 +13,34 @@ public class Posting {
     private List<Integer> mPositions;
     private int  termFrequency;
 
+    private double accumulator;
+    private double Ld;
+    private  double wdt;
+
+    public  void setLd(double ld){
+        Ld=ld;
+    }
+
+    public  double getLd(){
+        return Ld;
+    }
+
+
+    public double getWdt() {
+        return wdt;
+    }
+
+    public void setWdt(double wdt) {
+        this.wdt = wdt;
+    }
+
+    public  void  setAccumulator(double x){
+        accumulator =x;
+    }
+
+    public  double getAccumulator(){
+        return  accumulator;
+    }
     public Posting(int documentId) {
         mPositions = new ArrayList<>();
 
