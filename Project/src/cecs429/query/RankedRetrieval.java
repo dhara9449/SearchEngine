@@ -4,8 +4,6 @@ import cecs429.TermFrequency.ContextStrategy;
 import cecs429.documents.Document;
 import cecs429.index.Index;
 import cecs429.index.Posting;
-import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,7 +33,6 @@ public class RankedRetrieval implements QueryComponent {
             this.docId = docID;
         }
 
-
         private  double getWdt(){
             return  wdt;
         }
@@ -54,7 +51,7 @@ public class RankedRetrieval implements QueryComponent {
             return docId;
         }
         @Override
-        public int compareTo(@NotNull Accumulator otherAd)
+        public int compareTo(Accumulator otherAd)
         {
             return Double.compare(this.Ad, otherAd.Ad);
         }
