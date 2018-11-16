@@ -3,6 +3,7 @@ package cecs429.query;
 import cecs429.TermFrequency.ContextStrategy;
 import cecs429.index.Index;
 import cecs429.index.Posting;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.*;
@@ -24,6 +25,38 @@ public class RankedRetrieval implements QueryComponent {
         N = corpusSize;
     }
 
+    private class Accumulator implements Comparable<Accumulator> {
+        private  int docId;
+        private double Ad =0.0;
+        private  double wdt=0.0;
+        private Accumulator(int docID) {
+            this.docId = docID;
+        }
+
+
+        private  double getWdt(){
+            return  wdt;
+        }
+
+        private  void setWdt(double x){
+            wdt =x;
+        }
+        private double getAd() {
+            return Ad;
+        }
+
+        private void setAd(double Ad){
+            this.Ad = Ad;
+        }
+        public  int getDocId(){
+            return docId;
+        }
+        @Override
+        public int compareTo(@NotNull Accumulator otherAd)
+        {
+            return Double.compare(this.Ad, otherAd.Ad);
+        }
+    }
 
     @Override
     public List<Posting> getPostings(Index index) {
@@ -36,38 +69,6 @@ public class RankedRetrieval implements QueryComponent {
 
         double Ld=0.0;
 
-        class Accumulator implements Comparable<Accumulator> {
-            private  int docId;
-            private double Ad =0.0;
-            private  double wdt=0.0;
-            private Accumulator(int docID) {
-                this.docId = docID;
-            }
-
-
-            private  double getWdt(){
-                return  wdt;
-            }
-
-            private  void setWdt(double x){
-                wdt =x;
-            }
-            private double getAd() {
-                return Ad;
-            }
-
-            private void setAd(double Ad){
-                this.Ad = Ad;
-            }
-            public  int getDocId(){
-                return docId;
-            }
-            @Override
-            public int compareTo(Accumulator otherAd)
-            {
-                return Double.compare(Ad, otherAd.Ad);
-            }
-        }
 
 
         // max priority queue , i.e = larger value equals higher priority
@@ -116,7 +117,6 @@ public class RankedRetrieval implements QueryComponent {
         }
 
 
-        List<Integer> result = new ArrayList<>();
         ArrayList<Posting> ans=new ArrayList<>();
 
         Iterator priorityQIterator = accumulatorQueue.iterator();
@@ -125,7 +125,7 @@ public class RankedRetrieval implements QueryComponent {
             Accumulator s=(Accumulator) priorityQIterator.next();
             priorityQIterator.remove();
             int dId= s.getDocId();
-          //  System.out.println("Accum: " + s.getAd() + " docId: "+ s.getDocId());
+            System.out.println("Accum: " + s.getAd() + " docId: "+ s.getDocId());
                 for (Posting p:temp){
                     if (dId ==p.getDocumentId()){
                         p.setAccumulator(s.getAd());
@@ -139,11 +139,13 @@ public class RankedRetrieval implements QueryComponent {
                         break;
                     }
                 }
-
             cnt++;
             if(cnt>=10)
                 break;
         }
+
+
+
         return ans;
     }
 
