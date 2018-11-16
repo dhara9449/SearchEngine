@@ -127,20 +127,20 @@ public class RankedRetrieval implements QueryComponent {
             priorityQIterator.remove();
             int dId= s.getDocId();
             if(accum) {
-                System.out.print("Accum: " + s.getAd() + " docId: " + s.getDocId());
+                System.out.print("A: " + s.getAd() + " docId: " + s.getDocId());
             }
                 for (Posting p:temp){
                     if (dId ==p.getDocumentId()){
                         try {
                             if(accum) {
-                                System.out.print("Ld: " + strategy.calculateLd(dId));
+                                System.out.print(" Ld: " + strategy.calculateLd(dId));
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
 
                         if(accum) {
-                            System.out.print("Wdt: " + s.getWdt());
+                            System.out.println(" Wdt: " + s.getWdt());
                         }
                         ans.add(p);
                         break;
