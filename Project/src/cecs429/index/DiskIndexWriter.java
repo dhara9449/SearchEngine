@@ -156,7 +156,8 @@ public class DiskIndexWriter {
         DiskPositionalIndex dIndex=null;
         try{
             dIndex=new DiskPositionalIndex(path,corpus.getCorpusSize());
-        }catch (Exception ignored){
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return  dIndex;
 

@@ -211,7 +211,7 @@ public class MainIndexer2 {
                         queryPosting(corpus, index, query,currentMode,strategy,"log");
                     }else{
                         queryPosting(corpus, index, query,currentMode,strategy,"default");
-                    }                        break;
+                    }
 
                 }
             }

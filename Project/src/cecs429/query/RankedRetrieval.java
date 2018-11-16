@@ -104,6 +104,7 @@ public class RankedRetrieval implements QueryComponent {
             }
         }
 
+
         //For each non-aero Ad, divide A_d by L_d , where L_d is read from docWeights.bin file
         for (Accumulator accum : accumulatorHashMap.values()) {
             try {
@@ -150,7 +151,7 @@ public class RankedRetrieval implements QueryComponent {
                     }
                 }
             cnt++;
-            if(cnt>=10)
+            if(cnt>=20)
                 break;
         }
 //        System.out.println(sb);
