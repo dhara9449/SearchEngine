@@ -2,6 +2,7 @@ package cecs429.query;
 
 import cecs429.TermFrequency.ContextStrategy;
 import cecs429.documents.Document;
+import cecs429.documents.DocumentCorpus;
 import cecs429.index.Index;
 import cecs429.index.Posting;
 import java.io.IOException;
@@ -18,10 +19,12 @@ public class RankedRetrieval implements QueryComponent {
     private List<QueryComponent> mComponents;
     private  int N;
     private  boolean accum;
-    RankedRetrieval(List<QueryComponent> components,ContextStrategy strategy,int corpusSize,String accum) {
+    DocumentCorpus corpus;
+    RankedRetrieval(List<QueryComponent> components, ContextStrategy strategy, DocumentCorpus corpus, String accum) {
         mComponents = components;
         this.strategy = strategy;
-        N = corpusSize;
+        this.corpus = corpus;
+        N = corpus.getCorpusSize();
         this.accum= accum.equalsIgnoreCase("log");
     }
 
@@ -65,10 +68,7 @@ public class RankedRetrieval implements QueryComponent {
         int dft;
         double wdt=0.0,wqt;
         double Ad;
-
         double Ld=0.0;
-
-
 
         // max priority queue , i.e = larger value equals higher priority
         PriorityQueue<Accumulator> accumulatorQueue = new PriorityQueue<>(Collections.reverseOrder());
@@ -112,7 +112,9 @@ public class RankedRetrieval implements QueryComponent {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            accum.setAd(accum.getAd()/Ld);
+            if (accum.getAd()!=0) {
+                accum.setAd(accum.getAd() / Ld);
+            }
             accumulatorQueue.add(accum);
         }
 
@@ -121,40 +123,39 @@ public class RankedRetrieval implements QueryComponent {
         Iterator priorityQIterator = accumulatorQueue.iterator();
         int cnt=0;
         String sb="";
+
+
+
+
         while (priorityQIterator.hasNext()) {
-            Accumulator s=(Accumulator) priorityQIterator.next();
+            Accumulator s = (Accumulator) priorityQIterator.next();
             priorityQIterator.remove();
-            int dId= s.getDocId();
-
-
+            int dId = s.getDocId();
             //sb = sb +"\nDocument \"\" (ID: "+s.getDocId()+") (A:)"+s.getAd() ;
 
-            if(accum) {
+            if (accum) {
                 System.out.print("A:" + s.getAd() + "\tdocId: " + s.getDocId());
             }
-                for (Posting p:temp){
-                    if (dId ==p.getDocumentId()){
-                        p.setAccumulator(":"+s.getAd());
-                        try {
-                            if(accum) {
-                                System.out.print("\tLd: " + strategy.calculateLd(dId));
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+            Document doc=corpus.getDocument(dId);
+            try {
+                if(accum) {
+                    System.out.print("\tLd: " + strategy.calculateLd(dId));
+                    System.out.println("\tWdt: " + s.getWdt());
 
-                        if(accum) {
-                            System.out.println("\tWdt: " + s.getWdt());
-                        }
-                        ans.add(p);
-                        break;
-                    }
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            sb=sb+"Document Title:\""+doc.getTitle()+"\"  File Name: "+doc.getmFileName()+" (ID: "+dId+") "+s.getAd()+"\n";
+
             cnt++;
-            if(cnt>=20)
+            if (cnt>=10){
                 break;
+            }
         }
-//        System.out.println(sb);
+
+        System.out.println(sb);
         return ans;
     }
 

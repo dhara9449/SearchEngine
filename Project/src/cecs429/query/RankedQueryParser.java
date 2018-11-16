@@ -1,6 +1,7 @@
 package cecs429.query;
 
 import cecs429.TermFrequency.ContextStrategy;
+import cecs429.documents.DocumentCorpus;
 import cecs429.text.TokenProcessor;
 
 import java.util.ArrayList;
@@ -17,11 +18,11 @@ public class RankedQueryParser {
      */
 
     ContextStrategy strategy ;
-    int corpusSize;
+    DocumentCorpus corpus;
 
-    public RankedQueryParser(ContextStrategy strategy,int corpusSize){
+    public RankedQueryParser(ContextStrategy strategy,DocumentCorpus corpus){
         this.strategy = strategy;
-        this.corpusSize = corpusSize;
+        this.corpus = corpus;
     }
     private static class StringBounds {
         int start;
@@ -106,7 +107,7 @@ public class RankedQueryParser {
         // that must be combined with an OrQuery.
 
 
-        return new RankedRetrieval(allSubqueries,strategy,corpusSize,accum);
+        return new RankedRetrieval(allSubqueries,strategy,corpus,accum);
     }
 
     /**
