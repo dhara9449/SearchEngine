@@ -225,7 +225,7 @@ public class DiskPositionalIndexer {
                 if (p1.getDocumentId() >= 0) {
                     docId = p1.getDocumentId();
                     Document doc=corpus.getDocument(docId);
-                    System.out.println("Document \""+"  "+doc.getmFileName()+"\" (ID: "+docId+")");
+                    System.out.println("Document \""+doc.getmFileName()+"\" (ID "+docId+")" +p1.getAccumulator());
                 }
             }
             System.out.println(postings.size() + " document(s)");

@@ -13,6 +13,9 @@ public class Posting {
     private List<Integer> mPositions;
     private int  termFrequency;
 
+    private String accumulator="";
+
+
     public Posting(int documentId) {
         mPositions = new ArrayList<>();
 
@@ -56,4 +59,11 @@ public class Posting {
         this.termFrequency = termFrequency;
     }
 
+    public String getAccumulator() {
+        return accumulator;
+    }
+
+    public void setAccumulator(String accumulator) {
+        this.accumulator = accumulator;
+    }
 }

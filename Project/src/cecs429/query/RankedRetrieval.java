@@ -1,6 +1,7 @@
 package cecs429.query;
 
 import cecs429.TermFrequency.ContextStrategy;
+import cecs429.documents.Document;
 import cecs429.index.Index;
 import cecs429.index.Posting;
 import org.jetbrains.annotations.NotNull;
@@ -119,28 +120,33 @@ public class RankedRetrieval implements QueryComponent {
 
 
         ArrayList<Posting> ans=new ArrayList<>();
-
         Iterator priorityQIterator = accumulatorQueue.iterator();
         int cnt=0;
+        String sb="";
         while (priorityQIterator.hasNext()) {
             Accumulator s=(Accumulator) priorityQIterator.next();
             priorityQIterator.remove();
             int dId= s.getDocId();
+
+
+            //sb = sb +"\nDocument \"\" (ID: "+s.getDocId()+") (A:)"+s.getAd() ;
+
             if(accum) {
-                System.out.print("A: " + s.getAd() + " docId: " + s.getDocId());
+                System.out.print("A:" + s.getAd() + "\tdocId: " + s.getDocId());
             }
                 for (Posting p:temp){
                     if (dId ==p.getDocumentId()){
+                        p.setAccumulator(":"+s.getAd());
                         try {
                             if(accum) {
-                                System.out.print(" Ld: " + strategy.calculateLd(dId));
+                                System.out.print("\tLd: " + strategy.calculateLd(dId));
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
 
                         if(accum) {
-                            System.out.println(" Wdt: " + s.getWdt());
+                            System.out.println("\tWdt: " + s.getWdt());
                         }
                         ans.add(p);
                         break;
@@ -150,9 +156,7 @@ public class RankedRetrieval implements QueryComponent {
             if(cnt>=10)
                 break;
         }
-
-
-
+//        System.out.println(sb);
         return ans;
     }
 

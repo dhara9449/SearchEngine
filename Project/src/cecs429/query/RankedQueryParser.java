@@ -157,49 +157,7 @@ public class RankedQueryParser {
         while (subquery.charAt(startIndex) == ' ') {
             ++startIndex;
         }
-
-        //determine if it is a  phrase literal
-       /* if (subquery.charAt(startIndex) == '\"') {
-            ++startIndex;
-            int nextQuote = subquery.indexOf('\"', startIndex);
-            if (nextQuote < 0) {
-                // No more literals in this subquery.
-                return new Literal(
-                        new StringBounds(-1, -1),
-                        new TermLiteral("",processor)
-                );
-            } else {
-                lengthOut = nextQuote - startIndex;
-            }
-            // This is a term literal containing a single term.
-            String substring = subquery.substring(startIndex, startIndex + lengthOut);
-
-            return new Literal(
-                    new StringBounds(startIndex, lengthOut),
-                    new PhraseLiteral(substring,processor)
-            );
-        } //determine if it is a  Near literal
-        else if (subquery.charAt(startIndex) == '[') {
-            ++startIndex;
-            int nextBracket = subquery.indexOf(']', startIndex);
-            if (nextBracket < 0) {
-                // No more literals in this subquery.
-                return new Literal(
-                        new StringBounds(-1, -1),
-                        new TermLiteral("",processor)
-                );
-            } else {
-                lengthOut = nextBracket - startIndex;
-            }
-            // This is a term literal containing a single term.
-            String substring = subquery.substring(startIndex, startIndex + lengthOut);
-
-            return new Literal(
-                    new StringBounds(startIndex, lengthOut),
-                    new NearLiteral(substring)
-            );
-        } else {*/
-            // Locate the next space to find the end of this literal.
+         // Locate the next space to find the end of this literal.
             int nextSpace = subquery.indexOf(' ', startIndex);
             if (nextSpace < 0) {
                 // No more literals in this subquery.
