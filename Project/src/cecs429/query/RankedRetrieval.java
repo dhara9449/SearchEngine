@@ -1,6 +1,7 @@
 package cecs429.query;
 
 import cecs429.TermFrequency.ContextStrategy;
+import cecs429.documents.Document;
 import cecs429.index.Index;
 import cecs429.index.Posting;
 import org.jetbrains.annotations.NotNull;
@@ -18,11 +19,12 @@ public class RankedRetrieval implements QueryComponent {
     private ContextStrategy strategy;
     private List<QueryComponent> mComponents;
     private  int N;
-
-    RankedRetrieval(List<QueryComponent> components,ContextStrategy strategy,int corpusSize) {
+    private  boolean accum;
+    RankedRetrieval(List<QueryComponent> components,ContextStrategy strategy,int corpusSize,String accum) {
         mComponents = components;
         this.strategy = strategy;
         N = corpusSize;
+        this.accum= accum.equalsIgnoreCase("log");
     }
 
     private class Accumulator implements Comparable<Accumulator> {
@@ -64,8 +66,8 @@ public class RankedRetrieval implements QueryComponent {
         int docId;
         int tf;
         int dft;
-        double wdt=0.0,wqt=0.0;
-        double Ad=0.0;
+        double wdt=0.0,wqt;
+        double Ad;
 
         double Ld=0.0;
 
@@ -118,23 +120,34 @@ public class RankedRetrieval implements QueryComponent {
 
 
         ArrayList<Posting> ans=new ArrayList<>();
-
         Iterator priorityQIterator = accumulatorQueue.iterator();
         int cnt=0;
+        String sb="";
         while (priorityQIterator.hasNext()) {
             Accumulator s=(Accumulator) priorityQIterator.next();
             priorityQIterator.remove();
             int dId= s.getDocId();
-            System.out.println("Accum: " + s.getAd() + " docId: "+ s.getDocId());
+
+
+            //sb = sb +"\nDocument \"\" (ID: "+s.getDocId()+") (A:)"+s.getAd() ;
+
+            if(accum) {
+                System.out.print("A:" + s.getAd() + "\tdocId: " + s.getDocId());
+            }
                 for (Posting p:temp){
                     if (dId ==p.getDocumentId()){
-                        p.setAccumulator(s.getAd());
+                        p.setAccumulator(":"+s.getAd());
                         try {
-                            p.setLd(strategy.calculateLd(dId));
+                            if(accum) {
+                                System.out.print("\tLd: " + strategy.calculateLd(dId));
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        p.setWdt(s.getWdt());
+
+                        if(accum) {
+                            System.out.println("\tWdt: " + s.getWdt());
+                        }
                         ans.add(p);
                         break;
                     }
@@ -143,9 +156,7 @@ public class RankedRetrieval implements QueryComponent {
             if(cnt>=10)
                 break;
         }
-
-
-
+//        System.out.println(sb);
         return ans;
     }
 

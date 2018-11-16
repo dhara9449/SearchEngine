@@ -51,7 +51,7 @@ public class BooleanQueryParser {
      * @param query
      * @return
      */
-    public QueryComponent parseQuery(String query, TokenProcessor processor) {
+    public QueryComponent parseQuery(String query, TokenProcessor processor,String accum) {
         int start = 0;
 
         // General routine: scan the query to identify a literal, and put that literal into a list.
