@@ -123,6 +123,7 @@ public class RankedRetrieval implements QueryComponent {
         int cnt=0;
         while (priorityQIterator.hasNext()) {
             Accumulator s=(Accumulator) priorityQIterator.next();
+            priorityQIterator.remove();
             int dId= s.getDocId();
           //  System.out.println("Accum: " + s.getAd() + " docId: "+ s.getDocId());
                 for (Posting p:temp){

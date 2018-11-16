@@ -159,7 +159,7 @@ public class RankedQueryParser {
         }
 
         //determine if it is a  phrase literal
-        if (subquery.charAt(startIndex) == '\"') {
+       /* if (subquery.charAt(startIndex) == '\"') {
             ++startIndex;
             int nextQuote = subquery.indexOf('\"', startIndex);
             if (nextQuote < 0) {
@@ -198,7 +198,7 @@ public class RankedQueryParser {
                     new StringBounds(startIndex, lengthOut),
                     new NearLiteral(substring)
             );
-        } else {
+        } else {*/
             // Locate the next space to find the end of this literal.
             int nextSpace = subquery.indexOf(' ', startIndex);
             if (nextSpace < 0) {
@@ -216,7 +216,7 @@ public class RankedQueryParser {
                     new StringBounds(startIndex, lengthOut),
                     new TermLiteral(substring,processor)
             );
-        }
+       // }
 
     }
 }

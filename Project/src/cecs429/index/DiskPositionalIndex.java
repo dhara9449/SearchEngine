@@ -120,7 +120,7 @@ public class DiskPositionalIndex implements Index {
                 for(int termFreq = 0; termFreq < tft; termFreq++){
                     currentPosGap = postingsRAF.readInt();
                     positionList.add(currentPosGap+prevPosGap);
-                    prevPosGap = currentPosGap + prevPosGap;
+                    prevPosGap = currentPosGap +prevPosGap;
                 }
                 p.setmPositions(positionList);
                 postingsList.add(p);
@@ -181,7 +181,11 @@ public class DiskPositionalIndex implements Index {
 
     @Override
     public List<String> getVocabulary() throws IOException {
-        return (List<String>) map.keySet();
+
+        List<String> vocabList = null;
+        vocabList.addAll(map.keySet());
+
+        return vocabList ;
     }
 /*
     public List<String> getVocabulary() throws IOException {
