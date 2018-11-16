@@ -18,11 +18,12 @@ public class RankedRetrieval implements QueryComponent {
     private ContextStrategy strategy;
     private List<QueryComponent> mComponents;
     private  int N;
-
-    RankedRetrieval(List<QueryComponent> components,ContextStrategy strategy,int corpusSize) {
+    private  boolean accum;
+    RankedRetrieval(List<QueryComponent> components,ContextStrategy strategy,int corpusSize,String accum) {
         mComponents = components;
         this.strategy = strategy;
         N = corpusSize;
+        this.accum= accum.equalsIgnoreCase("log");
     }
 
     private class Accumulator implements Comparable<Accumulator> {
@@ -64,8 +65,8 @@ public class RankedRetrieval implements QueryComponent {
         int docId;
         int tf;
         int dft;
-        double wdt=0.0,wqt=0.0;
-        double Ad=0.0;
+        double wdt=0.0,wqt;
+        double Ad;
 
         double Ld=0.0;
 
@@ -125,16 +126,22 @@ public class RankedRetrieval implements QueryComponent {
             Accumulator s=(Accumulator) priorityQIterator.next();
             priorityQIterator.remove();
             int dId= s.getDocId();
-            System.out.println("Accum: " + s.getAd() + " docId: "+ s.getDocId());
+            if(accum) {
+                System.out.print("Accum: " + s.getAd() + " docId: " + s.getDocId());
+            }
                 for (Posting p:temp){
                     if (dId ==p.getDocumentId()){
-                        p.setAccumulator(s.getAd());
                         try {
-                            p.setLd(strategy.calculateLd(dId));
+                            if(accum) {
+                                System.out.print("Ld: " + strategy.calculateLd(dId));
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        p.setWdt(s.getWdt());
+
+                        if(accum) {
+                            System.out.print("Wdt: " + s.getWdt());
+                        }
                         ans.add(p);
                         break;
                     }

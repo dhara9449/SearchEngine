@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+/*
 package edu.csulb;
 
 import cecs429.TermFrequency.*;
@@ -247,3 +247,4 @@ public class MainIndexer {
         }
     }
 }
+*/

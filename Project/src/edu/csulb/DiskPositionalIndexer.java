@@ -151,7 +151,12 @@ public class DiskPositionalIndexer {
                         }
                         break;
                     default:
-                        queryPosting(corpus, index, query,currentMode,strategy);
+                        if (query.contains("--log")){
+                            query=query.substring(0,query.lastIndexOf("--log"));
+                            queryPosting(corpus, index, query,currentMode,strategy,"log");
+                        }else{
+                            queryPosting(corpus, index, query,currentMode,strategy,"default");
+                        }
                         break;
                 }
             } else if (len == 2) {
@@ -179,17 +184,25 @@ public class DiskPositionalIndexer {
                         }
                         break;
                     default:
-                        queryPosting( corpus, index, query,currentMode,strategy);
-                        break;
+                        if (query.contains("--log")){
+                            query=query.substring(0,query.lastIndexOf("--log"));
+                            queryPosting(corpus, index, query,currentMode,strategy,"log");
+                        }else{
+                            queryPosting(corpus, index, query,currentMode,strategy,"default");
+                        }                        break;
                 }
             } else {
-                queryPosting( corpus, index, query,currentMode,strategy);
-
+                if (query.contains("--log")){
+                    query=query.substring(0,query.lastIndexOf("--log"));
+                    queryPosting(corpus, index, query,currentMode,strategy,"log");
+                }else{
+                    queryPosting(corpus, index, query,currentMode,strategy,"default");
+                }
             }
         }
     }
 
-    private static void queryPosting( DocumentCorpus corpus, Index index, String query,String mode,ContextStrategy strategy)  {
+    private static void queryPosting( DocumentCorpus corpus, Index index, String query,String mode,ContextStrategy strategy,String accum)  {
         Scanner scanner = new Scanner(System.in);
         String reply = "y";
         String docName;
@@ -199,9 +212,9 @@ public class DiskPositionalIndexer {
 
         QueryComponent queryComponent;
         if (mode.equalsIgnoreCase("boolean")){
-            queryComponent = new BooleanQueryParser().parseQuery(query, processor);
+            queryComponent = new BooleanQueryParser().parseQuery(query, processor,accum);
         }else{
-            queryComponent = new RankedQueryParser(strategy,corpus.getCorpusSize()).parseQuery(query, processor);
+            queryComponent = new RankedQueryParser(strategy,corpus.getCorpusSize()).parseQuery(query, processor,accum);
         }
 
         List<Posting> postings = queryComponent.getPostings(index);
@@ -212,7 +225,7 @@ public class DiskPositionalIndexer {
                 if (p1.getDocumentId() >= 0) {
                     docId = p1.getDocumentId();
                     Document doc=corpus.getDocument(docId);
-                    System.out.println("Document \""+doc.getTitle()+"  "+doc.getmFileName()+"\"(ID: "+docId+") A:" + p1.getAccumulator() +" ld:" +p1.getLd() +" Wdt: "+p1.getWdt());
+                    System.out.println("Document \""+doc.getTitle()+"  "+doc.getmFileName()+"\"(ID: "+docId);
                 }
             }
             System.out.println(postings.size() + " document(s)");
