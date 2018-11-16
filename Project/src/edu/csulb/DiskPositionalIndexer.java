@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package edu.csulb;
 
 import cecs429.TermFrequency.*;
@@ -65,8 +66,8 @@ public class DiskPositionalIndexer {
         SnowballStemmer stemmer = new englishStemmer();
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter corpus path:");
-        // String PATH=scanner.nextLine();
-        String PATH = "/Users/indumanimaran/Documents/SET/MobyDick10Chapters/";
+        String PATH=scanner.nextLine();
+        //String PATH = "D:\\Dhara_MS_in_CS\\Java_Projects\\Corpus\\MobyDick10Chapters";
         Path directoryPath = Paths.get(PATH);
         String sPath = directoryPath.toString();
 
@@ -183,7 +184,7 @@ public class DiskPositionalIndexer {
                 }
             } else {
                 queryPosting( corpus, index, query,currentMode,strategy);
-                break;
+
             }
         }
     }
@@ -211,7 +212,7 @@ public class DiskPositionalIndexer {
                 if (p1.getDocumentId() >= 0) {
                     docId = p1.getDocumentId();
                     Document doc=corpus.getDocument(docId);
-                    System.out.println("Document \""+doc.getmFileName()+"\"(ID: "+docId+") A:" + p1.getAccumulator() +" ld:" +p1.getLd() +" Wdt: "+p1.getWdt());
+                    System.out.println("Document \""+doc.getTitle()+"  "+doc.getmFileName()+"\"(ID: "+docId+") A:" + p1.getAccumulator() +" ld:" +p1.getLd() +" Wdt: "+p1.getWdt());
                 }
             }
             System.out.println(postings.size() + " document(s)");
