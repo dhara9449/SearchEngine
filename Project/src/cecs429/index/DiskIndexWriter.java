@@ -139,13 +139,17 @@ public class DiskIndexWriter {
          }
 
          double docLengthA=0.0;
-         int pos=1;
+         int pos=0;
          for (Double item:Ld){
              Objects.requireNonNull(docWeightsout).writeDouble(item);
-             if (pos%4==0){
+             pos = pos+1;
+
+             if (pos==2 ){
                  docLengthA = docLengthA + item;
              }
-             pos = pos+1;
+             if(pos==4){
+                 pos=0;
+             }
          }
 
          Objects.requireNonNull(docWeightsout).writeDouble((docLengthA * 4) / Ld.size());
@@ -156,7 +160,8 @@ public class DiskIndexWriter {
         DiskPositionalIndex dIndex=null;
         try{
             dIndex=new DiskPositionalIndex(path,corpus.getCorpusSize());
-        }catch (Exception ignored){
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return  dIndex;
 

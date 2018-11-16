@@ -16,12 +16,12 @@ public class OkapiStrategy implements  TermFrequencyStrategy{
         }
     }
     public double calculateWqt(int N, int dft){
-        double dr= dft+0.5;
-        double nr=N - dft+ 0.5;
+        double dr= dft+0.5; //denominator
+        double nr= N - dft+ 0.5; //numerator
         return Math.max(0.1, Math.log(nr/dr));
     }
     public  double calculateWdt(int tf,int docId) throws IOException {
-        weightsRAF.seek(docId*8*4+ 8*2);
+        weightsRAF.seek(docId*8*4 + 8);
         double docLength_d= weightsRAF.readDouble();
 
         weightsRAF.seek(weightsRAF.length()-8);
