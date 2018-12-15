@@ -20,13 +20,17 @@ public class WackyStrategy implements  TermFrequencyStrategy {
         return Math.max(0,Math.log( (N-dft)*1.0/dft));
     }
     public  double calculateWdt(int tf,int docId) throws IOException {
+        //numerator
         double nr = 1+Math.log(tf);
-       // weightsRAF.seek((docId*8*4) + (3*8));
+
+        // weightsRAF.seek((docId*8*4) + (3*8));
         weightsRAF.seek(docId*8*4);
         weightsRAF.readDouble();
         weightsRAF.readDouble();
         weightsRAF.readDouble();
         double avg_tf_td=weightsRAF.readDouble();
+
+        //denominator
         double dr= 1+Math.log(avg_tf_td);
         return nr/dr;
     }

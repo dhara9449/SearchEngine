@@ -28,10 +28,12 @@ public class RankedRetrieval implements QueryComponent {
         this.accum= accum.equalsIgnoreCase("log");
     }
 
+    //inner class for accumulator values
     private class Accumulator implements Comparable<Accumulator> {
         private  int docId;
         private double Ad =0.0;
         private  double wdt=0.0;
+
         private Accumulator(int docID) {
             this.docId = docID;
         }
@@ -39,20 +41,19 @@ public class RankedRetrieval implements QueryComponent {
         private  double getWdt(){
             return  wdt;
         }
-
         private  void setWdt(double x){
             wdt =x;
         }
         private double getAd() {
             return Ad;
         }
-
         private void setAd(double Ad){
             this.Ad = Ad;
         }
         public  int getDocId(){
             return docId;
         }
+
         @Override
         public int compareTo(Accumulator otherAd)
         {
@@ -87,7 +88,6 @@ public class RankedRetrieval implements QueryComponent {
                 docId=p.getDocumentId();
                 try {
                     wdt=strategy.calculateWdt(tf,docId);
-                   // System.out.println(docId+"  wdt:"+ wdt);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -104,8 +104,7 @@ public class RankedRetrieval implements QueryComponent {
             }
         }
 
-
-        //For each non-aero Ad, divide A_d by L_d , where L_d is read from docWeights.bin file
+        //For each non-zero Ad, divide A_d by L_d , where L_d is read from docWeights.bin file
         for (Accumulator accum : accumulatorHashMap.values()) {
             try {
                 Ld=strategy.calculateLd(accum.getDocId());
@@ -118,20 +117,15 @@ public class RankedRetrieval implements QueryComponent {
             accumulatorQueue.add(accum);
         }
 
-
         ArrayList<Posting> ans=new ArrayList<>();
         Iterator priorityQIterator = accumulatorQueue.iterator();
-        int cnt=0;
-        String sb="";
-
-
-
+        int count=0;
+        String printResult="";
 
         while (priorityQIterator.hasNext()) {
             Accumulator s = (Accumulator) priorityQIterator.next();
             priorityQIterator.remove();
             int dId = s.getDocId();
-            //sb = sb +"\nDocument \"\" (ID: "+s.getDocId()+") (A:)"+s.getAd() ;
 
             if (accum) {
                 System.out.print("A:" + s.getAd() + "\tdocId: " + s.getDocId());
@@ -147,15 +141,14 @@ public class RankedRetrieval implements QueryComponent {
                 e.printStackTrace();
             }
 
-            sb=sb+"Document Title:\""+doc.getTitle()+"\"  File Name: "+doc.getmFileName()+" (ID: "+dId+") "+s.getAd()+"\n";
+            printResult=printResult+"Document Title:\""+doc.getTitle()+"\"  File Name: "+doc.getmFileName()+" (ID: "+dId+") "+s.getAd()+"\n";
 
-            cnt++;
-            if (cnt>=10){
+            count++;
+            if (count>=10){
                 break;
             }
         }
-
-        System.out.println(sb);
+        System.out.println(printResult);
         return ans;
     }
 

@@ -4,6 +4,8 @@ import cecs429.documents.Document;
 import cecs429.documents.DocumentCorpus;
 import cecs429.text.BetterTokenProcessor;
 import cecs429.text.EnglishTokenStream;
+import cecs429.text.TokenProcessor;
+import cecs429.text.TokenStream;
 import org.mapdb.BTreeMap;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
@@ -18,75 +20,76 @@ public class DiskIndexWriter {
     private Path path;
 
     private void WriteIndex(Index index, Path path) throws IOException {
-        //path = D:\Dhara_MS_in_CS\Java_Projects\MobyDick10Chapters
-       List<String> vocab = index.getVocabulary();
 
+        List<String> vocab = index.getVocabulary();
         ArrayList<Long> mMapPosting = writePostings(index,path, vocab);
         ArrayList<Long> mMapVocab = writeVocab(index,path, vocab);
         writeVocabTable(path,mMapVocab,mMapPosting);
         this.path = path;
     }
 
-    private static void createBtree(){
-
-
-    }
     private ArrayList<Long> writePostings(Index index, Path path, List<String> vocab) throws IOException {
-       File postingsFile = new File(String.valueOf(path) + "/index/postings.bin");
-       final boolean mkdirs = postingsFile.getParentFile().mkdirs();
+        File postingsFile = new File(String.valueOf(path) + "/index/postings.bin");
+        final boolean mkdirs = postingsFile.getParentFile().mkdirs();
 
-       if(!mkdirs){
-           System.out.println("Cannot create postings.bin");
-           return new ArrayList<>();
-       }
+        if(!mkdirs){
+            System.out.println("Cannot create postings.bin");
+            return new ArrayList<>();
+        }
 
-        FileOutputStream out1 = new FileOutputStream(postingsFile);
-        DataOutputStream postingsout = new DataOutputStream(out1);
+        FileOutputStream fileOutputStream = new FileOutputStream(postingsFile);
+        DataOutputStream postingsout = new DataOutputStream(fileOutputStream);
         ArrayList<Long> mMapPosting = new ArrayList<>();
+
+        //creates B+ tree using MapDB library
         DB vocabTabledb = DBMaker.fileDB(String.valueOf(path)  +"/index/BTreeDatabase.db").make();
+
         BTreeMap<String, Long> map = vocabTabledb.treeMap("map")
                 .keySerializer(Serializer.STRING)
                 .valueSerializer(Serializer.LONG)
                 .create();
 
         for (String str : index.getVocabulary()) {
-            List<Posting> docFrequency = index.getPostings(str);
-            postingsout.writeInt(docFrequency.size());
-            Long postingPos = out1.getChannel().size()-4;
-            //System.out.println(str + postingPos);
+            List<Posting> postingList = index.getPostings(str);
+
+            // writing document frequency : dft
+            postingsout.writeInt(postingList.size());
+            Long postingPos = fileOutputStream.getChannel().size()-4;
+
+            //storing the term as key and its postings position as value in the B+ tree
             map.put(str,postingPos);
 
             //determining the location for vocab table
             mMapPosting.add(postingPos);
 
-            // the first document should be the docId
             int prevDocId = 0;
             int currentDocId;
-
-            for (Posting document : docFrequency) {
+            for (Posting document : postingList) {
 
                 currentDocId = document.getDocumentId();
                 postingsout.writeInt( currentDocId - prevDocId);
                 prevDocId = currentDocId;
 
                 List<Integer> positionList = document.getPositions();
-                // writing posting.bin
-                //postingsout.writeInt(document.getTermFrequency());
+                //writing positionList
                 postingsout.writeInt(positionList.size());
                 int prevPos=0;
                 for (Integer currentPos : positionList ) {
                     postingsout.writeInt(currentPos - prevPos); //writeInt
                     prevPos=currentPos;
                 }
-
             }
         }
         vocabTabledb.close();
         return mMapPosting;
     }
-
+    /*
+     * This method writes the vocab words in  vocab.bin file to the disk
+     * the writeVocab() method is not needed for B+ tree
+     *
+     */
     private ArrayList<Long> writeVocab(Index index, Path path, List<String> vocab) throws IOException {
-        //File vocabFile = new File(String.valueOf(path) + "\\index\\vocab.bin");
+
         File vocabFile = new File(String.valueOf(path) + "/index/vocab.bin");
         FileOutputStream out2 = new FileOutputStream(vocabFile);
         DataOutputStream vocabOut = new DataOutputStream(out2);
@@ -102,9 +105,10 @@ public class DiskIndexWriter {
 
 
     /*
-    *   Writes the vocabulary table to  the  disk
-    *
-    * */
+     *   The writeVocabTable() writes the vocabulary table to  the disk
+     *
+     * This method is not needed for B+ tree.
+     * */
 
     private void writeVocabTable(Path path, ArrayList<Long> mMapVocab,ArrayList<Long> mMapPosting) throws IOException {
         //File vocabTablefile = new File(String.valueOf(path) + "\\index\\vocabTable.bin");
@@ -122,38 +126,37 @@ public class DiskIndexWriter {
         }
     }
 
-
     /*
-    *   Write document weights to the disk
-    *
-    */
+     *   Write document weights to the disk in docWeights.bin file
+     *
+     */
 
-     private  void writeDocWeights(ArrayList<Double> Ld,Path path) throws IOException{
-         File docWeightsfile = new File(String.valueOf(path) + "/index/docWeights.bin");
-         DataOutputStream docWeightsout = null;
+    private  void writeDocWeights(ArrayList<Double> Ld,Path path) throws IOException{
+        File docWeightsfile = new File(String.valueOf(path) + "/index/docWeights.bin");
+        DataOutputStream docWeightsout = null;
 
-         try {
-             docWeightsout = new DataOutputStream(new FileOutputStream(docWeightsfile));
-         } catch (FileNotFoundException e) {
-             e.printStackTrace();
-         }
+        try {
+            docWeightsout = new DataOutputStream(new FileOutputStream(docWeightsfile));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-         double docLengthA=0.0;
-         int pos=0;
-         for (Double item:Ld){
-             Objects.requireNonNull(docWeightsout).writeDouble(item);
-             pos = pos+1;
+        double docLengthA=0.0;
+        int pos=0;
+        for (Double item:Ld){
+            Objects.requireNonNull(docWeightsout).writeDouble(item);
+            pos = pos+1;
 
-             if (pos==2 ){
-                 docLengthA = docLengthA + item;
-             }
-             if(pos==4){
-                 pos=0;
-             }
-         }
+            if (pos==2 ){
+                docLengthA = docLengthA + item;
+            }
+            if(pos==4){
+                pos=0;
+            }
+        }
 
-         Objects.requireNonNull(docWeightsout).writeDouble((docLengthA * 4) / Ld.size());
-     }
+        Objects.requireNonNull(docWeightsout).writeDouble((docLengthA * 4) / Ld.size());
+    }
 
 
     public Index loadCorpus(DocumentCorpus corpus,Path path){
@@ -167,14 +170,13 @@ public class DiskIndexWriter {
 
     }
 
-     /*index the corpus given
-       * also find the document weight for each document in the corpus
-    */
-    public  Index indexCorpus(DocumentCorpus corpus,Path path) {
+    /*index the corpus given
+     * also find the document weight for each document in the corpus
+     */
+    public  Index indexCorpus(DocumentCorpus corpus, Path path, TokenProcessor processor) {
         HashSet<String> vocabulary = new HashSet<>();
         DiskPositionalIndex diskPositionalIndex = null;
 
-        BetterTokenProcessor processor = new BetterTokenProcessor();//must be dynamic
         EnglishTokenStream englishTokenStream;
         PositionalInvertedIndex invertedDocumentIndex = new PositionalInvertedIndex();
 
@@ -185,7 +187,7 @@ public class DiskIndexWriter {
             Iterable<String> getTokens = englishTokenStream.getTokens();
             int position = 0;
             String term;
-            HashMap<String,Integer> termFrequencyTracker = new HashMap<>();;
+            HashMap<String,Integer> termFrequencyTracker = new HashMap<>();
             currentDocId = document.getId();
             int frequency;
             for (String tokens : getTokens) {
@@ -237,6 +239,4 @@ public class DiskIndexWriter {
         }
         return  dIndex;
     }
-
-
 }

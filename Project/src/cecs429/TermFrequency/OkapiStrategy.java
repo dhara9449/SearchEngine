@@ -33,5 +33,5 @@ public class OkapiStrategy implements  TermFrequencyStrategy{
     public  double calculateLd(int docId){
         return 1.0;
     }
-    
+
 }
