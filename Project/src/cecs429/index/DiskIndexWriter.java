@@ -214,6 +214,7 @@ public class DiskIndexWriter {
             docWeights.add(Math.sqrt(Ld)); // docWeights d
             docWeights.add(position+0.0); // docLength d
             docWeights.add(document.getByteSize());//Determine the bytesize of the document
+
             docWeights.add(tf_td/termFrequencyTracker.size());//avg tf t,d
         }
 

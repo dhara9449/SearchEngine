@@ -25,6 +25,7 @@ public class DiskPositionalIndex implements Index {
 
 
 
+
     public DiskPositionalIndex(Path path,int N) throws FileNotFoundException {
         this.path=String.valueOf(path);
         vocabRAF = new RandomAccessFile( path + "/index/vocab.bin", "rw");
