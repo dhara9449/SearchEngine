@@ -10,7 +10,7 @@ public class ContextStrategy {
     public ContextStrategy(TermFrequencyStrategy strategy){
         this.strategy = strategy;
 
- }
+    }
     public double calculateWqt(int N, int dft){
         return strategy.calculateWqt(N, dft);
     }

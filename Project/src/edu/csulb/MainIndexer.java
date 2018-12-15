@@ -34,6 +34,8 @@ public class MainIndexer {
     public static void main(String[] args) {
 
         DocumentCorpus corpus = null;
+        TokenProcessor processor = new BetterTokenProcessor();
+
         String query;
         Index index = null;
         DiskIndexWriter diskIndexWriter = null;
@@ -54,7 +56,6 @@ public class MainIndexer {
         String EXTENSION = FilenameUtils.getExtension(Objects.requireNonNull(listOfFiles)[0].getName());
         corpus = newCorpus(directoryPath, "." + EXTENSION);
 
-
         String currentMode ="boolean";
         ArrayList<String> modes = new ArrayList<>();
         modes.add("");
@@ -65,10 +66,9 @@ public class MainIndexer {
 
         ContextStrategy strategy = null;//new ContextStrategy(new DefaultFrequencyStrategy(""));
 
-
         if (milestoneChoice == 1) {
             System.out.println("Indexing..." + directoryPath.toString());
-            index=newIndex(corpus, milestoneChoice, directoryPath);
+            index=newIndex(corpus, milestoneChoice, directoryPath,processor);
         }
         // else if(milestoneChoice == 2){
         else {
@@ -79,7 +79,7 @@ public class MainIndexer {
 
             if (choice == 1) {
                 System.out.println("Indexing..." + directoryPath.toString());
-                newIndex(corpus, milestoneChoice, directoryPath);
+                newIndex(corpus, milestoneChoice, directoryPath,processor);
                 return;
             }
 
@@ -142,6 +142,8 @@ public class MainIndexer {
                             }
                             break;
                         default:
+
+                            //prints the log information like wdt, Ld
                             if (query.contains("--log")){
                                 query=query.substring(0,query.lastIndexOf("--log"));
                                 queryPosting(corpus, index, query,currentMode,strategy,"log");
@@ -166,7 +168,8 @@ public class MainIndexer {
                                 queryPosting(corpus, index, query,currentMode,strategy,"log");
                             }else{
                                 queryPosting(corpus, index, query,currentMode,strategy,"default");
-                            }                        break;
+                            }
+                            break;
                     }
                 } else {
                     if (query.contains("--log")){
@@ -190,7 +193,7 @@ public class MainIndexer {
         return corpus;
     }
 
-    private static Index newIndex(DocumentCorpus corpus,int milestoneChoice,Path directoryPath) {
+    private static Index newIndex(DocumentCorpus corpus,int milestoneChoice,Path directoryPath,TokenProcessor processor) {
         final long startTime = System.currentTimeMillis();
         Index index;
         if (milestoneChoice == 1) {
@@ -200,7 +203,7 @@ public class MainIndexer {
         }
         else {
             DiskIndexWriter diskIndexWriter = new DiskIndexWriter();
-            index = diskIndexWriter.indexCorpus(corpus, directoryPath);
+            index = diskIndexWriter.indexCorpus(corpus, directoryPath,processor);
         }
         final long endTime = System.currentTimeMillis();
         long indexTime = endTime - startTime;
@@ -212,7 +215,7 @@ public class MainIndexer {
         return diskIndexWriter.loadCorpus(corpus,directoryPath);
     }
 
-    //Index the PositionalInvertedIndex
+    //create the PositionalInvertedIndex
     private static Index indexCorpus(DocumentCorpus corpus) {
         HashSet<String> vocabulary = new HashSet<>();
         BetterTokenProcessor processor = new BetterTokenProcessor();

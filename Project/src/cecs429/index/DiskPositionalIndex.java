@@ -53,7 +53,7 @@ public class DiskPositionalIndex implements Index {
     public List<Posting> getPostings(String term) {
         List<Posting> postingsList = new ArrayList<>();
         // get the position of postings from vocabTable.bin
-        //using binary search ....
+        //using binary search
 
         try {
             long postingPos = binarySearchVocab(term);
@@ -134,10 +134,14 @@ public class DiskPositionalIndex implements Index {
     }
 
     private long binarySearchVocab(String term) {
-        //TODO: make case for no word in the map
+
         return map.get(term);
     }
 
+    /*
+    The below method searches for the postingpostion using binary tree.
+    This methos is commented out as we are using B+ tree instead of binary tree.
+     */
 /*    private long binarySearchVocab(String term) throws IOException {
         long vocabTableLength =  (vocabTableRAF.length() /16);
         long vocabLength = vocabRAF.length();
@@ -179,6 +183,20 @@ public class DiskPositionalIndex implements Index {
         return currentPostingsPos;
     }*/
 
+
+
+
+    @Override
+    public int getVocabulorySize() {
+        int vocabSize = 0;
+        try {
+            vocabSize = (int)vocabTableRAF.length() /16;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return vocabSize;
+    }
+
     @Override
     public List<String> getVocabulary() throws IOException {
 
@@ -187,6 +205,10 @@ public class DiskPositionalIndex implements Index {
 
         return vocabList ;
     }
+    /*
+    The following method returns the list of vocab words using vocab.bin and vocabTable.bin in case of binary search.
+    We have been using B+ tree so the the method has been commented out.
+     */
 /*
     public List<String> getVocabulary() throws IOException {
         List<String> vocabResultList = new ArrayList<>();
@@ -224,16 +246,5 @@ public class DiskPositionalIndex implements Index {
     }
 */
 
-    //TODO:
-    @Override
-    public int getVocabulorySize() {
-        int vocabSize = 0;
-        try {
-            vocabSize = (int)vocabTableRAF.length() /16;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return vocabSize;
-    }
 
 }
