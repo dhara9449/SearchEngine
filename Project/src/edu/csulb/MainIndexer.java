@@ -125,22 +125,23 @@ public class MainIndexer {
 
                     strategy = new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt() - 1));
 
-                System.out.println("1.MAP\n" +
-                        "2.Throughput\n" +
-                        "3.Mean Response Time\n");
 
                 OUTER1:
                 while (true) {
+                    System.out.println("1.MAP\n" +
+                            "2.Throughput\n" +
+                            "3.Mean Response Time\n");
+
                     int choice = scanner.nextInt();
                     switch (choice) {
                         case 1:
                             System.out.println("MAP: " + MeanAvgPrecision(corpus,index,strategy));
                             break;
                         case 2:
-                            System.out.println("ThroughPut: "+ NQUERIES/TOTALTIME);
+                            System.out.println("ThroughPut: "+ NQUERIES/(TOTALTIME/1000));
                             break;
                         case 3:
-                            System.out.println("MRT: " + TOTALTIME/NQUERIES);
+                            System.out.println("MRT: " + (TOTALTIME/1000)/NQUERIES);
                             break;
                         default:
                             System.out.println("Exiting application");
@@ -352,7 +353,10 @@ public class MainIndexer {
             }
 
         }
-        return avgPrecision/resultDocIds.size();
+
+        if (pAti==0)
+            return 0;
+        return avgPrecision/pAti;
 
     }
 
@@ -388,6 +392,8 @@ public class MainIndexer {
         }
 
         setNQueries(nQueries);
+            if (nQueries==0)
+                return  0;
         return  MAP/nQueries;
 
 
