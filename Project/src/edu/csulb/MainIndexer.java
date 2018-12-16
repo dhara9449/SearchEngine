@@ -52,7 +52,6 @@ public class MainIndexer {
                 "3. Milestone 3\n");
 
         int milestoneChoice = scanner.nextInt();
-        String QPATH="";
         System.out.println("Enter corpus path:");
         String PATH = scanner.next();
         Path directoryPath = Paths.get(PATH);
@@ -371,7 +370,7 @@ public class MainIndexer {
             String RPATH = scanner.nextLine();
             int nQueries=0;
             double MAP=0.0;
-            String result="";
+            String result;
             BufferedReader reader,resultReader;
             try {
                 reader = new BufferedReader(new FileReader(QPATH));
@@ -415,6 +414,7 @@ public class MainIndexer {
             Posting p1;
             if (postings != null) {
             for(int i=0;i<postings.size();i++){
+
                 p1 = postings.get(i);
                 if (p1.getDocumentId() >= 0) {
                     docId = p1.getDocumentId();
