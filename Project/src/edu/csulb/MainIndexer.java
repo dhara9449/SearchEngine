@@ -21,7 +21,10 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.tartarus.snowball.SnowballStemmer;
 import org.tartarus.snowball.ext.englishStemmer;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,6 +34,8 @@ import static java.lang.Integer.min;
 
 public class MainIndexer {
 
+    private  static  double TOTALTIME=0;
+    private  static  int NQUERIES=0;
     public static void main(String[] args) {
 
         DocumentCorpus corpus = null;
@@ -43,10 +48,11 @@ public class MainIndexer {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("1. Milestone 1 (Boolean queries, in-memory index)\n" +
-                "2. Milestone 2 (Boolean and ranked queries, on-disk index)\n" );
+                "2. Milestone 2 (Boolean and ranked queries, on-disk index)\n" +
+                "3. Milestone 3\n");
 
         int milestoneChoice = scanner.nextInt();
-
+        String QPATH="";
         System.out.println("Enter corpus path:");
         String PATH = scanner.next();
         Path directoryPath = Paths.get(PATH);
@@ -70,19 +76,27 @@ public class MainIndexer {
             System.out.println("Indexing..." + directoryPath.toString());
             index=newIndex(corpus, milestoneChoice, directoryPath,processor);
         }
-        // else if(milestoneChoice == 2){
         else {
-            System.out.println("1.Build corpus" +
-                    "\n2.Query corpus" +
-                    "\nEnter choice: ");
-            int choice = scanner.nextInt();
 
-            if (choice == 1) {
-                System.out.println("Indexing..." + directoryPath.toString());
-                newIndex(corpus, milestoneChoice, directoryPath,processor);
-                return;
+            if (milestoneChoice == 2) {
+
+                System.out.println("1.Build corpus" +
+                        "\n2.Query corpus" +
+                        "\nEnter choice: ");
+                int choice = scanner.nextInt();
+
+                if (choice == 1) {
+                    System.out.println("Indexing..." + directoryPath.toString());
+                    newIndex(corpus, milestoneChoice, directoryPath, processor);
+                    return;
+                }else{
+                    System.out.println(" 1.Boolean\n" +
+                            " 2.Ranked\n" +
+                            "Enter retrieval mode:");
+                    int mode = scanner.nextInt();
+                    currentMode = modes.get(mode);
+                }
             }
-
             rankRetrievalStrategy.add(new DefaultFrequencyStrategy(sPath));
             rankRetrievalStrategy.add(new TfIdfStrategy(sPath));
             rankRetrievalStrategy.add(new OkapiStrategy(sPath));
@@ -92,11 +106,6 @@ public class MainIndexer {
             index = loadIndex(corpus, diskIndexWriter, directoryPath);
 
 
-            System.out.println(" 1.Boolean\n" +
-                    " 2.Ranked\n" +
-                    "Enter retrieval mode:");
-            int mode = scanner.nextInt();
-            currentMode = modes.get(mode);
 
             if (currentMode.equalsIgnoreCase("ranked")) {
                 System.out.println("1.Default\n" +
@@ -106,9 +115,47 @@ public class MainIndexer {
                         "Enter choice: ");
                 strategy = new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt() - 1));
             }
-        }
-            query = scanner.nextLine();
 
+            if (milestoneChoice == 3) {
+
+                    System.out.println("1.Default\n" +
+                            "2.tf-idf\n" +
+                            "3.Okapi BM25\n" +
+                            "4.Wacky\n" +
+                            "Enter choice: ");
+
+                    strategy = new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt() - 1));
+
+                System.out.println("1.MAP\n" +
+                        "2.Throughput\n" +
+                        "3.Mean Response Time\n");
+
+                OUTER1:
+                while (true) {
+                    int choice = scanner.nextInt();
+                    switch (choice) {
+                        case 1:
+                            System.out.println("MAP: " + MeanAvgPrecision(corpus,index,strategy));
+                            break;
+                        case 2:
+                            System.out.println("ThroughPut: "+ NQUERIES/TOTALTIME);
+                            break;
+                        case 3:
+                            System.out.println("MRT: " + TOTALTIME/NQUERIES);
+                            break;
+                        default:
+                            System.out.println("Exiting application");
+                            break OUTER1;
+                    }
+                }
+
+                return;
+            }
+
+        }
+
+
+        query = scanner.nextLine();
 
             OUTER:
             while (true) {
@@ -182,6 +229,7 @@ public class MainIndexer {
                 }
             }
         }
+
 
     private static DocumentCorpus newCorpus(Path directoryPath, String extension) {
         DocumentCorpus corpus;
@@ -268,7 +316,84 @@ public class MainIndexer {
         return invertedDocumentIndex;
     }
 
-    private static void queryPosting( DocumentCorpus corpus, Index index, String query,String mode,ContextStrategy strategy,String accum)  {
+
+    private  static  void setTime(double time){
+
+        if( time!=-1) {
+            TOTALTIME = TOTALTIME + time;
+        }else{
+            TOTALTIME=0;
+        }
+
+    }
+
+
+    private static double avgPrecision( DocumentCorpus corpus, Index index, String query,ContextStrategy strategy,String accum,List<String> resultDocIds) {
+        double avgPrecision = 0.0;
+        TokenProcessor processor = new BetterTokenProcessor();
+        QueryComponent queryComponent = new RankedQueryParser(strategy, corpus).parseQuery(query, processor, accum);
+
+        Long startTime = System.currentTimeMillis();
+        List<Posting> postings = queryComponent.getPostings(index);
+        Long endTime = System.currentTimeMillis();
+
+        setTime(endTime-startTime);
+        double pAti=0.0;
+        Posting p1;
+        if (postings != null) {
+            for (int i = 1; i <= postings.size(); i++) {
+                p1 = postings.get(i-1);
+                if (p1.getDocumentId() >= 0) {
+                    if (resultDocIds.contains(Integer.toString(p1.getDocumentId()))){
+                        pAti ++;
+                        avgPrecision = avgPrecision + pAti/i;
+                    }
+
+                }
+            }
+
+        }
+        return avgPrecision/resultDocIds.size();
+
+    }
+
+    private  static  void setNQueries(int N){
+        NQUERIES = N;
+    }
+
+    private  static  double MeanAvgPrecision(DocumentCorpus corpus,Index index,ContextStrategy strategy){
+
+            String query;
+            Scanner scanner= new Scanner(System.in);
+            System.out.println("Enter path to query file: ");
+            String QPATH = scanner.nextLine();
+            System.out.println("Enter path to the results file: ");
+            String RPATH = scanner.nextLine();
+            int nQueries=0;
+            double MAP=0.0;
+            String result="";
+            BufferedReader reader,resultReader;
+            try {
+                reader = new BufferedReader(new FileReader(QPATH));
+                resultReader  = new BufferedReader(new FileReader(RPATH));
+                List< String> resultArray;
+                setTime(-1);
+                while ((query = reader.readLine()) != null && (result = resultReader.readLine()) != null) {
+                    resultArray=  Arrays.asList(result.split(" "));
+                    MAP=MAP+avgPrecision(corpus, index, query, strategy, "default",resultArray);
+                    nQueries++;
+                }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        setNQueries(nQueries);
+        return  MAP/nQueries;
+
+
+    }
+        private static void queryPosting( DocumentCorpus corpus, Index index, String query,String mode,ContextStrategy strategy,String accum)  {
         Scanner scanner = new Scanner(System.in);
         String reply = "y";
         String docName;
@@ -317,6 +442,11 @@ public class MainIndexer {
                     }
                 }
             }
+
+
         }
+
     }
+
+
 }
