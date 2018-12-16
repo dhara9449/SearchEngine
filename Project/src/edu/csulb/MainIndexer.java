@@ -107,8 +107,7 @@ public class MainIndexer {
                 strategy = new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt() - 1));
             }
         }
-            query = scanner.nextLine();
-
+            //query = scanner.nextLine();
 
             OUTER:
             while (true) {
