@@ -58,7 +58,7 @@ public class MainIndexer {
         String sPath = directoryPath.toString();
         File folder2 = new File(PATH);
         File[] listOfFiles = folder2.listFiles();
-        String EXTENSION = FilenameUtils.getExtension(Objects.requireNonNull(listOfFiles)[0].getName());
+        String EXTENSION = FilenameUtils.getExtension((listOfFiles)[0].getName());
         corpus = newCorpus(directoryPath, "." + EXTENSION);
 
         String currentMode ="boolean";
@@ -125,18 +125,21 @@ public class MainIndexer {
 
                     strategy = new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt() - 1));
 
-                System.out.println("1.MAP\n" +
-                        "2.Throughput\n" +
-                        "3.Mean Response Time\n");
 
                 OUTER1:
                 while (true) {
+                    System.out.println("1.MAP\n" +
+                            "2.Throughput\n" +
+                            "3.Mean Response Time\n");
+
                     int choice = scanner.nextInt();
                     switch (choice) {
                         case 1:
                             System.out.println("MAP: " + MeanAvgPrecision(corpus,index,strategy));
                             break;
                         case 2:
+                            System.out.println("NQUERIES: "+ NQUERIES);
+                            System.out.println("TIME "+TOTALTIME);
                             System.out.println("ThroughPut: "+ NQUERIES/TOTALTIME);
                             break;
                         case 3:
@@ -337,7 +340,7 @@ public class MainIndexer {
         Long endTime = System.currentTimeMillis();
 
         setTime(endTime-startTime);
-        double pAti=0.0;
+        int pAti=0;
         Posting p1;
         if (postings != null) {
             for (int i = 1; i <= postings.size(); i++) {
@@ -345,14 +348,16 @@ public class MainIndexer {
                 if (p1.getDocumentId() >= 0) {
                     if (resultDocIds.contains(Integer.toString(p1.getDocumentId()))){
                         pAti ++;
-                        avgPrecision = avgPrecision + pAti/i;
+                        avgPrecision = avgPrecision + (pAti*1.0)/(i*1.0);
                     }
-
                 }
             }
 
         }
-        return avgPrecision/resultDocIds.size();
+        if(pAti==0) {
+            return 0.0;
+        }
+        return avgPrecision/(pAti*1.0);
 
     }
 
@@ -364,11 +369,15 @@ public class MainIndexer {
 
             String query;
             Scanner scanner= new Scanner(System.in);
-            System.out.println("Enter path to query file: ");
-            String QPATH = scanner.nextLine();
-            System.out.println("Enter path to the results file: ");
-            String RPATH = scanner.nextLine();
-            int nQueries=0;
+            //System.out.println("Enter path to query file: ");
+            //String QPATH = "D:\\Dhara_MS_in_CS\\3rd_sem\\Search Engine Technology\\project\\relevance_parks\\relevance\\queries";
+            //System.out.println("Enter path to the results file: ");
+            //String RPATH = "D:\\Dhara_MS_in_CS\\3rd_sem\\Search Engine Technology\\project\\relevance_parks\\relevance\\qrel";
+
+            String QPATH= "D:\\Dhara_MS_in_CS\\Java_Projects\\Corpus\\relevance_parks_result\\queries.txt";
+        String RPATH= "D:\\Dhara_MS_in_CS\\Java_Projects\\Corpus\\relevance_parks_result\\qrel.txt";
+
+        int nQueries=0;
             double MAP=0.0;
             String result;
             BufferedReader reader,resultReader;
@@ -379,6 +388,7 @@ public class MainIndexer {
                 setTime(-1);
                 while ((query = reader.readLine()) != null && (result = resultReader.readLine()) != null) {
                     resultArray=  Arrays.asList(result.split(" "));
+
                     MAP=MAP+avgPrecision(corpus, index, query, strategy, "default",resultArray);
                     nQueries++;
                 }
@@ -388,6 +398,8 @@ public class MainIndexer {
         }
 
         setNQueries(nQueries);
+        if (nQueries==0)
+            return 0.0;
         return  MAP/nQueries;
 
 
