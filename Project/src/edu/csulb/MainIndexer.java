@@ -28,6 +28,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLOutput;
 import java.util.*;
 
 import static java.lang.Integer.min;
@@ -125,33 +126,14 @@ public class MainIndexer {
 
                     strategy = new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt() - 1));
 
-                System.out.println("1.MAP\n" +
-                        "2.Throughput\n" +
-                        "3.Mean Response Time\n");
-
-                OUTER1:
-                while (true) {
-                    int choice = scanner.nextInt();
-                    switch (choice) {
-                        case 1:
-                            System.out.println("MAP: " + MeanAvgPrecision(corpus,index,strategy));
-                            break;
-                        case 2:
-                            System.out.println("ThroughPut: "+ NQUERIES/TOTALTIME);
-                            break;
-                        case 3:
-                            System.out.println("MRT: " + TOTALTIME/NQUERIES);
-                            break;
-                        default:
-                            System.out.println("Exiting application");
-                            break OUTER1;
+                            System.out.println("MAP: " + MeanAvgPrecision(corpus,index,strategy) );
+                            System.out.println("ThroughPut: "+ NQUERIES/(TOTALTIME/1000)+" q/s");
+                            System.out.println("MRT: " + TOTALTIME/NQUERIES+" ms");
+                        return;
                     }
-                }
-
-                return;
             }
 
-        }
+
 
 
         query = scanner.nextLine();
@@ -327,7 +309,7 @@ public class MainIndexer {
     }
 
 
-    private static double avgPrecision( DocumentCorpus corpus, Index index, String query,ContextStrategy strategy,String accum,List<String> resultDocIds) {
+    private static double avgPrecision( DocumentCorpus corpus, Index index, String query,ContextStrategy strategy,String accum,List<Integer> resultDocIds) {
         double avgPrecision = 0.0;
         TokenProcessor processor = new BetterTokenProcessor();
         QueryComponent queryComponent = new RankedQueryParser(strategy, corpus).parseQuery(query, processor, accum);
@@ -339,11 +321,15 @@ public class MainIndexer {
         setTime(endTime-startTime);
         double pAti=0.0;
         Posting p1;
+        int docName;
+        int docId;
         if (postings != null) {
             for (int i = 1; i <= postings.size(); i++) {
                 p1 = postings.get(i-1);
-                if (p1.getDocumentId() >= 0) {
-                    if (resultDocIds.contains(Integer.toString(p1.getDocumentId()))){
+                docId = p1.getDocumentId();
+                if (docId >= 0) {
+                    docName = Integer.parseInt(corpus.getDocument(docId).getmFileName().split("\\.")[0]);
+                    if (resultDocIds.contains(docName)){
                         pAti ++;
                         avgPrecision = avgPrecision + pAti/i;
                     }
@@ -352,7 +338,10 @@ public class MainIndexer {
             }
 
         }
-        return avgPrecision/resultDocIds.size();
+
+        if (pAti==0)
+            return 0;
+        return avgPrecision/pAti;
 
     }
 
@@ -368,6 +357,7 @@ public class MainIndexer {
             String QPATH = scanner.nextLine();
             System.out.println("Enter path to the results file: ");
             String RPATH = scanner.nextLine();
+            Double avgP;
             int nQueries=0;
             double MAP=0.0;
             String result;
@@ -379,7 +369,16 @@ public class MainIndexer {
                 setTime(-1);
                 while ((query = reader.readLine()) != null && (result = resultReader.readLine()) != null) {
                     resultArray=  Arrays.asList(result.split(" "));
-                    MAP=MAP+avgPrecision(corpus, index, query, strategy, "default",resultArray);
+                    List<Integer> intList =new ArrayList<>();
+                    for(String s : resultArray){
+                        try {
+                            intList.add(Integer.parseInt(s));
+                        }catch (Exception e){}
+                    }
+
+                    avgP=avgPrecision(corpus, index, query, strategy, "default",intList);
+                    MAP=MAP+avgP;
+                    System.out.println("AVERAGE PRECISION: "+avgP);
                     nQueries++;
                 }
             reader.close();
@@ -388,6 +387,8 @@ public class MainIndexer {
         }
 
         setNQueries(nQueries);
+            if (nQueries==0)
+                return  0;
         return  MAP/nQueries;
 
 
