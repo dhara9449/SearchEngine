@@ -227,6 +227,8 @@ public class MainIndexer {
         Index index;
         if (milestoneChoice == 1) {
             PositionalInvertedIndex positionalIndex = new PositionalInvertedIndex();
+
+            //TODO
             index = indexCorpus(corpus);
 
         }
@@ -365,30 +367,34 @@ public class MainIndexer {
             try {
                 reader = new BufferedReader(new FileReader(QPATH));
                 resultReader  = new BufferedReader(new FileReader(RPATH));
-                List< String> resultArray;
+                List<String> resultArray; // to store document Names from qrel file
                 setTime(-1);
                 while ((query = reader.readLine()) != null && (result = resultReader.readLine()) != null) {
                     resultArray=  Arrays.asList(result.split(" "));
-                    List<Integer> intList =new ArrayList<>();
+                    List<Integer> docList =new ArrayList<Integer>();
                     for(String s : resultArray){
                         try {
-                            intList.add(Integer.parseInt(s));
-                        }catch (Exception e){}
+                            docList.add(Integer.parseInt(s));
+                        }catch (Exception e){
+
+                        }
                     }
 
-                    avgP=avgPrecision(corpus, index, query, strategy, "default",intList);
+                    avgP=avgPrecision(corpus, index, query, strategy, "default",docList);
                     MAP=MAP+avgP;
                     System.out.println("AVERAGE PRECISION: "+avgP);
                     nQueries++;
                 }
             reader.close();
+            resultReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         setNQueries(nQueries);
-            if (nQueries==0)
-                return  0;
+            if (nQueries==0) {
+                return 0;
+            }
         return  MAP/nQueries;
 
 
