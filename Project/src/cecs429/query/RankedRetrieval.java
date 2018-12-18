@@ -141,7 +141,7 @@ public class RankedRetrieval implements QueryComponent {
                 e.printStackTrace();
             }
 
-            printResult=printResult+"Document Title:\""+doc.getTitle()+"\"  File Name: "+doc.getmFileName()+" (ID: "+dId+") "+s.getAd()+"\n";
+//            printResult=printResult+"Document Title:\""+doc.getTitle()+"\"  File Name: "+doc.getmFileName()+" (ID: "+dId+") "+s.getAd()+"\n";
             ans.add(new Posting(dId));
             count++;
             if (count>=50){
