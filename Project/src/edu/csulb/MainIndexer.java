@@ -28,7 +28,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.SQLOutput;
 import java.util.*;
 
 import static java.lang.Integer.min;
@@ -59,7 +58,7 @@ public class MainIndexer {
         String sPath = directoryPath.toString();
         File folder2 = new File(PATH);
         File[] listOfFiles = folder2.listFiles();
-        String EXTENSION = FilenameUtils.getExtension(Objects.requireNonNull(listOfFiles)[0].getName());
+        String EXTENSION = FilenameUtils.getExtension((listOfFiles)[0].getName());
         corpus = newCorpus(directoryPath, "." + EXTENSION);
 
         String currentMode ="boolean";
@@ -126,14 +125,36 @@ public class MainIndexer {
 
                     strategy = new ContextStrategy(rankRetrievalStrategy.get(scanner.nextInt() - 1));
 
-                            System.out.println("MAP: " + MeanAvgPrecision(corpus,index,strategy) );
-                            System.out.println("ThroughPut: "+ NQUERIES/(TOTALTIME/1000)+" q/s");
-                            System.out.println("MRT: " + TOTALTIME/NQUERIES+" ms");
-                        return;
+
+                OUTER1:
+                while (true) {
+                    System.out.println("1.MAP\n" +
+                            "2.Throughput\n" +
+                            "3.Mean Response Time\n");
+
+                    int choice = scanner.nextInt();
+                    switch (choice) {
+                        case 1:
+                            System.out.println("MAP: " + MeanAvgPrecision(corpus,index,strategy));
+                            break;
+                        case 2:
+                            System.out.println("NQUERIES: "+ NQUERIES);
+                            System.out.println("TIME "+TOTALTIME);
+                            System.out.println("ThroughPut: "+ NQUERIES/TOTALTIME);
+                            break;
+                        case 3:
+                            System.out.println("MRT: " + TOTALTIME/NQUERIES);
+                            break;
+                        default:
+                            System.out.println("Exiting application");
+                            break OUTER1;
                     }
+                }
+
+                return;
             }
 
-
+        }
 
 
         query = scanner.nextLine();
@@ -227,8 +248,6 @@ public class MainIndexer {
         Index index;
         if (milestoneChoice == 1) {
             PositionalInvertedIndex positionalIndex = new PositionalInvertedIndex();
-
-            //TODO
             index = indexCorpus(corpus);
 
         }
@@ -311,7 +330,7 @@ public class MainIndexer {
     }
 
 
-    private static double avgPrecision( DocumentCorpus corpus, Index index, String query,ContextStrategy strategy,String accum,List<Integer> resultDocIds) {
+    private static double avgPrecision( DocumentCorpus corpus, Index index, String query,ContextStrategy strategy,String accum,List<String> resultDocIds) {
         double avgPrecision = 0.0;
         TokenProcessor processor = new BetterTokenProcessor();
         QueryComponent queryComponent = new RankedQueryParser(strategy, corpus).parseQuery(query, processor, accum);
@@ -321,29 +340,24 @@ public class MainIndexer {
         Long endTime = System.currentTimeMillis();
 
         setTime(endTime-startTime);
-        double pAti=0.0;
+        int pAti=0;
         Posting p1;
-        int docName;
-        int docId;
         if (postings != null) {
             for (int i = 1; i <= postings.size(); i++) {
                 p1 = postings.get(i-1);
-                docId = p1.getDocumentId();
-                if (docId >= 0) {
-                    docName = Integer.parseInt(corpus.getDocument(docId).getmFileName().split("\\.")[0]);
-                    if (resultDocIds.contains(docName)){
+                if (p1.getDocumentId() >= 0) {
+                    if (resultDocIds.contains(Integer.toString(p1.getDocumentId()))){
                         pAti ++;
-                        avgPrecision = avgPrecision + pAti/i;
+                        avgPrecision = avgPrecision + (pAti*1.0)/(i*1.0);
                     }
-
                 }
             }
 
         }
-
-        if (pAti==0)
-            return 0;
-        return avgPrecision/pAti;
+        if(pAti==0) {
+            return 0.0;
+        }
+        return avgPrecision/(pAti*1.0);
 
     }
 
@@ -355,46 +369,37 @@ public class MainIndexer {
 
             String query;
             Scanner scanner= new Scanner(System.in);
-            System.out.println("Enter path to query file: ");
-            String QPATH = scanner.nextLine();
-            System.out.println("Enter path to the results file: ");
-            String RPATH = scanner.nextLine();
-            Double avgP;
-            int nQueries=0;
+            //System.out.println("Enter path to query file: ");
+            //String QPATH = "D:\\Dhara_MS_in_CS\\3rd_sem\\Search Engine Technology\\project\\relevance_parks\\relevance\\queries";
+            //System.out.println("Enter path to the results file: ");
+            //String RPATH = "D:\\Dhara_MS_in_CS\\3rd_sem\\Search Engine Technology\\project\\relevance_parks\\relevance\\qrel";
+
+        String QPATH= "D:\\Dhara_MS_in_CS\\Java_Projects\\Corpus\\relevance_parks_result\\queries.txt";
+        String RPATH= "D:\\Dhara_MS_in_CS\\Java_Projects\\Corpus\\relevance_parks_result\\qrel.txt";
+
+        int nQueries=0;
             double MAP=0.0;
             String result;
             BufferedReader reader,resultReader;
             try {
                 reader = new BufferedReader(new FileReader(QPATH));
                 resultReader  = new BufferedReader(new FileReader(RPATH));
-                List<String> resultArray; // to store document Names from qrel file
+                List< String> resultArray;
                 setTime(-1);
                 while ((query = reader.readLine()) != null && (result = resultReader.readLine()) != null) {
                     resultArray=  Arrays.asList(result.split(" "));
-                    List<Integer> docList =new ArrayList<Integer>();
-                    for(String s : resultArray){
-                        try {
-                            docList.add(Integer.parseInt(s));
-                        }catch (Exception e){
 
-                        }
-                    }
-
-                    avgP=avgPrecision(corpus, index, query, strategy, "default",docList);
-                    MAP=MAP+avgP;
-                    System.out.println("AVERAGE PRECISION: "+avgP);
+                    MAP=MAP+avgPrecision(corpus, index, query, strategy, "default",resultArray);
                     nQueries++;
                 }
             reader.close();
-            resultReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         setNQueries(nQueries);
-            if (nQueries==0) {
-                return 0;
-            }
+        if (nQueries==0)
+            return 0.0;
         return  MAP/nQueries;
 
 
