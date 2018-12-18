@@ -392,14 +392,14 @@ public class MainIndexer {
             Scanner scanner= new Scanner(System.in);
             System.out.println("Enter path to query file: ");
             String QPATH = scanner.nextLine();
-            String RPATH = QPATH+"/qrel";
+            String RPATH = QPATH+"\\qrel";
             Double avgP;
             int nQueries=0;
             double MAP=0.0;
             String result;
             BufferedReader reader,resultReader;
             try {
-                reader = new BufferedReader(new FileReader(QPATH + "/queries"));
+                reader = new BufferedReader(new FileReader(QPATH ));
                 resultReader = new BufferedReader(new FileReader(RPATH));
                 List<String> resultArray;
                 setTime(-1);
