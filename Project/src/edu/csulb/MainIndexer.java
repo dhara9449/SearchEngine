@@ -332,11 +332,8 @@ public class MainIndexer {
         Long startTime = System.currentTimeMillis();
         List<Posting> postings = queryComponent.getPostings(index);
         Long endTime = System.currentTimeMillis();
-
         setTime(endTime-startTime);
-
         return postings;
-
 
     }
 
@@ -351,7 +348,9 @@ public class MainIndexer {
         Posting p1;
         int docName;
         int docId;
+        int postingSize=0;
         if (postings != null) {
+            postingSize=postings.size();
             for (int i = 1; i <= postings.size(); i++) {
                 p1 = postings.get(i-1);
                 docId = p1.getDocumentId();
@@ -361,8 +360,8 @@ public class MainIndexer {
                         pAti ++;
                         avgPrecision = avgPrecision + pAti/i;
                     }
-
-                    sb.append(avgPrecision).append(" ");
+                    sb.append(pAti/i).append(" ");//precision
+                    sb.append(pAti/postingSize).append(" ");//recall
                 }
             }
 

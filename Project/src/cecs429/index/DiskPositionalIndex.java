@@ -70,10 +70,11 @@ public class DiskPositionalIndex implements Index {
                 //p.setmDocumentId(docId);
 
                 int tft = postingsRAF.readInt();
-                for(int termFreq = 0; termFreq < tft; termFreq++) {
+               for(int termFreq = 0; termFreq < tft; termFreq++) {
                     postingsRAF.readInt();
                 }
-               // postingsRAF.seek(postingPos + tft * 4);
+
+//                postingsRAF.seek(postingPos + tft * 4);
                 p.setTermFrequency(tft);
                 postingsList.add(p);
             }
@@ -122,6 +123,7 @@ public class DiskPositionalIndex implements Index {
                     positionList.add(currentPosGap+prevPosGap);
                     prevPosGap = currentPosGap +prevPosGap;
                 }
+
                 p.setmPositions(positionList);
                 postingsList.add(p);
             }
