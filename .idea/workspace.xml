@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8f3f9e3e-1d97-4ba4-92a2-6cbbe7fdfdb1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/cecs429/query/RankedRetrieval.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/cecs429/query/RankedRetrieval.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project/src/edu/csulb/MainIndexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/edu/csulb/MainIndexer.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -49,39 +50,37 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="11" />
-          <entry key="java" value="162" />
+          <entry key="java" value="160" />
           <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="11" />
-          <entry key="JAVA" value="162" />
+          <entry key="JAVA" value="160" />
           <entry key="XML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="4" />
-          <entry key="java" value="4847" />
+          <entry key="java" value="4613" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="4847" />
+          <entry key="JAVA" value="4613" />
           <entry key="PLAIN_TEXT" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
         <counts>
-          <entry key="git.branch.merge" value="7" />
+          <entry key="git.branch.merge" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="6" />
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.19" value="1" />
           <entry key="project.open.time.23" value="1" />
           <entry key="project.open.time.25" value="1" />
@@ -89,7 +88,7 @@
           <entry key="project.open.time.31" value="1" />
           <entry key="project.open.time.33" value="1" />
           <entry key="project.open.time.38" value="1" />
-          <entry key="project.opened" value="9" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
     </session>
@@ -103,22 +102,22 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="56" />
+          <entry key="java" value="59" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="56" />
+          <entry key="JAVA" value="59" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="3210" />
+          <entry key="java" value="4279" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3210" />
+          <entry key="JAVA" value="4279" />
         </counts>
       </usages-collector>
     </session>
@@ -131,29 +130,18 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project/src/edu/csulb/MainIndexer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="376" column="8" selection-start-line="376" selection-start-column="8" selection-end-line="376" selection-end-column="8" />
+            <state relative-caret-position="84">
+              <caret line="349" column="7" selection-start-line="349" selection-start-column="7" selection-end-line="349" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#newCorpus#0;class#MainIndexer#0" />
+                <element signature="method#newIndex#0;class#MainIndexer#0" />
+                <element signature="method#loadIndex#0;class#MainIndexer#0" />
+                <element signature="method#setTime#0;class#MainIndexer#0" />
+                <element signature="e#14754#14755#0" expanded="true" />
+                <element signature="e#14782#14783#0" expanded="true" />
+                <element signature="method#queryPosting#0;class#MainIndexer#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/util/Objects.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2805">
-              <caret line="202" selection-start-line="202" selection-end-line="202" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/Posting.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -161,11 +149,32 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/RankedRetrieval.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2193">
-              <caret line="144" column="38" selection-start-line="144" selection-start-column="38" selection-end-line="144" selection-end-column="38" />
+            <state relative-caret-position="436">
+              <caret line="150" column="10" selection-start-line="150" selection-start-column="10" selection-end-line="150" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2649">
+              <caret line="220" column="33" selection-start-line="220" selection-start-column="33" selection-end-line="220" selection-end-column="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/RankedQueryParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="67">
+              <caret line="109" column="36" selection-start-line="109" selection-start-column="36" selection-end-line="109" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -181,8 +190,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getPosti</find>
-      <find>strategy</find>
       <find>getPostings</find>
       <find>queryComponent</find>
       <find>result</find>
@@ -208,9 +215,11 @@
       <find>newIndex</find>
       <find>OUTER</find>
       <find>Sys</find>
-      <find>ans</find>
       <find>scanner</find>
       <find>currentMode</find>
+      <find>ans</find>
+      <find>System.</find>
+      <find>Ranked</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -326,7 +335,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544990547471" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545087195936" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/elsa-3.0.0-M5.jar!/" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -376,21 +385,21 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="877" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7975133" visible="true" weight="0.29878542" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8024948" visible="true" weight="0.28898427" />
       <window_info id="Capture Tool" order="1" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Learn" order="5" weight="0.3298969" />
-      <window_info id="Structure" order="6" sideWeight="0.20248668" side_tool="true" visible="true" weight="0.29878542" />
+      <window_info id="Structure" order="6" sideWeight="0.19750519" side_tool="true" visible="true" weight="0.28898427" />
       <window_info id="Favorites" order="7" sideWeight="0.19135803" side_tool="true" weight="0.27125505" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.11545293" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.5062167" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.38726115" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.047957372" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3299363" />
@@ -453,6 +462,7 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/cecs429/text/BetterTokenProcessor.java" />
     <entry file="file://$PROJECT_DIR$/src/edu/csulb/InvertedTermDocumentIndex.java" />
     <entry file="file://$PROJECT_DIR$/src/cecs429/query/TermLiteral.java" />
     <entry file="file://$PROJECT_DIR$/src/cecs429/documents/JsonFileDocument.java" />
@@ -657,20 +667,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/RankedQueryParser.java">
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/Posting.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="124" lean-forward="true" selection-start-line="124" selection-end-line="124" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="157" column="34" selection-start-line="157" selection-start-column="34" selection-end-line="157" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="285">
+          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -705,36 +705,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/edu/csulb/MainIndexer.java">
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/RankedQueryParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="376" column="8" selection-start-line="376" selection-start-column="8" selection-end-line="376" selection-end-column="8" />
+        <state relative-caret-position="67">
+          <caret line="109" column="36" selection-start-line="109" selection-start-column="36" selection-end-line="109" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2649">
+          <caret line="220" column="33" selection-start-line="220" selection-start-column="33" selection-end-line="220" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/util/Objects.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2805">
-          <caret line="202" selection-start-line="202" selection-end-line="202" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/Posting.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/RankedRetrieval.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2193">
-          <caret line="144" column="38" selection-start-line="144" selection-start-column="38" selection-end-line="144" selection-end-column="38" />
+        <state relative-caret-position="436">
+          <caret line="150" column="10" selection-start-line="150" selection-start-column="10" selection-end-line="150" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project/src/edu/csulb/MainIndexer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="349" column="7" selection-start-line="349" selection-start-column="7" selection-end-line="349" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#newCorpus#0;class#MainIndexer#0" />
+            <element signature="method#newIndex#0;class#MainIndexer#0" />
+            <element signature="method#loadIndex#0;class#MainIndexer#0" />
+            <element signature="method#setTime#0;class#MainIndexer#0" />
+            <element signature="e#14754#14755#0" expanded="true" />
+            <element signature="e#14782#14783#0" expanded="true" />
+            <element signature="method#queryPosting#0;class#MainIndexer#0" />
           </folding>
         </state>
       </provider>
@@ -814,8 +824,5 @@
         </settings>
       </state>
     </states>
-  </component>
-  <component name="se.expertsystem.intellij.aop.aspectj.AspectJProjectComponent">
-    <setting name="isActivated" value="false" />
   </component>
 </project>

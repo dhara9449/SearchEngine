@@ -148,7 +148,7 @@ public class RankedRetrieval implements QueryComponent {
                 break;
             }
         }
-        System.out.println(printResult);
+        //System.out.println(printResult);
         return ans;
     }
 
