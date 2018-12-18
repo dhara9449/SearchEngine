@@ -25,7 +25,6 @@ import org.tartarus.snowball.ext.englishStemmer;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.SQLOutput;
 import java.util.*;
 
 import static java.lang.Integer.min;
@@ -102,8 +101,6 @@ public class MainIndexer {
             diskIndexWriter = new DiskIndexWriter();
             index = loadIndex(corpus, diskIndexWriter, directoryPath);
 
-
-
             if (currentMode.equalsIgnoreCase("ranked")) {
                 System.out.println("1.Default\n" +
                         "2.tf-idf\n" +
@@ -126,31 +123,22 @@ public class MainIndexer {
 
                     while(true) {
                         System.out.println("1.MAP\n" +
-                                "2.Throughput\n" +
-                                "3.MRT\n" +
+                                "2.Throughput for 1 query\n" +
                                 "Enter choice: ");
 
                         int choice = scanner.nextInt();
                         if (choice == 1) {
                             System.out.println("MAP: " + MeanAvgPrecision(corpus, index, strategy, "MAP"));
+                            System.out.println("ThroughPut: " + NQUERIES / (TOTALTIME / 1000) + " q/s");
+                            System.out.println("MRT: " + TOTALTIME / NQUERIES + " ms");
                         } else if (choice == 2) {
                             MeanAvgPrecision(corpus, index, strategy, "Throughput");
-                            System.out.println("NQ:" + NQUERIES);
-                            System.out.println("TT:" + TOTALTIME);
                             System.out.println("ThroughPut: " + NQUERIES / (TOTALTIME / 1000) + " q/s");
-                        } else if (choice == 3) {
-                            System.out.println("MRT: " + TOTALTIME / NQUERIES + " ms");
-                        }else{
-                            break;
-                        }
+                        }else{break;}
                     }
-
-                        return;
+                       return;
                     }
             }
-
-
-
 
         query = scanner.nextLine();
 
@@ -359,6 +347,9 @@ public class MainIndexer {
                     if (resultDocIds.contains(docName)){
                         pAti ++;
                         avgPrecision = avgPrecision + pAti/i;
+                        System.out.println(corpus.getDocument(docId).getmFileName() +" Relevant");
+                    }else{
+                        System.out.println(corpus.getDocument(docId).getmFileName() +" Not Relevant");
                     }
                     sb.append(pAti/i).append(" ");//precision
                     sb.append(pAti/postingSize).append(" ");//recall
@@ -395,6 +386,7 @@ public class MainIndexer {
             String RPATH = QPATH+"\\qrel";
             Double avgP;
             int nQueries=0;
+            double time=0.0;
             double MAP=0.0;
             String result;
             BufferedReader reader,resultReader;
@@ -414,23 +406,33 @@ public class MainIndexer {
                             }
                         }
 
+                        Long startTime = System.currentTimeMillis();
                         avgP = avgPrecision(corpus, index, query, strategy, "default", intList);
+                        Long endTime = System.currentTimeMillis();
+
+                        time=time+endTime-startTime;
                         MAP = MAP + avgP;
+                        System.out.println("\n"+query);
                         System.out.println("AVERAGE PRECISION: " + avgP);
                         nQueries++;
+
                     }
             }else {
+                    System.out.println("Enter query no: ");
+                    int lineNum = scanner.nextInt();
+                    int j=0;
                     if ((query = reader.readLine()) != null) {
-
-                        Long startTime = System.currentTimeMillis();
-                        for(int i=0;i<=30;i++){
-                            getPostings(corpus,index,query,strategy,"default");
+                        if(j+1==lineNum) {
+                            Long startTime = System.currentTimeMillis();
+                            for (int i = 0; i <= 30; i++) {
+                                getPostings(corpus, index, query, strategy, "default");
+                            }
+                            Long endTime = System.currentTimeMillis();
+                            setTime(endTime - startTime);
+                            setNQueries(30);
+                            nQueries = NQUERIES;
                         }
-                        Long endTime = System.currentTimeMillis();
-                        setTime(endTime-startTime);
-                        setNQueries(30);
-                        nQueries = NQUERIES;
-
+                        j++;
                     }
                 }
 
@@ -439,6 +441,7 @@ public class MainIndexer {
             e.printStackTrace();
         }
 
+        setTime(time);
         setNQueries(nQueries);
             if (nQueries==0)
                 return  0;
