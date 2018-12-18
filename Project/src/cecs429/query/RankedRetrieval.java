@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
  * intersection-like operation.
  */
 public class RankedRetrieval implements QueryComponent {
-
     private ContextStrategy strategy;
     private List<QueryComponent> mComponents;
     private  int N;
