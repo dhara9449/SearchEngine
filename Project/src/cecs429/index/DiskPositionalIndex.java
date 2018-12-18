@@ -58,7 +58,9 @@ public class DiskPositionalIndex implements Index {
         try {
             long postingPos = binarySearchVocab(term);
             postingsRAF.seek(postingPos);
+
             int dft=postingsRAF.readInt();
+            postingPos =postingPos +4;
             Posting p;
             int currentdocIdGap;
             int prevdocIdGap =0;
@@ -70,11 +72,13 @@ public class DiskPositionalIndex implements Index {
                 //p.setmDocumentId(docId);
 
                 int tft = postingsRAF.readInt();
-               for(int termFreq = 0; termFreq < tft; termFreq++) {
-                    postingsRAF.readInt();
-                }
-
-//                postingsRAF.seek(postingPos + tft * 4);
+                //for(int termFreq = 0; termFreq < tft; termFreq++) {
+                 //   postingsRAF.readInt();
+                    //postingsRAF.seek(postingPos + tft * 4);
+               // }
+                postingPos = postingPos + 8;
+               postingsRAF.seek(postingPos+ tft * 4 );
+                postingPos = postingPos+tft*4;
                 p.setTermFrequency(tft);
                 postingsList.add(p);
             }
@@ -123,7 +127,6 @@ public class DiskPositionalIndex implements Index {
                     positionList.add(currentPosGap+prevPosGap);
                     prevPosGap = currentPosGap +prevPosGap;
                 }
-
                 p.setmPositions(positionList);
                 postingsList.add(p);
             }
