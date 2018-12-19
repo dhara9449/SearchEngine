@@ -9,22 +9,20 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * An AndQuery composes other QueryComponents and merges their postings in an
- * intersection-like operation.
- */
 public class RankedRetrieval implements QueryComponent {
     private ContextStrategy strategy;
     private List<QueryComponent> mComponents;
     private  int N;
     private  boolean accum;
     DocumentCorpus corpus;
-    RankedRetrieval(List<QueryComponent> components, ContextStrategy strategy, DocumentCorpus corpus, String accum) {
+    private int numDocsReturned;
+    RankedRetrieval(List<QueryComponent> components, ContextStrategy strategy, DocumentCorpus corpus, String accum, int numDocReturned) {
         mComponents = components;
         this.strategy = strategy;
         this.corpus = corpus;
         N = corpus.getCorpusSize();
         this.accum= accum.equalsIgnoreCase("log");
+        this.numDocsReturned = numDocReturned;
     }
 
     //inner class for accumulator values
@@ -140,14 +138,27 @@ public class RankedRetrieval implements QueryComponent {
                 e.printStackTrace();
             }
 
-//            printResult=printResult+"Document Title:\""+doc.getTitle()+"\"  File Name: "+doc.getmFileName()+" (ID: "+dId+") "+s.getAd()+"\n";
+            /*
+             we print the results only for ranked Queries where numDocsReturned <50 as otherwise printing for more
+             documents adds time expenses in terms of console I/O
+            */
+            if (numDocsReturned <50 && numDocsReturned >0) {
+                printResult = printResult + "Document Title:\"" + doc.getTitle() + "\"  File Name: " + doc.getmFileName() + " (ID: " + dId + ") " + s.getAd() + "\n";
+
+            }
             ans.add(new Posting(dId));
             count++;
-            if (count>=50){
+            if (count>=numDocsReturned){
                 break;
             }
         }
-        //System.out.println(printResult);
+        /*
+             we print the results only for ranked Queries where numDocsReturned <50 as otherwise printing for more
+             documents adds time expenses in terms of console I/O
+            */
+        if (numDocsReturned <50 && numDocsReturned >0) {
+            System.out.print(printResult);
+        }
         return ans;
     }
 

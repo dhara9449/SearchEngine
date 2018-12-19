@@ -56,7 +56,7 @@ public class RankedQueryParser {
      * @param query
      * @return
      */
-    public QueryComponent parseQuery(String query, TokenProcessor processor,String accum) {
+    public QueryComponent parseQuery(String query, TokenProcessor processor,String accum,int k) {
         int start = 0;
 
         // General routine: scan the query to identify a literal, and put that literal into a list.
@@ -107,7 +107,7 @@ public class RankedQueryParser {
         // that must be combined with an OrQuery.
 
 
-        return new RankedRetrieval(allSubqueries,strategy,corpus,accum);
+        return new RankedRetrieval(allSubqueries,strategy,corpus,accum,k);
     }
 
     /**
