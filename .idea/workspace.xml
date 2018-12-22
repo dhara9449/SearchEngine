@@ -48,27 +48,28 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="11" />
-          <entry key="java" value="160" />
+          <entry key="java" value="173" />
           <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="11" />
-          <entry key="JAVA" value="160" />
+          <entry key="JAVA" value="173" />
           <entry key="XML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="4" />
-          <entry key="java" value="4613" />
+          <entry key="java" value="7028" />
+          <entry key="txt" value="33" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="4613" />
-          <entry key="PLAIN_TEXT" value="4" />
+          <entry key="JAVA" value="7028" />
+          <entry key="PLAIN_TEXT" value="37" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -78,15 +79,17 @@
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
+          <entry key="project.closed" value="8" />
+          <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.19" value="1" />
           <entry key="project.open.time.23" value="1" />
           <entry key="project.open.time.25" value="1" />
           <entry key="project.open.time.26" value="1" />
+          <entry key="project.open.time.30" value="1" />
           <entry key="project.open.time.31" value="1" />
           <entry key="project.open.time.33" value="1" />
           <entry key="project.open.time.38" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="9" />
         </counts>
       </usages-collector>
     </session>
@@ -128,15 +131,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project/src/edu/csulb/MainIndexer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3353">
-              <caret line="365" column="29" lean-forward="true" selection-start-line="365" selection-start-column="29" selection-end-line="365" selection-end-column="29" />
+            <state relative-caret-position="-918">
+              <caret line="355" column="34" lean-forward="true" selection-start-line="355" selection-start-column="34" selection-end-line="355" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#newCorpus#0;class#MainIndexer#0" />
+                <element signature="method#newIndex#0;class#MainIndexer#0" />
                 <element signature="method#loadIndex#0;class#MainIndexer#0" />
-                <element signature="method#indexCorpus#0;class#MainIndexer#0" />
-                <element signature="method#setTime#0;class#MainIndexer#0" />
-                <element signature="method#queryPosting#0;class#MainIndexer#0" />
               </folding>
             </state>
           </provider>
@@ -145,8 +146,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/RankedRetrieval.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="56" selection-start-line="15" selection-start-column="56" selection-end-line="15" selection-end-column="56" />
+            <state relative-caret-position="2346">
+              <caret line="160" column="9" selection-start-line="160" selection-start-column="9" selection-end-line="160" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -155,16 +156,52 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskPositionalIndex.java">
+        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/PositionalInvertedIndex.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
-              <caret line="140" column="5" selection-start-line="140" selection-start-column="5" selection-end-line="140" selection-end-column="5" />
+            <state relative-caret-position="544">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/RankedQueryParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1768">
+              <caret line="109" column="71" selection-start-line="109" selection-start-column="71" selection-end-line="109" selection-end-column="71" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/QueryComponent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#DiskPositionalIndex#0;class#DiskPositionalIndex#0" />
-                <element signature="method#getPostings#0;class#DiskPositionalIndex#0" />
-                <element signature="method#getPostingsWithPosition#0;class#DiskPositionalIndex#0" />
-                <element signature="method#getVocabulary#0;class#DiskPositionalIndex#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/Index.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/TermFrequency/ContextStrategy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
+              <folding>
+                <element signature="e#286#287#0" expanded="true" />
+                <element signature="e#338#339#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -173,8 +210,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Project/src/cecs429/TermFrequency/DefaultFrequencyStrategy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="21" column="48" selection-start-line="21" selection-start-column="48" selection-end-line="21" selection-end-column="48" />
+            <state relative-caret-position="153">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
               <folding>
                 <element signature="e#663#664#0" expanded="true" />
                 <element signature="e#704#705#0" expanded="true" />
@@ -184,18 +221,30 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskPositionalIndex.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#getPostings#0;class#DiskPositionalIndex#0" />
+                <element signature="method#getVocabulary#0;class#DiskPositionalIndex#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
+            <state relative-caret-position="986">
+              <caret line="164" selection-start-line="164" selection-end-line="164" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#writePostings#0;class#DiskIndexWriter#0" />
                 <element signature="method#writeVocab#0;class#DiskIndexWriter#0" />
                 <element signature="method#writeVocabTable#0;class#DiskIndexWriter#0" />
                 <element signature="method#writeDocWeights#0;class#DiskIndexWriter#0" />
-                <element signature="method#loadCorpus#0;class#DiskIndexWriter#0" />
-                <element signature="method#indexCorpus#0;class#DiskIndexWriter#0" />
               </folding>
             </state>
           </provider>
@@ -212,13 +261,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>result</find>
-      <find>StringBounds</find>
-      <find>corpus</find>
-      <find>strategy1</find>
-      <find>catch</find>
-      <find>stemmer</find>
-      <find>mode</find>
       <find>ignore</find>
       <find>corpusSize</find>
       <find>corpusS</find>
@@ -242,6 +284,13 @@
       <find>Ranked</find>
       <find>getPostings</find>
       <find>seek</find>
+      <find>AVER</find>
+      <find>totaltime</find>
+      <find>QueryComponent</find>
+      <find>setTime(-1)</find>
+      <find>RankedRetrieval</find>
+      <find>parseQuery</find>
+      <find>numDocsReturned</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -255,7 +304,6 @@
         <option value="$PROJECT_DIR$/Project/src/edu/csulb/InvertedTermDocumentIndex.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/TfIdfStrategy.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/query/AndQuery.java" />
-        <option value="$PROJECT_DIR$/Project/src/cecs429/query/QueryComponent.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/documents/DirectoryCorpus.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/documents/Document.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/documents/JsonFileDocument.java" />
@@ -266,23 +314,24 @@
         <option value="$PROJECT_DIR$/Project/src/cecs429/text/BetterTokenProcessor.java" />
         <option value="$PROJECT_DIR$/Project/src/edu/csulb/DiskPositionalIndexer.java" />
         <option value="$PROJECT_DIR$/Project/src/edu/csulb/MainIndexer2.java" />
-        <option value="$PROJECT_DIR$/Project/src/cecs429/index/PositionalInvertedIndex.java" />
-        <option value="$PROJECT_DIR$/Project/src/cecs429/query/RankedQueryParser.java" />
-        <option value="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/ContextStrategy.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/OkapiStrategy.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/WackyStrategy.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/index/Posting.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/index/DiskPositionalIndex.java" />
+        <option value="$PROJECT_DIR$/Project/src/cecs429/TermFrequency/ContextStrategy.java" />
+        <option value="$PROJECT_DIR$/Project/src/cecs429/index/PositionalInvertedIndex.java" />
+        <option value="$PROJECT_DIR$/Project/src/cecs429/query/QueryComponent.java" />
+        <option value="$PROJECT_DIR$/Project/src/cecs429/query/RankedQueryParser.java" />
         <option value="$PROJECT_DIR$/Project/src/cecs429/query/RankedRetrieval.java" />
         <option value="$PROJECT_DIR$/Project/src/edu/csulb/MainIndexer.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="23" />
+    <option name="y" value="21" />
     <option name="width" value="1440" />
-    <option name="height" value="877" />
+    <option name="height" value="879" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -290,6 +339,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -351,12 +402,10 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545108484569" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545202476914" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/elsa-3.0.0-M5.jar!/" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -394,6 +443,14 @@
       <option name="presentableId" value="Default" />
       <updated>1540919652977</updated>
     </task>
+    <task id="LOCAL-00001" summary="final commit for MAP calculations">
+      <created>1545201708087</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1545201708087</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView">
@@ -406,28 +463,28 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="877" extended-state="6" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8012739" visible="true" weight="0.2932761" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7975133" visible="true" weight="0.302834" />
       <window_info id="Capture Tool" order="1" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Learn" order="5" weight="0.3298969" />
-      <window_info id="Structure" order="6" sideWeight="0.19872612" side_tool="true" visible="true" weight="0.2932761" />
+      <window_info id="Structure" order="6" sideWeight="0.20248668" side_tool="true" visible="true" weight="0.302834" />
       <window_info id="Favorites" order="7" sideWeight="0.19135803" side_tool="true" weight="0.27125505" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.36433122" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.047957372" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.4689165" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.23978686" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.44227353" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3299363" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3299363" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.28535032" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.58792186" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -470,6 +527,10 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="final commit for MAP calculations" />
+    <option name="LAST_COMMIT_MESSAGE" value="final commit for MAP calculations" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -479,12 +540,28 @@
           <properties />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Project/src/cecs429/query/RankedRetrieval.java</url>
+          <line>144</line>
+          <properties />
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Project/src/cecs429/query/RankedRetrieval.java</url>
+          <line>158</line>
+          <properties />
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Project/src/edu/csulb/MainIndexer.java</url>
+          <line>425</line>
+          <properties />
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/cecs429/text/BetterTokenProcessor.java" />
-    <entry file="file://$PROJECT_DIR$/src/edu/csulb/InvertedTermDocumentIndex.java" />
     <entry file="file://$PROJECT_DIR$/src/cecs429/query/TermLiteral.java" />
     <entry file="file://$PROJECT_DIR$/src/cecs429/documents/JsonFileDocument.java" />
     <entry file="file://$PROJECT_DIR$/src/cecs429/documents/MovieDocument.java" />
@@ -495,13 +572,6 @@
     </entry>
     <entry file="jar://$PROJECT_DIR$/../mapdb-3.0.7.jar!/org/mapdb/DB.class" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/util/ArrayList.java" />
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/QueryComponent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/Project/dist/lib/org.apache.commons.io.jar!/org/apache/commons/io/FilenameUtils.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="107">
@@ -614,13 +684,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/BooleanQueryParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="107" selection-start-line="107" selection-end-line="107" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../mapdb-3.0.7.jar!/org/mapdb/BTreeMap.class" />
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/PhraseLiteral.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -640,13 +703,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
           <caret line="146" selection-start-line="146" selection-end-line="146" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/PositionalInvertedIndex.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="73" column="15" lean-forward="true" selection-end-line="77" />
         </state>
       </provider>
     </entry>
@@ -678,16 +734,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/TermFrequency/TermFrequencyStrategy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/text/BetterTokenProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="645">
@@ -695,70 +741,103 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/Index.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/io/File.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="21" column="7" lean-forward="true" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
+        <state relative-caret-position="87">
+          <caret line="1205" column="18" selection-start-line="1205" selection-start-column="18" selection-end-line="1205" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/RankedQueryParser.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/lang/Override.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-512">
-          <caret line="109" column="36" selection-start-line="109" selection-start-column="36" selection-end-line="109" selection-end-column="36" />
+        <state relative-caret-position="323">
+          <caret line="50" column="18" selection-start-line="50" selection-start-column="18" selection-end-line="50" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/TermFrequency/ContextStrategy.java">
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/TermFrequency/TermFrequencyStrategy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        <state relative-caret-position="170">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/BooleanQueryParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-782">
+          <caret line="107" selection-start-line="107" selection-end-line="107" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/edu/csulb/MainIndexer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3353">
-          <caret line="365" column="29" lean-forward="true" selection-start-line="365" selection-start-column="29" selection-end-line="365" selection-end-column="29" />
+        <state relative-caret-position="-918">
+          <caret line="355" column="34" lean-forward="true" selection-start-line="355" selection-start-column="34" selection-end-line="355" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#newCorpus#0;class#MainIndexer#0" />
+            <element signature="method#newIndex#0;class#MainIndexer#0" />
             <element signature="method#loadIndex#0;class#MainIndexer#0" />
-            <element signature="method#indexCorpus#0;class#MainIndexer#0" />
-            <element signature="method#setTime#0;class#MainIndexer#0" />
-            <element signature="method#queryPosting#0;class#MainIndexer#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/RankedRetrieval.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="56" selection-start-line="15" selection-start-column="56" selection-end-line="15" selection-end-column="56" />
+        <state relative-caret-position="2346">
+          <caret line="160" column="9" selection-start-line="160" selection-start-column="9" selection-end-line="160" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskPositionalIndex.java">
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/PositionalInvertedIndex.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="140" column="5" selection-start-line="140" selection-start-column="5" selection-end-line="140" selection-end-column="5" />
+        <state relative-caret-position="544">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/RankedQueryParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1768">
+          <caret line="109" column="71" selection-start-line="109" selection-start-column="71" selection-end-line="109" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/query/QueryComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#DiskPositionalIndex#0;class#DiskPositionalIndex#0" />
-            <element signature="method#getPostings#0;class#DiskPositionalIndex#0" />
-            <element signature="method#getPostingsWithPosition#0;class#DiskPositionalIndex#0" />
-            <element signature="method#getVocabulary#0;class#DiskPositionalIndex#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/Index.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/TermFrequency/ContextStrategy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="e#286#287#0" expanded="true" />
+            <element signature="e#338#339#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/TermFrequency/DefaultFrequencyStrategy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="21" column="48" selection-start-line="21" selection-start-column="48" selection-end-line="21" selection-end-column="48" />
+        <state relative-caret-position="153">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
           <folding>
             <element signature="e#663#664#0" expanded="true" />
             <element signature="e#704#705#0" expanded="true" />
@@ -766,18 +845,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskPositionalIndex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getPostings#0;class#DiskPositionalIndex#0" />
+            <element signature="method#getVocabulary#0;class#DiskPositionalIndex#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Project/src/cecs429/index/DiskIndexWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
+        <state relative-caret-position="986">
+          <caret line="164" selection-start-line="164" selection-end-line="164" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#writePostings#0;class#DiskIndexWriter#0" />
             <element signature="method#writeVocab#0;class#DiskIndexWriter#0" />
             <element signature="method#writeVocabTable#0;class#DiskIndexWriter#0" />
             <element signature="method#writeDocWeights#0;class#DiskIndexWriter#0" />
-            <element signature="method#loadCorpus#0;class#DiskIndexWriter#0" />
-            <element signature="method#indexCorpus#0;class#DiskIndexWriter#0" />
           </folding>
         </state>
       </provider>
@@ -857,5 +946,8 @@
         </settings>
       </state>
     </states>
+  </component>
+  <component name="se.expertsystem.intellij.aop.aspectj.AspectJProjectComponent">
+    <setting name="isActivated" value="false" />
   </component>
 </project>

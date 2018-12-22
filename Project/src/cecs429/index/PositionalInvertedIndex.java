@@ -35,7 +35,6 @@ public class PositionalInvertedIndex implements Index {
         return mInvertedIndexMap.size();
     }
 
-    //TODO:???
     @Override
     public List<Posting> getPostingsWithPosition(String term) {
         return getPostings(term);
